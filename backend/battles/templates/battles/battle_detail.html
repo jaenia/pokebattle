@@ -1,4 +1,9 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/global.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
+
 <h1>Pokebattle #{{ object.id }}</h1>
-<p><strong>Creator:</strong> {{ object.creator }}</p>
+<p id="battle-creator"><strong>Creator:</strong> {{ object.creator }}</p>
 <p><strong>Opponent:</strong> {{ object.opponent }}</p>
-<a href="{% url 'battles:battle_list' %}">Back to list</a>
+<a class="nav-link" href="{% url 'battles:battle_list' %}">Back to list</a>
