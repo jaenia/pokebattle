@@ -1,3 +1,4 @@
-<h1>Pokebattle #{{ object.id }} - Created at {{ object.created_at }}</h1>
+<h1>Pokebattle #{{ object.id }}</h1>
 <p><strong>Creator:</strong> {{ object.creator }}</p>
 <p><strong>Opponent:</strong> {{ object.opponent }}</p>
+<a href="{% url 'battles:battle_list' %}">Back to list</a>
