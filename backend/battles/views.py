@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from django.views.generic import CreateView, DetailView
+from django.views.generic import CreateView, DetailView, ListView
 
 from battles.forms import BattleForm
 from battles.models import Battle
@@ -27,3 +27,8 @@ class BattleDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+
+
+class BattleList(ListView):
+    model = Battle
+
