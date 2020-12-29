@@ -12,7 +12,7 @@ class BattleCreate(CreateView):
 
     def get_form_kwargs(self):
         kwargs = super(BattleCreate, self).get_form_kwargs()
-        kwargs['user'] = get_object_or_404(User, email='jaenia@vinta.com.br')
+        kwargs['user'] = User.objects.first()
         return kwargs
 
     def form_valid(self, form):
