@@ -31,4 +31,3 @@ class BattleDetail(DetailView):
 
 class BattleList(ListView):
     model = Battle
-
