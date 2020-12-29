@@ -40,7 +40,7 @@ class BattleCreateViewTests(TestCase):
         self.client = Client()
 
     def test_battle_create(self):
-        user = mommy.make('users.User')
+        mommy.make('users.User')
         data = {
             'creator': 'creator@test.com',
             'opponent': 'opponent@test.com'
