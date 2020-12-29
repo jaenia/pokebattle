@@ -40,11 +40,12 @@ class BattleCreateViewTests(TestCase):
         self.client = Client()
 
     def test_battle_create(self):
+        user = mommy.make('users.User')
         data = {
             'creator': 'creator@test.com',
             'opponent': 'opponent@test.com'
         }
         url = reverse('battles:battle_create')
-        response = self.client.post(url, data, follow=True)
+        response = self.client.post(url, data)
 
-        self.assertEqual(response, 200)
+        self.assertEqual(response.status_code, 200)
