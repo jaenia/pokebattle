@@ -9,6 +9,25 @@ class BattleListViewTests(TestCase):
     def setUp(self):
         self.client = Client()
 
+    def test_performance(self):
+        mommy.make('battles.Battle')
+        mommy.make('battles.Battle')
+
+        url = reverse('battles:battle_list')
+
+        with self.assertNumQueries(1):
+            response = self.client.get(url)
+
+        self.assertEqual(response.context['object_list'].count(), 2)
+
+        mommy.make('battles.Battle')
+        mommy.make('battles.Battle')
+
+        with self.assertNumQueries(1):
+            response = self.client.get(url)
+
+        self.assertEqual(response.context['object_list'].count(), 4)
+
     def test_battle_list(self):
         battle1 = mommy.make('battles.Battle')
         battle2 = mommy.make('battles.Battle')
