@@ -15,11 +15,6 @@ class BattleCreate(CreateView):
         kwargs['user'] = User.objects.first()
         return kwargs
 
-    def form_valid(self, form):
-        creator = get_object_or_404(User, email='jaenia@vinta.com.br')
-        form.instance.creator = creator
-        return super().form_valid(form)
-
 
 class BattleDetail(DetailView):
     model = Battle
