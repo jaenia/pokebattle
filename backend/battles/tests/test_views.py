@@ -60,9 +60,21 @@ class BattleCreateViewTests(TestCase):
 
     def test_battle_create(self):
         mommy.make('users.User')
+        opponent = mommy.make('users.User')
+
         data = {
-            'creator': 'creator@test.com',
-            'opponent': 'opponent@test.com'
+            'opponent': opponent.id
+        }
+        url = reverse('battles:battle_create')
+        response = self.client.post(url, data)
+
+        self.assertEqual(response.status_code, 302)
+
+    def test_cannot_create_battle_with_same_user_as_opponent_and_creator(self):
+        current_user = mommy.make('users.User')
+
+        data = {
+            'opponent': current_user.id
         }
         url = reverse('battles:battle_create')
         response = self.client.post(url, data)
