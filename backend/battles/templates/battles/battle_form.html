@@ -6,7 +6,7 @@
 <h1>Create a new Pokebattle</h1>
 <form id="battle-form" action="{% url 'battles:battle_create' %}" method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+  <p>{{ form.opponent }}</p>
   <button type="submit">Select</button>
 </form>
 <a class="nav-link" href="{% url 'battles:battle_list' %}">Back to list</a>
