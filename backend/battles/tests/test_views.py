@@ -3,6 +3,8 @@ from django.urls import reverse
 
 from model_mommy import mommy
 
+from battles.models import Battle
+
 
 class BattleListViewTests(TestCase):
 
@@ -66,7 +68,14 @@ class BattleCreateViewTests(TestCase):
             'opponent': opponent.id
         }
         url = reverse('battles:battle_create')
+
+        battle = Battle.objects.filter(opponent=opponent).first()
+        self.assertIsNone(battle)
+
         response = self.client.post(url, data)
+
+        battle = Battle.objects.filter(opponent=opponent).first()
+        self.assertIsNotNone(battle)
 
         self.assertEqual(response.status_code, 302)
 
