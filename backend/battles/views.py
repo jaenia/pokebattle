@@ -1,4 +1,3 @@
-from django.shortcuts import get_object_or_404
 from django.views.generic import CreateView, DetailView, ListView
 
 from battles.forms import BattleForm
@@ -15,18 +14,9 @@ class BattleCreate(CreateView):
         kwargs['user'] = User.objects.first()
         return kwargs
 
-    def form_valid(self, form):
-        creator = get_object_or_404(User, email='jaenia@vinta.com.br')
-        form.instance.creator = creator
-        return super().form_valid(form)
-
 
 class BattleDetail(DetailView):
     model = Battle
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
 
 
 class BattleList(ListView):
