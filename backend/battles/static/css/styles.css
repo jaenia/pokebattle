@@ -24,8 +24,6 @@
 
 /* Battle creation styles */
 #battle-form {
-    display: flex;
-    align-items: flex-end;
     margin-top: 32px;
     width: 60%;
 }
@@ -39,7 +37,7 @@
 }
 
 #battle-form button {
-    margin-left: 8px;
+    margin-top: 8px;
     border: 0;
     border-radius: 2px;
     padding: 8px 16px;
