@@ -12,7 +12,7 @@ class BattleForm(forms.ModelForm):
         fields = ['creator', 'opponent']
 
     def __init__(self, *args, **kwargs):
-        self.current_user = kwargs.pop('user')
+        self.current_user = kwargs.pop('current_user')
         super(BattleForm, self).__init__(*args, **kwargs)
         self.fields['opponent'].queryset = User.objects.exclude(email=self.current_user.email)
         self.fields['creator'].initial = self.current_user

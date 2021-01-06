@@ -11,7 +11,7 @@ class BattleCreate(CreateView):
 
     def get_form_kwargs(self):
         kwargs = super(BattleCreate, self).get_form_kwargs()
-        kwargs['user'] = User.objects.first()
+        kwargs['current_user'] = User.objects.first()
         return kwargs
 
 
