@@ -85,7 +85,9 @@ jobs:
           command: npm run test
       - run:
           command: |
-            coverage run --source='.' manage.py test/
+            cd backend;
+            mkdir -p test-reports;
+            coverage run --source='backend' manage.py test --output;
             coverage report
           when: always
       - store_test_results:
