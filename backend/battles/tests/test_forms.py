@@ -15,7 +15,7 @@ class BattleCreateFormTests(TestCase):
             'opponent': opponent.id
         }
 
-        form = BattleForm(data=data, user=current_user)
+        form = BattleForm(data=data, current_user=current_user)
         self.assertTrue(form.is_valid())
 
         battle = form.save()
@@ -29,9 +29,10 @@ class BattleCreateFormTests(TestCase):
             'opponent': current_user.id
         }
 
-        form = BattleForm(data=data, user=current_user)
+        form = BattleForm(data=data, current_user=current_user)
 
         self.assertFalse(form.is_valid())
+        self.assertIn("opponent", form.errors)
 
     def test_cannot_force_a_creator_user(self):
         current_user = mommy.make('users.User')
@@ -43,7 +44,7 @@ class BattleCreateFormTests(TestCase):
             'opponent': opponent.id
         }
 
-        form = BattleForm(data=data, user=current_user)
+        form = BattleForm(data=data, current_user=current_user)
         self.assertTrue(form.is_valid())
 
         battle = form.save()

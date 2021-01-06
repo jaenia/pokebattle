@@ -75,7 +75,7 @@ class BattleCreateViewTests(TestCase):
         response = self.client.post(url, data)
 
         battle = Battle.objects.filter(opponent=opponent).first()
-        self.assertIsNotNone(battle)
+        self.assertEqual(battle.opponent, opponent)
 
         self.assertEqual(response.status_code, 302)
 
