@@ -1,7 +1,7 @@
 from .base import *  # noqa
 
 
-SECRET_KEY = "test"
+SECRET_KEY = "test" #nosec
 
 DATABASES = {
     "default": {"ENGINE": "django.db.backends.sqlite3", "NAME": base_dir_join("db.sqlite3"),}

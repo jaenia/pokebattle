@@ -87,7 +87,7 @@ jobs:
           command: |
             cd backend;
             mkdir -p test-reports;
-            coverage run --source='backend' manage.py test;
+            coverage run --source='.' manage.py test;
             coverage report
           when: always
       - store_test_results:
