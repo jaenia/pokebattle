@@ -6,14 +6,11 @@ from battles.forms import BattleForm
 
 
 class BattleCreateFormTests(TestCase):
-
     def test_create_battle(self):
-        current_user = mommy.make('users.User')
-        opponent = mommy.make('users.User', email='opponent@test.com')
+        current_user = mommy.make("users.User")
+        opponent = mommy.make("users.User", email="opponent@test.com")
 
-        data = {
-            'opponent': opponent.id
-        }
+        data = {"opponent": opponent.id}
 
         form = BattleForm(data=data, current_user=current_user)
         self.assertTrue(form.is_valid())
@@ -23,11 +20,9 @@ class BattleCreateFormTests(TestCase):
         self.assertEqual(battle.opponent, opponent)
 
     def test_cannot_create_battle_with_creator_as_opponent(self):
-        current_user = mommy.make('users.User')
+        current_user = mommy.make("users.User")
 
-        data = {
-            'opponent': current_user.id
-        }
+        data = {"opponent": current_user.id}
 
         form = BattleForm(data=data, current_user=current_user)
 
@@ -35,14 +30,11 @@ class BattleCreateFormTests(TestCase):
         self.assertIn("opponent", form.errors)
 
     def test_cannot_force_a_creator_user(self):
-        current_user = mommy.make('users.User')
-        fake_creator_user = mommy.make('users.User')
-        opponent = mommy.make('users.User')
+        current_user = mommy.make("users.User")
+        fake_creator_user = mommy.make("users.User")
+        opponent = mommy.make("users.User")
 
-        data = {
-            'creator': fake_creator_user.id,
-            'opponent': opponent.id
-        }
+        data = {"creator": fake_creator_user.id, "opponent": opponent.id}
 
         form = BattleForm(data=data, current_user=current_user)
         self.assertTrue(form.is_valid())

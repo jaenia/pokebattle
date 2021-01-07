@@ -6,12 +6,12 @@ from users.models import User
 
 
 class BattleCreate(CreateView):
-    template_name = 'battles/battle_form.html'
+    template_name = "battles/battle_form.html"
     form_class = BattleForm
 
     def get_form_kwargs(self):
         kwargs = super(BattleCreate, self).get_form_kwargs()
-        kwargs['current_user'] = User.objects.first()
+        kwargs["current_user"] = User.objects.first()
         return kwargs
 
 
