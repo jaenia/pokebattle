@@ -57,7 +57,7 @@ jobs:
           command: prospector --messages-only
       # security checks
       - run:
-          command: bandit -r .
+          command: bandit -r . -x "test_*.py,./venv/,./env/,./node_modules/,/data/,/data_files/,/tests/"
       # imports check
       - run:
           command: isort **/*.py --check-only
