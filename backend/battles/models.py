@@ -8,7 +8,7 @@ class Battle(models.Model):
     creator = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="battles_as_creator",
+        related_name="battle_as_creator",
     )
     opponent = models.ForeignKey(User, on_delete=models.CASCADE, related_name="battle_as_opponent")
     created_at = models.DateTimeField(auto_now_add=True, null=True)
