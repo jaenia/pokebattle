@@ -5,10 +5,13 @@ DEBUG = True
 
 HOST = "http://localhost:8000"
 
-SECRET_KEY = "secret"
+SECRET_KEY = "secret"  # nosec
 
 DATABASES = {
-    "default": {"ENGINE": "django.db.backends.sqlite3", "NAME": base_dir_join("db.sqlite3"),}
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": base_dir_join("db.sqlite3"),
+    }
 }
 
 STATIC_ROOT = base_dir_join("staticfiles")
@@ -35,9 +38,15 @@ EMAIL_FILE_PATH = base_dir_join("tmp_email")
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "formatters": {"standard": {"format": "%(levelname)-8s [%(asctime)s] %(name)s: %(message)s"},},
+    "formatters": {
+        "standard": {"format": "%(levelname)-8s [%(asctime)s] %(name)s: %(message)s"},
+    },
     "handlers": {
-        "console": {"level": "DEBUG", "class": "logging.StreamHandler", "formatter": "standard",},
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "standard",
+        },
     },
     "loggers": {
         "": {"handlers": ["console"], "level": "INFO"},

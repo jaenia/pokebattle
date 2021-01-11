@@ -41,7 +41,8 @@ class Command(BaseCommand):
                 sys.exit("Unable to check migrations: cannot connect to database\n")
 
             autodetector = MigrationAutodetector(
-                executor.loader.project_state(), ProjectState.from_apps(apps),
+                executor.loader.project_state(),
+                ProjectState.from_apps(apps),
             )
             changed.update(autodetector.changes(graph=executor.loader.graph).keys())
 
