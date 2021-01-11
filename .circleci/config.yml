@@ -19,7 +19,7 @@ jobs:
           command: sudo chown -R circleci:circleci /usr/local/lib/python3.7/site-packages
       - run:
           command: pip install requests pip-tools --upgrade
-      
+
       - restore_cache:
           keys:
             - v1-pip-cache-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
@@ -47,7 +47,7 @@ jobs:
           key: npm-cache-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - node_modules
-      
+
       - run:
           command: npm run build
       - run:
@@ -57,7 +57,7 @@ jobs:
           command: prospector --messages-only
       # security checks
       - run:
-          command: bandit -r .
+          command: bandit -r . -x "test_*.py,./venv/,./env/,./node_modules/,/data/,/data_files/,/tests/"
       # imports check
       - run:
           command: isort **/*.py --check-only
@@ -81,12 +81,14 @@ jobs:
             REDIS_URL: 'redis://'
       - run:
           command: (cd backend; coverage run manage.py test)
-      - run:
-          command: npm run test
+#      - run:
+#          command: npm run test
       - run:
           command: |
-            mkdir -p test-reports/
-            coverage xml -o test-reports/results.xml
+            cd backend;
+            mkdir -p test-reports;
+            coverage run --source='.' manage.py test;
+            coverage report
           when: always
       - store_test_results:
           path: test-reports

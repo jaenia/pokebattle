@@ -1,5 +1,6 @@
 [bandit]
-exclude: test_*.py,./venv/,./env/,./node_modules/,./cacheback/,./.env,./.venv
-skips: B101,B311
+exclude_dirs: test_*.py,./venv/,./env/,./node_modules/,/data/,/data_files/,/tests/
+skips: B101,B311,B112
 # B101: assert
 # B311: random
+# B112: try-except-continue

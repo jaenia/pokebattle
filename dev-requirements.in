@@ -8,3 +8,4 @@ model-bakery
 pre-commit
 prospector[with-vulture]
 safety
+model-mommy
