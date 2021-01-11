@@ -81,8 +81,8 @@ jobs:
             REDIS_URL: 'redis://'
       - run:
           command: (cd backend; coverage run manage.py test)
-      - run:
-          command: npm run test
+#      - run:
+#          command: npm run test
       - run:
           command: |
             cd backend;
