@@ -17,7 +17,7 @@ class BattleForm(forms.ModelForm):
             "creator_pokemon_3",
             "opponent_pokemon_1",
             "opponent_pokemon_2",
-            "opponent_pokemon_3"
+            "opponent_pokemon_3",
         ]
 
     def __init__(self, *args, **kwargs):

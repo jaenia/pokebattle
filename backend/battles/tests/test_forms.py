@@ -36,7 +36,6 @@ class BattleCreateFormTests(TestCase):
 
     def test_cannot_create_battle_with_creator_as_opponent(self):
         current_user = mommy.make("users.User")
-        opponent = mommy.make("users.User", email="opponent@test.com")
 
         creator_pokemon_1 = mommy.make("pokemons.Pokemon", poke_id=1)
         creator_pokemon_2 = mommy.make("pokemons.Pokemon", poke_id=2)
