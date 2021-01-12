@@ -9,7 +9,16 @@ class BattleForm(forms.ModelForm):
 
     class Meta:
         model = Battle
-        fields = ["creator", "opponent"]
+        fields = [
+            "creator",
+            "opponent",
+            "creator_pokemon_1",
+            "creator_pokemon_2",
+            "creator_pokemon_3",
+            "opponent_pokemon_1",
+            "opponent_pokemon_2",
+            "opponent_pokemon_3"
+        ]
 
     def __init__(self, *args, **kwargs):
         self.current_user = kwargs.pop("current_user")
