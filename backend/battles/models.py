@@ -59,7 +59,7 @@ class Battle(models.Model):
     )
 
     def __str__(self):
-        return f"Battle #{self.battle.id}: {self.creator.email} X {self.opponent.email}"
+        return f"Battle #{self.id}: {self.creator.email} X {self.opponent.email}"
 
     def get_absolute_url(self):
         return reverse("battles:battle_detail", kwargs={"pk": self.pk})
