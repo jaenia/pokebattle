@@ -7,10 +7,8 @@ def forwards_func(apps, schema_editor):
     Battle = apps.get_model("battles", "Battle")
     BattleTeam = apps.get_model("battles", "BattleTeam")
 
-    db_alias = schema_editor.connection.alias
-
-    for battle_team in BattleTeam.objects.using(db_alias).all():
-        Battle.objects.using(db_alias).filter(
+    for battle_team in BattleTeam.objects.all():
+        Battle.objects.filter(
             id=battle_team.battle.id,
         ).update(
             creator_pokemon_1=battle_team.pokemon_1,
@@ -23,10 +21,8 @@ def reverse_func(apps, schema_editor):
     Battle = apps.get_model("battles", "Battle")
     BattleTeam = apps.get_model("battles", "BattleTeam")
 
-    db_alias = schema_editor.connection.alias
-
-    for battle_team in BattleTeam.objects.using(db_alias).all():
-        Battle.objects.using(db_alias).filter(
+    for battle_team in BattleTeam.objects.all():
+        Battle.objects.filter(
             id=battle_team.battle.id,
         ).update(
             creator_pokemon_1=None,
