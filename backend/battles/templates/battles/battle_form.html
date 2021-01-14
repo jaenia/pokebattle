@@ -8,6 +8,12 @@
     {% csrf_token %}
   <label for="{{ form.opponent.id_for_label }}">Opponent:</label>
   {{ form.opponent }}
-  <button type="submit">Select</button>
+  <label for="{{ form.creator_pokemon_1_input.id_for_label }}">Pokemon 1:</label>
+  {{ form.creator_pokemon_1_input }}
+  <label for="{{ form.creator_pokemon_2_input.id_for_label }}">Pokemon 2:</label>
+  {{ form.creator_pokemon_2_input }}
+  <label for="{{ form.creator_pokemon_3_input.id_for_label }}">Pokemon 3:</label>
+  {{ form.creator_pokemon_3_input }}
+  <button type="submit">Create Battle</button>
 </form>
 <a class="nav-link" href="{% url 'battles:battle_list' %}">Back to list</a>

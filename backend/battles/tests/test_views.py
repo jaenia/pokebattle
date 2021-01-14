@@ -61,7 +61,16 @@ class BattleCreateViewTests(TestCase):
         mommy.make("users.User")
         opponent = mommy.make("users.User")
 
-        data = {"opponent": opponent.id}
+        pokemon1 = mommy.make("pokemons.Pokemon", poke_id=1)
+        pokemon2 = mommy.make("pokemons.Pokemon", poke_id=2)
+        pokemon3 = mommy.make("pokemons.Pokemon", poke_id=3)
+
+        data = {
+            "opponent": opponent.id,
+            "creator_pokemon_1_input": pokemon1.id,
+            "creator_pokemon_2_input": pokemon2.id,
+            "creator_pokemon_3_input": pokemon3.id,
+        }
         url = reverse("battles:battle_create")
 
         battle = Battle.objects.filter(opponent=opponent).first()
@@ -77,7 +86,16 @@ class BattleCreateViewTests(TestCase):
     def test_cannot_create_battle_with_same_user_as_opponent_and_creator(self):
         current_user = mommy.make("users.User")
 
-        data = {"opponent": current_user.id}
+        pokemon1 = mommy.make("pokemons.Pokemon", poke_id=1)
+        pokemon2 = mommy.make("pokemons.Pokemon", poke_id=2)
+        pokemon3 = mommy.make("pokemons.Pokemon", poke_id=3)
+
+        data = {
+            "opponent": current_user.id,
+            "creator_pokemon_1_input": pokemon1.id,
+            "creator_pokemon_2_input": pokemon2.id,
+            "creator_pokemon_3_input": pokemon3.id,
+        }
         url = reverse("battles:battle_create")
         response = self.client.post(url, data)
 
