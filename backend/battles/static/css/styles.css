@@ -30,8 +30,18 @@
     width: 60%;
 }
 
+#battle-form .field-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+#battle-form .field-error li {
+    list-style: none;
+    color: #B00020;
+}
+
 #battle-form label {
-    margin-top: 16px;
+    margin-top: 8px;
 }
 
 #battle-form select {

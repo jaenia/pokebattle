@@ -16,13 +16,12 @@ class BattleCreateFormTests(TestCase):
 
         data = {
             "opponent": opponent.id,
-            "creator_pokemon_1_input": pokemon1.id,
-            "creator_pokemon_2_input": pokemon2.id,
-            "creator_pokemon_3_input": pokemon3.id,
+            "creator_pokemon_1_input": pokemon1.poke_id,
+            "creator_pokemon_2_input": pokemon2.poke_id,
+            "creator_pokemon_3_input": pokemon3.poke_id,
         }
 
         form = BattleForm(data=data, current_user=current_user)
-        print(form.errors)
         self.assertTrue(form.is_valid())
 
         battle = form.save()
@@ -41,9 +40,9 @@ class BattleCreateFormTests(TestCase):
 
         data = {
             "opponent": current_user.id,
-            "creator_pokemon_1_input": pokemon1.id,
-            "creator_pokemon_2_input": pokemon2.id,
-            "creator_pokemon_3_input": pokemon3.id,
+            "creator_pokemon_1_input": pokemon1.poke_id,
+            "creator_pokemon_2_input": pokemon2.poke_id,
+            "creator_pokemon_3_input": pokemon3.poke_id,
         }
 
         form = BattleForm(data=data, current_user=current_user)
@@ -63,9 +62,9 @@ class BattleCreateFormTests(TestCase):
         data = {
             "creator": fake_creator_user.id,
             "opponent": opponent.id,
-            "creator_pokemon_1_input": pokemon1.id,
-            "creator_pokemon_2_input": pokemon2.id,
-            "creator_pokemon_3_input": pokemon3.id,
+            "creator_pokemon_1_input": pokemon1.poke_id,
+            "creator_pokemon_2_input": pokemon2.poke_id,
+            "creator_pokemon_3_input": pokemon3.poke_id,
         }
 
         form = BattleForm(data=data, current_user=current_user)
@@ -73,3 +72,23 @@ class BattleCreateFormTests(TestCase):
 
         battle = form.save()
         self.assertEqual(battle.creator, current_user)
+
+    def test_cannot_create_battle_if_pokemon_does_not_exist_in_api(self):
+        current_user = mommy.make("users.User")
+        opponent = mommy.make("users.User", email="opponent@test.com")
+
+        pokemon1 = mommy.make("pokemons.Pokemon", poke_id=0)
+        pokemon2 = mommy.make("pokemons.Pokemon", poke_id=1)
+        pokemon3 = mommy.make("pokemons.Pokemon", poke_id=2)
+
+        data = {
+            "opponent": opponent.id,
+            "creator_pokemon_1_input": pokemon1.poke_id,
+            "creator_pokemon_2_input": pokemon2.poke_id,
+            "creator_pokemon_3_input": pokemon3.poke_id,
+        }
+
+        form = BattleForm(data=data, current_user=current_user)
+        self.assertFalse(form.is_valid())
+
+        self.assertIn("creator_pokemon_1_input", form.errors)

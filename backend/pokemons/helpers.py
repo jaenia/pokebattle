@@ -14,11 +14,7 @@ def save_pokemon(poke_id):
     hit_points = data["stats"][5]["base_stat"]
 
     pokemon = Pokemon.objects.create(
-        poke_id=poke_id,
-        name=data["name"],
-        attack=attack,
-        defense=defense,
-        hit_points=hit_points
+        poke_id=poke_id, name=data["name"], attack=attack, defense=defense, hit_points=hit_points
     )
 
     return pokemon

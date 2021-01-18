@@ -67,9 +67,9 @@ class BattleCreateViewTests(TestCase):
 
         data = {
             "opponent": opponent.id,
-            "creator_pokemon_1_input": pokemon1.id,
-            "creator_pokemon_2_input": pokemon2.id,
-            "creator_pokemon_3_input": pokemon3.id,
+            "creator_pokemon_1_input": pokemon1.poke_id,
+            "creator_pokemon_2_input": pokemon2.poke_id,
+            "creator_pokemon_3_input": pokemon3.poke_id,
         }
         url = reverse("battles:battle_create")
 
@@ -92,9 +92,9 @@ class BattleCreateViewTests(TestCase):
 
         data = {
             "opponent": current_user.id,
-            "creator_pokemon_1_input": pokemon1.id,
-            "creator_pokemon_2_input": pokemon2.id,
-            "creator_pokemon_3_input": pokemon3.id,
+            "creator_pokemon_1_input": pokemon1.poke_id,
+            "creator_pokemon_2_input": pokemon2.poke_id,
+            "creator_pokemon_3_input": pokemon3.poke_id,
         }
         url = reverse("battles:battle_create")
         response = self.client.post(url, data)

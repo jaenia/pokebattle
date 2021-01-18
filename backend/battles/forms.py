@@ -1,5 +1,4 @@
 from django import forms
-from django.core.exceptions import ValidationError
 
 from battles.models import Battle
 from pokemons.helpers import save_pokemon
@@ -39,25 +38,28 @@ class BattleForm(forms.ModelForm):
         self.fields["creator"].initial = self.current_user
 
     def clean_creator_pokemon_1(self):
-        data = self.cleaned_data.get('creator_pokemon_1_input')
+        data = self.cleaned_data.get("creator_pokemon_1_input")
         if not pokemon_exists(data):
-            raise ValidationError('Sorry, this pokemon was not found.')
-        data = save_pokemon(data)
-        return data
+            self.add_error("creator_pokemon_1_input", "Sorry, this pokemon was not found")
+            return None
+        pokemon = save_pokemon(data)
+        return pokemon
 
     def clean_creator_pokemon_2(self):
-        data = self.cleaned_data.get('creator_pokemon_2_input')
+        data = self.cleaned_data.get("creator_pokemon_2_input")
         if not pokemon_exists(data):
-            raise ValidationError('Sorry, this pokemon was not found.')
-        data = save_pokemon(data)
-        return data
+            self.add_error("creator_pokemon_2_input", "Sorry, this pokemon was not found")
+            return None
+        pokemon = save_pokemon(data)
+        return pokemon
 
     def clean_creator_pokemon_3(self):
-        data = self.cleaned_data.get('creator_pokemon_3_input')
+        data = self.cleaned_data.get("creator_pokemon_3_input")
         if not pokemon_exists(data):
-            raise ValidationError('Sorry, this pokemon was not found.')
-        data = save_pokemon(data)
-        return data
+            self.add_error("creator_pokemon_3_input", "Sorry, this pokemon was not found")
+            return None
+        pokemon = save_pokemon(data)
+        return pokemon
 
     def clean(self):
         cleaned_data = super().clean()
