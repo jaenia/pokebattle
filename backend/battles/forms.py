@@ -10,6 +10,10 @@ from users.models import User
 class BattleForm(forms.ModelForm):
     creator = forms.ModelChoiceField(required=False, queryset=User.objects.all())
 
+    """
+    These input fields are used to get the Pokemons' ids in the form.
+    We need to validate that selected Pokemons exist in PokeAPI before creating the battle.
+    """
     creator_pokemon_1_input = forms.IntegerField(required=True)
     creator_pokemon_2_input = forms.IntegerField(required=True)
     creator_pokemon_3_input = forms.IntegerField(required=True)
