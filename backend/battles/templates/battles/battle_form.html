@@ -6,7 +6,7 @@
 <h1>Create a new Pokebattle</h1>
 <form id="battle-form" action="{% url 'battles:battle_create' %}" method="post">
     {% csrf_token %}
-  {{ form.non_field_errors }}
+  <span class="field-error">{{ form.non_field_errors }}</span>
   <div class="field-wrapper">
     <label for="{{ form.opponent.id_for_label }}">Opponent:</label>
     {{ form.opponent }}

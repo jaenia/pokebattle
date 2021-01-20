@@ -18,3 +18,21 @@ def save_pokemon(poke_id):
     )
 
     return pokemon
+
+
+def get_pokemons_points_sum(poke_ids):
+    points_sum = 0
+    for poke_id in poke_ids:
+        pokemon = Pokemon.objects.filter(poke_id=poke_id).first()
+
+        if pokemon:
+            points_sum += pokemon.attack + pokemon.defense + pokemon.hit_points
+        else:
+            pokemon = get_pokemon(poke_id)
+            points_sum += (
+                pokemon["stats"][1]["base_stat"]
+                + pokemon["stats"][2]["base_stat"]
+                + pokemon["stats"][0]["base_stat"]
+            )
+
+    return points_sum
