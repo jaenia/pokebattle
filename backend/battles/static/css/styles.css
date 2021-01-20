@@ -24,8 +24,24 @@
 
 /* Battle creation styles */
 #battle-form {
+    display: flex;
+    flex-direction: column;
     margin-top: 32px;
     width: 60%;
+}
+
+#battle-form .field-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+#battle-form .field-error li {
+    list-style: none;
+    color: #B00020;
+}
+
+#battle-form label {
+    margin-top: 8px;
 }
 
 #battle-form select {
@@ -37,11 +53,11 @@
 }
 
 #battle-form button {
-    margin-top: 8px;
+    margin-top: 16px;
     border: 0;
     border-radius: 2px;
     padding: 8px 16px;
-    width: 100px;
+    width: 200px;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -6,8 +6,27 @@
 <h1>Create a new Pokebattle</h1>
 <form id="battle-form" action="{% url 'battles:battle_create' %}" method="post">
     {% csrf_token %}
-  <label for="{{ form.opponent.id_for_label }}">Opponent:</label>
-  {{ form.opponent }}
-  <button type="submit">Select</button>
+  {{ form.non_field_errors }}
+  <div class="field-wrapper">
+    <label for="{{ form.opponent.id_for_label }}">Opponent:</label>
+    {{ form.opponent }}
+    <span class="field-error">{{ form.opponent.errors }}</span>
+  </div>
+  <div class="field-wrapper">
+    <label for="{{ form.creator_pokemon_1_input.id_for_label }}">Pokemon 1:</label>
+    {{ form.creator_pokemon_1_input }}
+    <span class="field-error">{{ form.creator_pokemon_1_input.errors }}</span>
+  </div>
+  <div class="field-wrapper">
+    <label for="{{ form.creator_pokemon_2_input.id_for_label }}">Pokemon 2:</label>
+    {{ form.creator_pokemon_2_input }}
+    <span class="field-error">{{ form.creator_pokemon_2_input.errors }}</span>
+  </div>
+  <div class="field-wrapper">
+    <label for="{{ form.creator_pokemon_3_input.id_for_label }}">Pokemon 3:</label>
+    {{ form.creator_pokemon_3_input }}
+    <span class="field-error">{{ form.creator_pokemon_3_input.errors }}</span>
+  </div>
+  <button type="submit">Create Battle</button>
 </form>
 <a class="nav-link" href="{% url 'battles:battle_list' %}">Back to list</a>
