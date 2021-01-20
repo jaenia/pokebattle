@@ -1,9 +1,12 @@
+import responses
+
 from django.test import TestCase, Client
 from django.urls import reverse
 
 from model_mommy import mommy
 
 from battles.models import Battle
+from common.constants import POKEAPI_BASE_URL
 
 
 class BattleListViewTests(TestCase):
@@ -57,19 +60,51 @@ class BattleCreateViewTests(TestCase):
     def setUp(self):
         self.client = Client()
 
+    @responses.activate
     def test_battle_create(self):
+        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/1", status=200)
+        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/2", status=200)
+        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/3", status=200)
+
+        responses.add(
+            responses.GET,
+            f"{POKEAPI_BASE_URL}pokemon/1",
+            status=200,
+            json={
+                "id": 1,
+                "name": "pokemon1",
+                "stats": [{"base_stat": 45}, {"base_stat": 49}, {"base_stat": 49}],
+            },
+        )
+        responses.add(
+            responses.GET,
+            f"{POKEAPI_BASE_URL}pokemon/2",
+            status=200,
+            json={
+                "id": 2,
+                "name": "pokemon2",
+                "stats": [{"base_stat": 50}, {"base_stat": 64}, {"base_stat": 64}],
+            },
+        )
+        responses.add(
+            responses.GET,
+            f"{POKEAPI_BASE_URL}pokemon/3",
+            status=200,
+            json={
+                "id": 3,
+                "name": "pokemon3",
+                "stats": [{"base_stat": 55}, {"base_stat": 69}, {"base_stat": 69}],
+            },
+        )
+
         mommy.make("users.User")
         opponent = mommy.make("users.User")
 
-        pokemon1 = mommy.make("pokemons.Pokemon", poke_id=1)
-        pokemon2 = mommy.make("pokemons.Pokemon", poke_id=2)
-        pokemon3 = mommy.make("pokemons.Pokemon", poke_id=3)
-
         data = {
             "opponent": opponent.id,
-            "creator_pokemon_1_input": pokemon1.poke_id,
-            "creator_pokemon_2_input": pokemon2.poke_id,
-            "creator_pokemon_3_input": pokemon3.poke_id,
+            "creator_pokemon_1_input": 1,
+            "creator_pokemon_2_input": 2,
+            "creator_pokemon_3_input": 3,
         }
         url = reverse("battles:battle_create")
 
@@ -83,18 +118,50 @@ class BattleCreateViewTests(TestCase):
 
         self.assertEqual(response.status_code, 302)
 
+    @responses.activate
     def test_cannot_create_battle_with_same_user_as_opponent_and_creator(self):
-        current_user = mommy.make("users.User")
+        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/1", status=200)
+        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/2", status=200)
+        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/3", status=200)
 
-        pokemon1 = mommy.make("pokemons.Pokemon", poke_id=1)
-        pokemon2 = mommy.make("pokemons.Pokemon", poke_id=2)
-        pokemon3 = mommy.make("pokemons.Pokemon", poke_id=3)
+        responses.add(
+            responses.GET,
+            f"{POKEAPI_BASE_URL}pokemon/1",
+            status=200,
+            json={
+                "id": 1,
+                "name": "pokemon1",
+                "stats": [{"base_stat": 45}, {"base_stat": 49}, {"base_stat": 49}],
+            },
+        )
+        responses.add(
+            responses.GET,
+            f"{POKEAPI_BASE_URL}pokemon/2",
+            status=200,
+            json={
+                "id": 2,
+                "name": "pokemon2",
+                "stats": [{"base_stat": 50}, {"base_stat": 64}, {"base_stat": 64}],
+            },
+        )
+        responses.add(
+            responses.GET,
+            f"{POKEAPI_BASE_URL}pokemon/3",
+            status=200,
+            json={
+                "id": 3,
+                "name": "pokemon3",
+                "stats": [{"base_stat": 55}, {"base_stat": 69}, {"base_stat": 69}],
+            },
+        )
+
+        current_user = mommy.make("users.User")
 
         data = {
             "opponent": current_user.id,
-            "creator_pokemon_1_input": pokemon1.poke_id,
-            "creator_pokemon_2_input": pokemon2.poke_id,
-            "creator_pokemon_3_input": pokemon3.poke_id,
+            "creator_pokemon_1_input": 1,
+            "creator_pokemon_2_input": 2,
+            "creator_pokemon_3_input": 3,
         }
         url = reverse("battles:battle_create")
         response = self.client.post(url, data)

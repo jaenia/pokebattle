@@ -1,7 +1,6 @@
 import requests
 
-
-POKEAPI_BASE_URL = "https://pokeapi.co/api/v2/"
+from common.constants import POKEAPI_BASE_URL
 
 
 def pokemon_exists(pokemon_id):
