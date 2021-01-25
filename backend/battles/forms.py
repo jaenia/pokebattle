@@ -73,7 +73,7 @@ class BattleForm(forms.ModelForm):
             pokemon_points_sum = get_pokemons_points_sum(
                 [creator_pokemon_1_input, creator_pokemon_2_input, creator_pokemon_3_input]
             )
-        except PokemonNotFound: # noqa #nosec
+        except PokemonNotFound:  # noqa #nosec
             pass
 
         if pokemon_points_sum > 600:
