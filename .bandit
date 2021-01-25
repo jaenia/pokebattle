@@ -4,4 +4,3 @@ skips: B101,B311,B112
 # B101: assert
 # B311: random
 # B112: try-except-continue
-# B110: try_except_pass
