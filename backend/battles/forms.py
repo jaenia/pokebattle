@@ -68,10 +68,12 @@ class BattleForm(forms.ModelForm):
         creator_pokemon_3_input = cleaned_data.get("creator_pokemon_3_input")
 
         pokemon_points_sum = 0
-        if self.is_valid():
+        try:
             pokemon_points_sum = get_pokemons_points_sum(
                 [creator_pokemon_1_input, creator_pokemon_2_input, creator_pokemon_3_input]
             )
+        except:  # noqa
+            pass
 
         if pokemon_points_sum > 600:
             raise forms.ValidationError("Pokemons' points sum cannot be more than 600")
