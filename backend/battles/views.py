@@ -16,7 +16,7 @@ class BattleCreate(CreateView):
         return kwargs
 
     def get_success_url(self):
-        return reverse('battles:battle_update_opponent_pokemons', kwargs={'pk': self.object.pk})
+        return reverse("battles:battle_update_opponent_pokemons", kwargs={"pk": self.object.pk})
 
 
 class BattleUpdateOpponentPokemons(UpdateView):

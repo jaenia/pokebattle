@@ -117,7 +117,9 @@ class BattleCreateViewTests(TestCase):
         self.assertEqual(battle.opponent, opponent)
 
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse("battles:battle_update_opponent_pokemons", args=[battle.pk]))
+        self.assertRedirects(
+            response, reverse("battles:battle_update_opponent_pokemons", args=[battle.pk])
+        )
 
     @responses.activate
     def test_cannot_create_battle_with_same_user_as_opponent_and_creator(self):

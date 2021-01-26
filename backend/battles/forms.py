@@ -99,6 +99,7 @@ class BattleOpponentPokemonsForm(forms.ModelForm):
     These input fields are used to get the Pokemons' ids in the form.
     We need to validate that selected Pokemons exist in PokeAPI before creating the battle.
     """
+
     opponent_pokemon_1_input = forms.IntegerField(required=True)
     opponent_pokemon_2_input = forms.IntegerField(required=True)
     opponent_pokemon_3_input = forms.IntegerField(required=True)
