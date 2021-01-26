@@ -180,6 +180,12 @@ class BattleCreateFormTests(TestCase):
 
         responses.add(
             responses.GET,
+            f"{POKEAPI_BASE_URL}pokemon/0",
+            status=404,
+            json={"error": "not found"},
+        )
+        responses.add(
+            responses.GET,
             f"{POKEAPI_BASE_URL}pokemon/1",
             status=200,
             json={
@@ -213,3 +219,55 @@ class BattleCreateFormTests(TestCase):
         self.assertFalse(form.is_valid())
 
         self.assertIn("creator_pokemon_1_input", form.errors)
+
+    @responses.activate
+    def test_cannot_create_battle_if_pokemon_points_sum_more_than_600(self):
+        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/1", status=200)
+        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/2", status=200)
+        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/3", status=200)
+
+        responses.add(
+            responses.GET,
+            f"{POKEAPI_BASE_URL}pokemon/1",
+            status=200,
+            json={
+                "id": 1,
+                "name": "pokemon1",
+                "stats": [{"base_stat": 100}, {"base_stat": 100}, {"base_stat": 100}],
+            },
+        )
+        responses.add(
+            responses.GET,
+            f"{POKEAPI_BASE_URL}pokemon/2",
+            status=200,
+            json={
+                "id": 2,
+                "name": "pokemon2",
+                "stats": [{"base_stat": 100}, {"base_stat": 100}, {"base_stat": 100}],
+            },
+        )
+        responses.add(
+            responses.GET,
+            f"{POKEAPI_BASE_URL}pokemon/3",
+            status=200,
+            json={
+                "id": 3,
+                "name": "pokemon3",
+                "stats": [{"base_stat": 100}, {"base_stat": 100}, {"base_stat": 100}],
+            },
+        )
+
+        current_user = mommy.make("users.User")
+        opponent = mommy.make("users.User", email="opponent@test.com")
+
+        data = {
+            "opponent": opponent.id,
+            "creator_pokemon_1_input": 1,
+            "creator_pokemon_2_input": 2,
+            "creator_pokemon_3_input": 3,
+        }
+
+        form = BattleForm(data=data, current_user=current_user)
+        self.assertFalse(form.is_valid())
+
+        self.assertEqual(["Pokemons' points sum cannot be more than 600"], form.errors["__all__"])
