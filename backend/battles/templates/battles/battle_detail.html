@@ -5,8 +5,15 @@
 
 <h1>Pokebattle #{{ object.id }}</h1>
 <p id="battle-creator"><strong>Creator:</strong> {{ object.creator }}</p>
-<p><strong>Opponent:</strong> {{ object.opponent }}</p>
-<p><strong>Creator's Pokemon 1:</strong> {{ object.creator_pokemon_1.name }}</p>
-<p><strong>Creator's Pokemon 2:</strong> {{ object.creator_pokemon_2.name  }}</p>
-<p><strong>Creator's Pokemon 3:</strong> {{ object.creator_pokemon_3.name  }}</p>
+<p id="battle-opponent"><strong>Opponent:</strong> {{ object.opponent }}</p>
+
+<h2 class="heading-team">Creator's Team</h2>
+<p><strong>Pokemon 1:</strong> {{ object.creator_pokemon_1.name }}</p>
+<p><strong>Pokemon 2:</strong> {{ object.creator_pokemon_2.name  }}</p>
+<p><strong>Pokemon 3:</strong> {{ object.creator_pokemon_3.name  }}</p>
+
+<h2 class="heading-team">Opponent's Team</h2>
+<p><strong>Pokemon 1:</strong> {{ object.opponent_pokemon_1.name  }}</p>
+<p><strong>Pokemon 2:</strong> {{ object.opponent_pokemon_2.name  }}</p>
+<p><strong>Pokemon 3:</strong> {{ object.opponent_pokemon_3.name  }}</p>
 <a class="nav-link" href="{% url 'battles:battle_list' %}">Back to list</a>

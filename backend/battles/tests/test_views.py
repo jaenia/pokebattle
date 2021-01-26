@@ -170,3 +170,81 @@ class BattleCreateViewTests(TestCase):
         response = self.client.post(url, data)
 
         self.assertEqual(response.status_code, 200)
+
+
+class BattleUpdateOpponentPokemonsViewTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+
+    @responses.activate
+    def test_opponent_select_pokemons(self):
+        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/1", status=200)
+        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/2", status=200)
+        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/3", status=200)
+
+        responses.add(
+            responses.GET,
+            f"{POKEAPI_BASE_URL}pokemon/1",
+            status=200,
+            json={
+                "id": 1,
+                "name": "pokemon1",
+                "stats": [{"base_stat": 45}, {"base_stat": 49}, {"base_stat": 49}],
+            },
+        )
+        responses.add(
+            responses.GET,
+            f"{POKEAPI_BASE_URL}pokemon/2",
+            status=200,
+            json={
+                "id": 2,
+                "name": "pokemon2",
+                "stats": [{"base_stat": 50}, {"base_stat": 64}, {"base_stat": 64}],
+            },
+        )
+        responses.add(
+            responses.GET,
+            f"{POKEAPI_BASE_URL}pokemon/3",
+            status=200,
+            json={
+                "id": 3,
+                "name": "pokemon3",
+                "stats": [{"base_stat": 55}, {"base_stat": 69}, {"base_stat": 69}],
+            },
+        )
+
+        creator = mommy.make("users.User")
+        opponent = mommy.make("users.User")
+
+        pokemon_1 = mommy.make("pokemons.Pokemon")
+        pokemon_2 = mommy.make("pokemons.Pokemon")
+        pokemon_3 = mommy.make("pokemons.Pokemon")
+
+        battle = mommy.make(
+            "battles.Battle",
+            creator=creator,
+            opponent=opponent,
+            creator_pokemon_1=pokemon_1,
+            creator_pokemon_2=pokemon_2,
+            creator_pokemon_3=pokemon_3,
+        )
+
+        data = {
+            "opponent_pokemon_1_input": 3,
+            "opponent_pokemon_2_input": 2,
+            "opponent_pokemon_3_input": 1,
+        }
+
+        self.assertIsNone(battle.opponent_pokemon_1)
+        self.assertIsNone(battle.opponent_pokemon_2)
+        self.assertIsNone(battle.opponent_pokemon_3)
+
+        url = reverse("battles:battle_update_opponent_pokemons", args=[battle.id])
+        response = self.client.post(url, data)
+
+        battle = Battle.objects.get(pk=battle.id)
+        self.assertEqual(battle.opponent_pokemon_1.poke_id, 3)
+        self.assertEqual(battle.opponent_pokemon_2.poke_id, 2)
+        self.assertEqual(battle.opponent_pokemon_3.poke_id, 1)
+
+        self.assertEqual(response.status_code, 302)

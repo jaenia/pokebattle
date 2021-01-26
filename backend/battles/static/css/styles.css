@@ -69,3 +69,12 @@
 #battle-creator {
     margin-top: 32px;
 }
+
+.heading-team {
+    margin-top: 32px;
+}
+
+#battle-creator,
+#battle-opponent {
+    font-size: 24px;
+}
