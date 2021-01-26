@@ -92,3 +92,28 @@ class BattleForm(forms.ModelForm):
             self.cleaned_data.get("creator_pokemon_3_input")
         )
         return super(BattleForm, self).save(commit)
+
+
+class BattleOpponentPokemonsForm(forms.ModelForm):
+    """
+    These input fields are used to get the Pokemons' ids in the form.
+    We need to validate that selected Pokemons exist in PokeAPI before creating the battle.
+    """
+    opponent_pokemon_1_input = forms.IntegerField(required=True)
+    opponent_pokemon_2_input = forms.IntegerField(required=True)
+    opponent_pokemon_3_input = forms.IntegerField(required=True)
+
+    opponent_pokemon_1 = forms.ModelChoiceField(required=False, queryset=Pokemon.objects.all())
+    opponent_pokemon_2 = forms.ModelChoiceField(required=False, queryset=Pokemon.objects.all())
+    opponent_pokemon_3 = forms.ModelChoiceField(required=False, queryset=Pokemon.objects.all())
+
+    class Meta:
+        model = Battle
+        fields = [
+            "opponent_pokemon_1_input",
+            "opponent_pokemon_2_input",
+            "opponent_pokemon_3_input",
+            "opponent_pokemon_1",
+            "opponent_pokemon_2",
+            "opponent_pokemon_3",
+        ]
