@@ -4,6 +4,10 @@
 #
 #    pip-compile --output-file=dev-requirements.txt dev-requirements.in
 #
+amqp==5.0.3
+    # via
+    #   -r requirements.txt
+    #   kombu
 appdirs==1.4.4
     # via
     #   black
@@ -15,29 +19,94 @@ astroid==2.4.1
     #   pylint-celery
     #   pylint-flask
     #   requirements-detector
+backcall==0.2.0
+    # via
+    #   -r requirements.txt
+    #   ipython
 bandit==1.7.0
     # via -r dev-requirements.in
+billiard==3.6.3.0
+    # via
+    #   -r requirements.txt
+    #   celery
 black==20.8b1
     # via -r dev-requirements.in
+brotlipy==0.7.0
+    # via -r requirements.txt
+celery[redis]==5.0.5
+    # via -r requirements.txt
 certifi==2020.12.5
-    # via requests
+    # via
+    #   -r requirements.txt
+    #   requests
+    #   sentry-sdk
+cffi==1.14.4
+    # via
+    #   -r requirements.txt
+    #   brotlipy
 cfgv==3.2.0
     # via pre-commit
 chardet==4.0.0
     # via requests
+click-didyoumean==0.0.3
+    # via
+    #   -r requirements.txt
+    #   celery
+click-plugins==1.1.1
+    # via
+    #   -r requirements.txt
+    #   celery
+click-repl==0.1.6
+    # via
+    #   -r requirements.txt
+    #   celery
 click==7.1.2
     # via
+    #   -r requirements.txt
     #   black
+    #   celery
+    #   click-didyoumean
+    #   click-plugins
+    #   click-repl
     #   safety
-coverage==5.3.1
+coverage==5.4
     # via -r dev-requirements.in
+decorator==4.4.2
+    # via
+    #   -r requirements.txt
+    #   ipython
+defusedxml==0.6.0
+    # via
+    #   -r requirements.txt
+    #   odfpy
+diff-match-patch==20200713
+    # via
+    #   -r requirements.txt
+    #   django-import-export
 distlib==0.3.1
     # via virtualenv
+dj-database-url==0.5.0
+    # via -r requirements.txt
+django-import-export==2.5.0
+    # via -r requirements.txt
+django-js-reverse==0.9.1
+    # via -r requirements.txt
+django-log-request-id==1.6.0
+    # via -r requirements.txt
+django-model-utils==4.1.1
+    # via -r requirements.txt
 django-naomi==0.8
     # via -r dev-requirements.in
+django-webpack-loader==0.7.0
+    # via -r requirements.txt
 django==2.2.17
     # via
     #   -r dev-requirements.in
+    #   -r requirements.txt
+    #   django-import-export
+    #   django-js-reverse
+    #   django-log-request-id
+    #   django-model-utils
     #   django-naomi
     #   model-bakery
     #   model-mommy
@@ -45,6 +114,10 @@ dodgy==0.2.1
     # via prospector
 dparse==0.5.1
     # via safety
+et-xmlfile==1.0.1
+    # via
+    #   -r requirements.txt
+    #   openpyxl
 filelock==3.0.12
     # via virtualenv
 flake8-polyfill==1.0.2
@@ -55,16 +128,40 @@ gitdb==4.0.5
     # via gitpython
 gitpython==3.1.12
     # via bandit
+gunicorn==20.0.4
+    # via -r requirements.txt
 identify==1.5.13
     # via pre-commit
 idna==2.10
     # via requests
+ipython-genutils==0.2.0
+    # via
+    #   -r requirements.txt
+    #   traitlets
+ipython==7.19.0
+    # via -r requirements.txt
 isort==4.3.21
     # via
     #   -r dev-requirements.in
     #   pylint
+jdcal==1.4.1
+    # via
+    #   -r requirements.txt
+    #   openpyxl
+jedi==0.18.0
+    # via
+    #   -r requirements.txt
+    #   ipython
+kombu==5.0.2
+    # via
+    #   -r requirements.txt
+    #   celery
 lazy-object-proxy==1.4.3
     # via astroid
+markuppy==1.14
+    # via
+    #   -r requirements.txt
+    #   tablib
 mccabe==0.6.1
     # via
     #   flake8
@@ -78,30 +175,71 @@ mypy-extensions==0.4.3
     # via black
 nodeenv==1.5.0
     # via pre-commit
+odfpy==1.4.1
+    # via
+    #   -r requirements.txt
+    #   tablib
+openpyxl==3.0.6
+    # via
+    #   -r requirements.txt
+    #   tablib
 packaging==20.8
     # via
     #   dparse
     #   safety
+parso==0.8.1
+    # via
+    #   -r requirements.txt
+    #   jedi
 pathspec==0.8.1
     # via black
 pbr==5.5.1
     # via stevedore
 pep8-naming==0.10.0
     # via prospector
+pexpect==4.8.0
+    # via
+    #   -r requirements.txt
+    #   ipython
+pickleshare==0.7.5
+    # via
+    #   -r requirements.txt
+    #   ipython
 pre-commit==2.9.3
     # via -r dev-requirements.in
+prompt-toolkit==3.0.14
+    # via
+    #   -r requirements.txt
+    #   click-repl
+    #   ipython
 prospector[with-vulture]==1.3.1
     # via -r dev-requirements.in
+psutil==5.8.0
+    # via -r requirements.txt
+psycopg2==2.8.6
+    # via -r requirements.txt
+ptyprocess==0.7.0
+    # via
+    #   -r requirements.txt
+    #   pexpect
 pycodestyle==2.6.0
     # via
     #   flake8
     #   prospector
+pycparser==2.20
+    # via
+    #   -r requirements.txt
+    #   cffi
 pydocstyle==5.1.1
     # via prospector
 pyflakes==2.2.0
     # via
     #   flake8
     #   prospector
+pygments==2.7.4
+    # via
+    #   -r requirements.txt
+    #   ipython
 pylint-celery==0.3
     # via prospector
 pylint-django==2.1.0
@@ -123,14 +261,25 @@ pylint==2.5.3
     #   pylint-plugin-utils
 pyparsing==2.4.7
     # via packaging
+python-decouple==3.4
+    # via -r requirements.txt
 pytz==2020.5
-    # via django
-pyyaml==5.3.1
     # via
+    #   -r requirements.txt
+    #   celery
+    #   django
+pyyaml==5.4.1
+    # via
+    #   -r requirements.txt
     #   bandit
     #   dparse
     #   pre-commit
     #   prospector
+    #   tablib
+redis==3.5.3
+    # via
+    #   -r requirements.txt
+    #   celery
 regex==2020.11.13
     # via black
 requests==2.25.1
@@ -143,40 +292,75 @@ responses==0.12.1
     # via -r dev-requirements.in
 safety==1.10.3
     # via -r dev-requirements.in
+sentry-sdk==0.19.5
+    # via -r requirements.txt
 setoptconf==0.2.0
     # via prospector
 six==1.15.0
     # via
+    #   -r requirements.txt
     #   astroid
     #   bandit
+    #   click-repl
     #   responses
     #   virtualenv
-smmap==3.0.4
+smmap==3.0.5
     # via gitdb
-snowballstemmer==2.0.0
+snowballstemmer==2.1.0
     # via pydocstyle
 sqlparse==0.4.1
-    # via django
+    # via
+    #   -r requirements.txt
+    #   django
 stevedore==3.3.0
     # via bandit
+tablib[html,ods,xls,xlsx,yaml]==3.0.0
+    # via
+    #   -r requirements.txt
+    #   django-import-export
 toml==0.10.2
     # via
     #   black
     #   dparse
     #   pre-commit
     #   pylint
+traitlets==5.0.5
+    # via
+    #   -r requirements.txt
+    #   ipython
 typed-ast==1.4.2
     # via black
 typing-extensions==3.7.4.3
     # via black
-urllib3==1.26.2
+urllib3==1.26.3
     # via
+    #   -r requirements.txt
     #   requests
     #   responses
+    #   sentry-sdk
+vine==5.0.0
+    # via
+    #   -r requirements.txt
+    #   amqp
+    #   celery
 virtualenv==20.4.0
     # via pre-commit
+wcwidth==0.2.5
+    # via
+    #   -r requirements.txt
+    #   prompt-toolkit
+whitenoise==5.2.0
+    # via -r requirements.txt
 wrapt==1.12.1
     # via astroid
+xlrd==2.0.1
+    # via
+    #   -r requirements.txt
+    #   tablib
+xlwt==1.3.0
+    # via
+    #   -r requirements.txt
+    #   tablib
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools

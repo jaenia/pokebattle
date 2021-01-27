@@ -4,7 +4,7 @@
 #
 #    pip-compile --output-file=requirements.txt requirements.in
 #
-amqp>=5.0.2
+amqp>=5.0.3
     # via kombu
 backcall>=0.2.0
     # via ipython
@@ -15,9 +15,13 @@ brotlipy>=0.7.0
 celery[redis]>=5.0.5
     # via -r requirements.in
 certifi>=2020.12.5
-    # via sentry-sdk
+    # via
+    #   requests
+    #   sentry-sdk
 cffi>=1.14.4
     # via brotlipy
+chardet>=4.0.0
+    # via requests
 click-didyoumean>=0.0.3
     # via celery
 click-plugins>=1.1.1
@@ -59,6 +63,8 @@ et-xmlfile>=1.0.1
     # via openpyxl
 gunicorn>=20.0.4
     # via -r requirements.in
+idna>=2.10
+    # via requests
 ipython-genutils>=0.2.0
     # via traitlets
 ipython>=7.19.0
@@ -81,7 +87,7 @@ pexpect>=4.8.0
     # via ipython
 pickleshare>=0.7.5
     # via ipython
-prompt-toolkit>=3.0.10
+prompt-toolkit>=3.0.14
     # via
     #   click-repl
     #   ipython
@@ -101,10 +107,12 @@ pytz>=2020.5
     # via
     #   celery
     #   django
-pyyaml>=5.3.1
+pyyaml>=5.4.1
     # via tablib
 redis>=3.5.3
     # via celery
+requests>=2.25.1
+    # via -r requirements.in
 sentry-sdk>=0.19.5
     # via -r requirements.in
 six>=1.15.0
@@ -115,8 +123,10 @@ tablib[html,ods,xls,xlsx,yaml]>=3.0.0
     # via django-import-export
 traitlets>=5.0.5
     # via ipython
-urllib3>=1.26.2
-    # via sentry-sdk
+urllib3>=1.26.3
+    # via
+    #   requests
+    #   sentry-sdk
 vine>=5.0.0
     # via
     #   amqp
