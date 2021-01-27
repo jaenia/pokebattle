@@ -92,3 +92,79 @@ class BattleForm(forms.ModelForm):
             self.cleaned_data.get("creator_pokemon_3_input")
         )
         return super(BattleForm, self).save(commit)
+
+
+class BattleOpponentPokemonsForm(forms.ModelForm):
+    """
+    These input fields are used to get the Pokemons' ids in the form.
+    We need to validate that selected Pokemons exist in PokeAPI before creating the battle.
+    """
+
+    opponent_pokemon_1_input = forms.IntegerField(required=True)
+    opponent_pokemon_2_input = forms.IntegerField(required=True)
+    opponent_pokemon_3_input = forms.IntegerField(required=True)
+
+    opponent_pokemon_1 = forms.ModelChoiceField(required=False, queryset=Pokemon.objects.all())
+    opponent_pokemon_2 = forms.ModelChoiceField(required=False, queryset=Pokemon.objects.all())
+    opponent_pokemon_3 = forms.ModelChoiceField(required=False, queryset=Pokemon.objects.all())
+
+    class Meta:
+        model = Battle
+        fields = [
+            "opponent_pokemon_1_input",
+            "opponent_pokemon_2_input",
+            "opponent_pokemon_3_input",
+            "opponent_pokemon_1",
+            "opponent_pokemon_2",
+            "opponent_pokemon_3",
+        ]
+
+    def clean_opponent_pokemon_1_input(self):
+        data = self.cleaned_data.get("opponent_pokemon_1_input")
+        if not pokemon_exists(data):
+            self.add_error("opponent_pokemon_1_input", "Sorry, this pokemon was not found")
+        return data
+
+    def clean_opponent_pokemon_2_input(self):
+        data = self.cleaned_data.get("opponent_pokemon_2_input")
+        if not pokemon_exists(data):
+            self.add_error("opponent_pokemon_2_input", "Sorry, this pokemon was not found")
+        return data
+
+    def clean_opponent_pokemon_3_input(self):
+        data = self.cleaned_data.get("opponent_pokemon_3_input")
+        if not pokemon_exists(data):
+            self.add_error("opponent_pokemon_3_input", "Sorry, this pokemon was not found")
+        return data
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        opponent_pokemon_1_input = cleaned_data.get("opponent_pokemon_1_input")
+        opponent_pokemon_2_input = cleaned_data.get("opponent_pokemon_2_input")
+        opponent_pokemon_3_input = cleaned_data.get("opponent_pokemon_3_input")
+
+        pokemon_points_sum = 0
+        try:
+            pokemon_points_sum = get_pokemons_points_sum(
+                [opponent_pokemon_1_input, opponent_pokemon_2_input, opponent_pokemon_3_input]
+            )
+        except PokemonNotFound:
+            pass
+
+        if pokemon_points_sum > 600:
+            raise forms.ValidationError("Pokemons' points sum cannot be more than 600")
+
+        return cleaned_data
+
+    def save(self, commit=True):
+        self.instance.opponent_pokemon_1 = save_pokemon(
+            self.cleaned_data.get("opponent_pokemon_1_input")
+        )
+        self.instance.opponent_pokemon_2 = save_pokemon(
+            self.cleaned_data.get("opponent_pokemon_2_input")
+        )
+        self.instance.opponent_pokemon_3 = save_pokemon(
+            self.cleaned_data.get("opponent_pokemon_3_input")
+        )
+        return super(BattleOpponentPokemonsForm, self).save(commit)

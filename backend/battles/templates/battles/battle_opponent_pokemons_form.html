@@ -1,0 +1,29 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/global.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
+
+<h1>Hey, {{ object.opponent.email }}!</h1>
+<p>{{ object.creator.email }} has invited you for a Pokebattle. Choose your Pokemons below:</p>
+<form id="battle-form" action="{% url 'battles:battle_update_opponent_pokemons' object.id %}" method="post">
+    {% csrf_token %}
+  <span class="field-error">{{ form.non_field_errors }}</span>
+  <div class="field-wrapper">
+    <label for="{{ form.opponent_pokemon_1_input.id_for_label }}">Pokemon 1:</label>
+    {{ form.opponent_pokemon_1_input }}
+    <span class="field-error">{{ form.opponent_pokemon_1_input.errors }}</span>
+  </div>
+  <div class="field-wrapper">
+    <label for="{{ form.opponent_pokemon_2_input.id_for_label }}">Pokemon 2:</label>
+    {{ form.opponent_pokemon_2_input }}
+    <span class="field-error">{{ form.opponent_pokemon_2_input.errors }}</span>
+  </div>
+  <div class="field-wrapper">
+    <label for="{{ form.opponent_pokemon_3_input.id_for_label }}">Pokemon 3:</label>
+    {{ form.opponent_pokemon_3_input }}
+    <span class="field-error">{{ form.opponent_pokemon_3_input.errors }}</span>
+  </div>
+  <button type="submit">Battle!</button>
+</form>
+<a class="nav-link" href="{% url 'battles:battle_list' %}">Back to list</a>
+
