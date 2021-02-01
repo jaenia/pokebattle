@@ -29,7 +29,7 @@ def get_battle_result(battle):
     pokemon_pairs = [
         (battle.creator_pokemon_1, battle.opponent_pokemon_1),
         (battle.creator_pokemon_2, battle.opponent_pokemon_2),
-        (battle.creator_pokemon_3, battle.opponent_pokemon_3)
+        (battle.creator_pokemon_3, battle.opponent_pokemon_3),
     ]
 
     for creator_pokemon, opponent_pokemon in pokemon_pairs:
