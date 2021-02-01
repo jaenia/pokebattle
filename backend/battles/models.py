@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 
+from battles.helpers import get_battle_result
 from pokemons.models import Pokemon
 from users.models import User
 
@@ -57,6 +58,10 @@ class Battle(models.Model):
         blank=True,
         null=True,
     )
+
+    @property
+    def winner(self):
+        return get_battle_result(self)
 
     def __str__(self):
         return f"Battle #{self.id}: {self.creator.email} X {self.opponent.email}"
