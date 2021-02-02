@@ -26,26 +26,18 @@ def get_battle_result(battle):
     creator_victory_points = 0
     opponent_victory_points = 0
 
-    # first round
-    first_winner_pokemon = compare_pokemons(battle.creator_pokemon_1, battle.opponent_pokemon_1)
-    if first_winner_pokemon == battle.creator_pokemon_1:
-        creator_victory_points += 1
-    else:
-        opponent_victory_points += 1
+    pokemon_pairs = [
+        (battle.creator_pokemon_1, battle.opponent_pokemon_1),
+        (battle.creator_pokemon_2, battle.opponent_pokemon_2),
+        (battle.creator_pokemon_3, battle.opponent_pokemon_3),
+    ]
 
-    # second round
-    second_winner_pokemon = compare_pokemons(battle.creator_pokemon_2, battle.opponent_pokemon_2)
-    if second_winner_pokemon == battle.creator_pokemon_2:
-        creator_victory_points += 1
-    else:
-        opponent_victory_points += 1
-
-    # third round
-    third_winner_pokemon = compare_pokemons(battle.creator_pokemon_3, battle.opponent_pokemon_3)
-    if third_winner_pokemon == battle.creator_pokemon_3:
-        creator_victory_points += 1
-    else:
-        opponent_victory_points += 1
+    for creator_pokemon, opponent_pokemon in pokemon_pairs:
+        winner = compare_pokemons(creator_pokemon, opponent_pokemon)
+        if winner == creator_pokemon:
+            creator_victory_points += 1
+        else:
+            opponent_victory_points += 1
 
     if creator_victory_points > opponent_victory_points:  # noqa
         return battle.creator
