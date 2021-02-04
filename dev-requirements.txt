@@ -99,6 +99,12 @@ django-model-utils==4.1.1
     # via -r requirements.txt
 django-naomi==0.8
     # via -r dev-requirements.in
+django-render-block==0.8.1
+    # via
+    #   -r requirements.txt
+    #   django-templated-email
+django-templated-email==2.3.0
+    # via -r requirements.txt
 django-webpack-loader==0.7.0
     # via -r requirements.txt
 django==2.2.18
@@ -110,6 +116,7 @@ django==2.2.18
     #   django-log-request-id
     #   django-model-utils
     #   django-naomi
+    #   django-render-block
     #   model-bakery
     #   model-mommy
 dodgy==0.2.1
@@ -142,7 +149,7 @@ ipython-genutils==0.2.0
     # via
     #   -r requirements.txt
     #   traitlets
-ipython==7.19.0
+ipython==7.20.0
     # via -r requirements.txt
 isort==4.3.21
     # via
@@ -267,6 +274,10 @@ pyparsing==2.4.7
     # via packaging
 python-decouple==3.4
     # via -r requirements.txt
+python-http-client==3.3.1
+    # via
+    #   -r requirements.txt
+    #   sendgrid
 pytz==2021.1
     # via
     #   -r requirements.txt
@@ -297,6 +308,8 @@ responses==0.12.1
     # via -r dev-requirements.in
 safety==1.10.3
     # via -r dev-requirements.in
+sendgrid==6.5.0
+    # via -r requirements.txt
 sentry-sdk==0.19.5
     # via -r requirements.txt
 setoptconf==0.2.0
@@ -307,6 +320,7 @@ six==1.15.0
     #   astroid
     #   bandit
     #   click-repl
+    #   django-templated-email
     #   responses
     #   virtualenv
 smmap==3.0.5
@@ -317,6 +331,10 @@ sqlparse==0.4.1
     # via
     #   -r requirements.txt
     #   django
+starkbank-ecdsa==1.1.0
+    # via
+    #   -r requirements.txt
+    #   sendgrid
 stevedore==3.3.0
     # via bandit
 tablib[html,ods,xls,xlsx,yaml]==3.0.0

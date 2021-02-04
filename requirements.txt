@@ -72,7 +72,7 @@ idna>=2.10
     # via requests
 ipython-genutils>=0.2.0
     # via traitlets
-ipython>=7.19.0
+ipython>=7.20.0
     # via -r requirements.in
 jdcal>=1.4.1
     # via openpyxl
@@ -108,8 +108,6 @@ pygments>=2.7.4
     # via ipython
 python-decouple>=3.4
     # via -r requirements.in
-python-http-client>=3.3.1
-    # via sendgrid
 pytz>=2021.1
     # via
     #   celery
@@ -120,8 +118,6 @@ redis>=3.5.3
     # via celery
 requests>=2.25.1
     # via -r requirements.in
-sendgrid>=6.5.0
-    # via -r requirements.in
 sentry-sdk>=0.19.5
     # via -r requirements.in
 six>=1.15.0
@@ -130,8 +126,6 @@ six>=1.15.0
     #   django-templated-email
 sqlparse>=0.4.1
     # via django
-starkbank-ecdsa>=1.1.0
-    # via sendgrid
 tablib[html,ods,xls,xlsx,yaml]>=3.0.0
     # via django-import-export
 traitlets>=5.0.5

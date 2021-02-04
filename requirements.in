@@ -15,5 +15,4 @@ psutil
 ipython
 sentry-sdk
 requests
-sendgrid==6.5.0
 django-templated-email==2.3.0
