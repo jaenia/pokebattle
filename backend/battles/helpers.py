@@ -1,3 +1,7 @@
+from django.conf import settings
+from templated_email import send_templated_mail
+
+
 def compare_pokemons(pokemon_1, pokemon_2):
     pokemon_1_victory_points = 0
     pokemon_2_victory_points = 0
@@ -43,3 +47,23 @@ def get_battle_result(battle):
         return battle.creator
     else:
         return battle.opponent
+
+
+def send_battle_result(battle):
+    send_templated_mail(
+        template_name="battle_result",
+        from_email=settings.EMAIL_ADDRESS,
+        recipient_list=[battle.creator.email, battle.opponent.email],
+        context={
+            "battle_creator": battle.creator.email,
+            "battle_opponent": battle.opponent.email,
+            "battle_winner": battle.winner.email,
+            "battle_id": battle.id,
+            "battle_creator_pokemon_1": battle.creator_pokemon_1.name,
+            "battle_creator_pokemon_2": battle.creator_pokemon_2.name,
+            "battle_creator_pokemon_3": battle.creator_pokemon_3.name,
+            "battle_opponent_pokemon_1": battle.opponent_pokemon_1.name,
+            "battle_opponent_pokemon_2": battle.opponent_pokemon_2.name,
+            "battle_opponent_pokemon_3": battle.opponent_pokemon_3.name,
+        },
+    )

@@ -1,0 +1,24 @@
+{% block subject %}PokeBattle Result{% endblock %}
+{% block html %}
+    <p>Hello, trainers,</p>
+
+    <p>{{ battle_creator }} challenged {{ battle_opponent }} for a PokeBattle and now we have the results!</p>
+
+    <p>The teams were:</p>
+    <p>Team of {{ battle_creator }}</p>
+    <ul>
+        <li>{{ battle_creator_pokemon_1 }}</li>
+        <li>{{ battle_creator_pokemon_2 }}</li>
+        <li>{{ battle_creator_pokemon_3 }}</li>
+    </ul>
+    <p>Team of {{ battle_opponent }}</p>
+    <ul>
+        <li>{{ battle_opponent_pokemon_1 }}</li>
+        <li>{{ battle_opponent_pokemon_2 }}</li>
+        <li>{{ battle_opponent_pokemon_3 }}</li>
+    </ul>
+
+    <p>The winner of PokeBattle #{{ battle_id}} is {{ battle_winner }}!</p>
+
+    <p>Congrats!</p>
+{% endblock %}
