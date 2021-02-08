@@ -1,3 +1,5 @@
+from unittest import mock
+
 import responses
 
 from django.test import TestCase, Client
@@ -177,7 +179,8 @@ class BattleUpdateOpponentPokemonsViewTests(TestCase):
         self.client = Client()
 
     @responses.activate
-    def test_opponent_select_pokemons(self):
+    @mock.patch("battles.views.send_battle_result")
+    def test_opponent_select_pokemons(self, send_mock):
         responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/1", status=200)
         responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/2", status=200)
         responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/3", status=200)
@@ -247,4 +250,5 @@ class BattleUpdateOpponentPokemonsViewTests(TestCase):
         self.assertEqual(battle.opponent_pokemon_2.poke_id, 2)
         self.assertEqual(battle.opponent_pokemon_3.poke_id, 1)
 
+        send_mock.assert_called_with(battle)
         self.assertEqual(response.status_code, 302)

@@ -2,6 +2,7 @@ from django.urls import reverse
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
 from battles.forms import BattleForm, BattleOpponentPokemonsForm
+from battles.helpers import send_battle_result
 from battles.models import Battle
 from users.models import User
 
@@ -23,6 +24,10 @@ class BattleUpdateOpponentPokemons(UpdateView):
     model = Battle
     form_class = BattleOpponentPokemonsForm
     template_name = "battles/battle_opponent_pokemons_form.html"
+
+    def post(self, request, *args, **kwargs):
+        send_battle_result(self.get_object())
+        return super(BattleUpdateOpponentPokemons, self).post(request, *args, **kwargs)
 
 
 class BattleDetail(DetailView):
