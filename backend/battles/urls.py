@@ -13,4 +13,5 @@ urlpatterns = [
         views.BattleUpdateOpponentPokemons.as_view(),
         name="battle_update_opponent_pokemons",
     ),
+    path("settled", views.SettledBattlesList.as_view(), name="settled_battles_list"),
 ]
