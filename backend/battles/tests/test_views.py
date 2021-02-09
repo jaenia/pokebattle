@@ -292,7 +292,6 @@ class SettledBattlesListViewTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
 
-        result_ids = [battle.id for battle in response.context_data["object_list"]]
-        self.assertEqual(len(result_ids), 1)
-        self.assertTrue(battle_2.id in result_ids)
-        self.assertFalse(battle_1.id in result_ids)
+        battles = response.context_data["object_list"]
+        self.assertIn(battle_2, battles)
+        self.assertNotIn(battle_1, battles)
