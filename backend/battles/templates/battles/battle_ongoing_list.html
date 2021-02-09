@@ -1,0 +1,14 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/global.css' %}" />
+
+<h1>Battles</h1>
+<ul id="battles-list">
+  {% for battle in object_list %}
+  <li><a href="{% url 'battles:battle_detail' battle.id %}">Pokebattle {{ battle.id }}</a></li>
+  {% empty %}
+    <li>No battles yet.</li>
+  {% endfor %}
+</ul>
+<a class="nav-link" href="{% url 'battles:battle_list' %}">Back to all battles</a>
