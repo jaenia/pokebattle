@@ -45,3 +45,10 @@ class SettledBattlesList(ListView):
 
     def get_queryset(self):
         return Battle.objects.settled()
+
+
+class OngoingBattlesList(ListView):
+    model = Battle
+
+    def get_queryset(self):
+        return Battle.objects.ongoing()

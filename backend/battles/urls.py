@@ -14,4 +14,5 @@ urlpatterns = [
         name="battle_update_opponent_pokemons",
     ),
     path("settled", views.SettledBattlesList.as_view(), name="settled_battles_list"),
+    path("ongoing", views.OngoingBattlesList.as_view(), name="ongoing_battles_list"),
 ]

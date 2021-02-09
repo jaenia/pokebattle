@@ -5,7 +5,6 @@ from battles.models import Battle
 
 
 class BattleQuerySetTests(TestCase):
-
     def test_get_settled_battles(self):
         creator = mommy.make("users.User")
         opponent = mommy.make("users.User")
