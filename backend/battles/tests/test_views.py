@@ -252,3 +252,46 @@ class BattleUpdateOpponentPokemonsViewTests(TestCase):
 
         send_mock.assert_called_with(battle)
         self.assertEqual(response.status_code, 302)
+
+
+class SettledBattlesListViewTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+
+    def test_list_settled_battles(self):
+        creator = mommy.make("users.User")
+        opponent = mommy.make("users.User")
+
+        pokemon_1 = mommy.make("pokemons.Pokemon")
+        pokemon_2 = mommy.make("pokemons.Pokemon")
+        pokemon_3 = mommy.make("pokemons.Pokemon")
+
+        battle_1 = mommy.make(
+            "battles.Battle",
+            creator=creator,
+            opponent=opponent,
+            creator_pokemon_1=pokemon_1,
+            creator_pokemon_2=pokemon_2,
+            creator_pokemon_3=pokemon_3,
+        )
+
+        battle_2 = mommy.make(
+            "battles.Battle",
+            creator=creator,
+            opponent=opponent,
+            creator_pokemon_1=pokemon_1,
+            creator_pokemon_2=pokemon_2,
+            creator_pokemon_3=pokemon_3,
+            opponent_pokemon_1=pokemon_3,
+            opponent_pokemon_2=pokemon_2,
+            opponent_pokemon_3=pokemon_1,
+        )
+
+        url = reverse("battles:settled_battles_list")
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 200)
+
+        battles = response.context_data["object_list"]
+        self.assertIn(battle_2, battles)
+        self.assertNotIn(battle_1, battles)

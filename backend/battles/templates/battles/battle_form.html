@@ -1,6 +1,7 @@
 {% load static %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/global.css' %}" />
 
 <h1>Create a new Pokebattle</h1>
 <form id="battle-form" action="{% url 'battles:battle_create' %}" method="post">

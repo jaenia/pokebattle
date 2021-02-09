@@ -6,6 +6,15 @@ from pokemons.models import Pokemon
 from users.models import User
 
 
+class BattleQuerySet(models.QuerySet):
+    def settled(self):
+        return self.filter(
+            opponent_pokemon_1__isnull=False,
+            opponent_pokemon_2__isnull=False,
+            opponent_pokemon_3__isnull=False,
+        )
+
+
 class Battle(models.Model):
     creator = models.ForeignKey(
         User,
@@ -58,6 +67,8 @@ class Battle(models.Model):
         blank=True,
         null=True,
     )
+
+    objects = BattleQuerySet().as_manager()
 
     @property
     def winner(self):

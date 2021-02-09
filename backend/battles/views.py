@@ -1,3 +1,4 @@
+from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
@@ -26,8 +27,9 @@ class BattleUpdateOpponentPokemons(UpdateView):
     template_name = "battles/battle_opponent_pokemons_form.html"
 
     def post(self, request, *args, **kwargs):
+        super(BattleUpdateOpponentPokemons, self).post(request, *args, **kwargs)
         send_battle_result(self.get_object())
-        return super(BattleUpdateOpponentPokemons, self).post(request, *args, **kwargs)
+        return redirect(self.get_success_url())
 
 
 class BattleDetail(DetailView):
@@ -36,3 +38,10 @@ class BattleDetail(DetailView):
 
 class BattleList(ListView):
     model = Battle
+
+
+class SettledBattlesList(ListView):
+    model = Battle
+
+    def get_queryset(self):
+        return Battle.objects.settled()
