@@ -3,6 +3,15 @@
     margin-top: 16px;
 }
 
+.navigation {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.navigation a {
+    margin-left: 24px;
+}
+
 /* Battles list styles */
 #battles-list {
     list-style: none;

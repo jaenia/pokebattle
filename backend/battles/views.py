@@ -42,6 +42,15 @@ class BattleList(ListView):
 
 class SettledBattlesList(ListView):
     model = Battle
+    template_name = "battles/battle_settled_list.html"
 
     def get_queryset(self):
         return Battle.objects.settled()
+
+
+class OngoingBattlesList(ListView):
+    model = Battle
+    template_name = "battles/battle_ongoing_list.html"
+
+    def get_queryset(self):
+        return Battle.objects.ongoing()
