@@ -4,6 +4,11 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/global.css' %}" />
 
 <h1>Battles</h1>
+<nav class="navigation">
+  <a class="nav-link" href="{% url 'battles:battle_create' %}">Add new</a>
+  <a class="nav-link" href="{% url 'battles:settled_battles_list' %}">Settled</a>
+  <a class="nav-link" href="{% url 'battles:ongoing_battles_list' %}">Ongoing</a>
+</nav>
 <ul id="battles-list">
   {% for battle in object_list %}
   <li><a href="{% url 'battles:battle_detail' battle.id %}">Pokebattle {{ battle.id }}</a></li>
@@ -11,4 +16,3 @@
     <li>No battles yet.</li>
   {% endfor %}
 </ul>
-<a class="nav-link" href="{% url 'battles:battle_create' %}">Add new</a>
