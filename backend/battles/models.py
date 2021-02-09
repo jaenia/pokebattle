@@ -14,6 +14,13 @@ class BattleQuerySet(models.QuerySet):
             opponent_pokemon_3__isnull=False,
         )
 
+    def ongoing(self):
+        return self.filter(
+            opponent_pokemon_1__isnull=True,
+            opponent_pokemon_2__isnull=True,
+            opponent_pokemon_3__isnull=True,
+        )
+
 
 class Battle(models.Model):
     creator = models.ForeignKey(
