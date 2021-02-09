@@ -44,8 +44,4 @@ class SettledBattlesList(ListView):
     model = Battle
 
     def get_queryset(self):
-        return Battle.objects.filter(
-            opponent_pokemon_1__isnull=False,
-            opponent_pokemon_2__isnull=False,
-            opponent_pokemon_3__isnull=False,
-        )
+        return Battle.objects.settled()
