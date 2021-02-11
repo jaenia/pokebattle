@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render  # noqa
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse
 from django.views.generic import CreateView
 
 from users.forms import SignUpForm

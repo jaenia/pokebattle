@@ -4,7 +4,6 @@ from users.forms import SignUpForm
 
 
 class SignUpFormTests(TestCase):
-
     def test_create_user(self):
         data = {
             "email": "test@test.com",
