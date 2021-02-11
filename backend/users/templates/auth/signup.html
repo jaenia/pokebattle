@@ -1,6 +1,6 @@
 {% load static %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/estilos.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/global.css' %}" />
 
 <h1>Sign up to PokeBattle</h1>
@@ -13,14 +13,9 @@
     <span class="field-error">{{ form.email.errors }}</span>
   </div>
   <div class="field-wrapper">
-    <label for="{{ form.password1.id_for_label }}">Password:</label>
-    {{ form.password1 }}
-    <span class="field-error">{{ form.password1.errors }}</span>
-  </div>
-  <div class="field-wrapper">
-    <label for="{{ form.password2.id_for_label }}">Confirm password:</label>
-    {{ form.password2 }}
-    <span class="field-error">{{ form.password2.errors }}</span>
+    <label for="{{ form.password.id_for_label }}">Password:</label>
+    {{ form.password }}
+    <span class="field-error">{{ form.password.errors }}</span>
   </div>
   <button type="submit">Create Account</button>
 </form>
