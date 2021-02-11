@@ -39,6 +39,11 @@ class BattleDetail(DetailView):
 class BattleList(ListView):
     model = Battle
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['logged_user'] = self.request.user
+        return context
+
 
 class SettledBattlesList(ListView):
     model = Battle
