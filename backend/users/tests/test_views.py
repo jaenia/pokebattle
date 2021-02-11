@@ -22,12 +22,10 @@ class SignUpViewTests(TestCase):
         self.assertIsNone(user)
 
         response = self.client.post(url, data)
+        self.assertRedirects(response, reverse("battles:battle_list"))
 
         user = User.objects.filter(email="test@test.com").first()
         self.assertEqual(user.email, "test@test.com")
-
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse("battles:battle_list"))
 
         logged_user = auth.get_user(self.client)
         self.assertEqual(logged_user, user)
