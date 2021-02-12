@@ -5,7 +5,7 @@
 
 <div class="header">
   <h1>Battles</h1>
-  <p>{{ logged_user }}</p>
+  <p>{{ request.user }}</p>
 </div>
 <nav class="navigation">
   <a class="nav-link" href="{% url 'battles:battle_create' %}">Add new</a>
