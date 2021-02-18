@@ -305,7 +305,9 @@ class SettledBattlesListViewTests(TestCase):
 
 class OngoingBattlesListViewTests(TestCase):
     def setUp(self):
+        self.user = User.objects.create_user(email="test@test.com", password="password123")
         self.client = Client()
+        self.client.force_login(self.user)
 
     def test_list_settled_battles(self):
         creator = mommy.make("users.User")
