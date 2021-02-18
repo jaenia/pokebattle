@@ -6,7 +6,6 @@ from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from battles.forms import BattleForm, BattleOpponentPokemonsForm
 from battles.helpers import send_battle_result
 from battles.models import Battle
-from users.models import User
 
 
 class BattleCreate(LoginRequiredMixin, CreateView):
@@ -16,7 +15,7 @@ class BattleCreate(LoginRequiredMixin, CreateView):
 
     def get_form_kwargs(self):
         kwargs = super(BattleCreate, self).get_form_kwargs()
-        kwargs["current_user"] = User.objects.first()
+        kwargs["current_user"] = self.request.user
         return kwargs
 
     def get_success_url(self):
