@@ -1,5 +1,6 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
 from battles.forms import BattleForm, BattleOpponentPokemonsForm
@@ -36,9 +37,9 @@ class BattleDetail(DetailView):
     model = Battle
 
 
-class BattleList(ListView):
+class BattleList(LoginRequiredMixin, ListView):
     model = Battle
-
+    login_url = reverse_lazy("users:user_login")
 
 class SettledBattlesList(ListView):
     model = Battle

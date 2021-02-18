@@ -9,11 +9,14 @@ from model_mommy import mommy
 
 from battles.models import Battle
 from common.constants import POKEAPI_BASE_URL
+from users.models import User
 
 
 class BattleListViewTests(TestCase):
     def setUp(self):
+        self.user = User.objects.create_user(email="test@test.com", password="password123")
         self.client = Client()
+        self.client.force_login(self.user)
 
     def test_performance(self):
         mommy.make("battles.Battle")
@@ -21,7 +24,7 @@ class BattleListViewTests(TestCase):
 
         url = reverse("battles:battle_list")
 
-        with self.assertNumQueries(1):
+        with self.assertNumQueries(3):
             response = self.client.get(url)
 
         self.assertEqual(response.context["object_list"].count(), 2)
@@ -29,7 +32,7 @@ class BattleListViewTests(TestCase):
         mommy.make("battles.Battle")
         mommy.make("battles.Battle")
 
-        with self.assertNumQueries(1):
+        with self.assertNumQueries(3):
             response = self.client.get(url)
 
         self.assertEqual(response.context["object_list"].count(), 4)
