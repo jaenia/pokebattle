@@ -55,3 +55,21 @@ class LoginViewTests(TestCase):
         response = self.client.post(url, data)
 
         self.assertEqual(response.status_code, 200)
+
+
+class LogoutViewTests(TestCase):
+    def setUp(self):
+        self.client = Client()
+
+    def test_logout_with_success(self):
+        data = {"username": "test@test.com", "password": "password"}
+
+        User.objects.create_user(email="test@test.com", password="password")
+
+        url = reverse("users:user_login")
+        self.client.post(url, data)
+
+        url = reverse("users:user_logout")
+        response = self.client.get(url)
+
+        self.assertRedirects(response, reverse("users:user_login"))
