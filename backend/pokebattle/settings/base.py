@@ -3,7 +3,7 @@
 import os
 
 from decouple import config  # noqa
-
+from django.urls import reverse_lazy
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -21,6 +21,8 @@ DEBUG = True
 ADMINS = (("Admin", "jaeniaps@gmail.com"),)
 
 AUTH_USER_MODEL = "users.User"
+
+LOGIN_REDIRECT_URL = reverse_lazy("battles:battle_list")
 
 ALLOWED_HOSTS = []
 

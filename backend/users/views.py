@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login
-from django.shortcuts import render  # noqa
+from django.contrib.auth.views import LoginView
+from django.shortcuts import render, redirect  # noqa
 from django.urls import reverse
 from django.views.generic import CreateView
 
@@ -23,3 +24,8 @@ class SignUp(CreateView):
 
     def get_success_url(self):
         return reverse("battles:battle_list")
+
+
+class Login(LoginView):
+    template_name = "auth/login.html"
+    redirect_authenticated_user = True
