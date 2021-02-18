@@ -1,0 +1,21 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/global.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/users_styles.css' %}" />
+
+<h1>Sign up to PokeBattle</h1>
+<form id="signup-form" action="{% url 'users:user_signup' %}" method="post">
+    {% csrf_token %}
+  <span class="field-error">{{ form.non_field_errors }}</span>
+  <div class="field-wrapper">
+    <label for="{{ form.email.id_for_label }}">E-mail address:</label>
+    {{ form.email }}
+    <span class="field-error">{{ form.email.errors }}</span>
+  </div>
+  <div class="field-wrapper">
+    <label for="{{ form.password.id_for_label }}">Password:</label>
+    {{ form.password }}
+    <span class="field-error">{{ form.password.errors }}</span>
+  </div>
+  <button type="submit">Create Account</button>
+</form>

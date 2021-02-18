@@ -1,0 +1,34 @@
+/* Sign up form */
+#signup-form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 32px;
+    width: 40%;
+}
+
+#signup-form .field-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+#signup-form .field-error li {
+    list-style: none;
+    color: #B00020;
+}
+
+#signup-form label {
+    margin-top: 8px;
+}
+
+#signup-form button {
+    margin-top: 16px;
+    border: 0;
+    border-radius: 2px;
+    padding: 8px 16px;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #222222;
+    color: #fff;
+}
