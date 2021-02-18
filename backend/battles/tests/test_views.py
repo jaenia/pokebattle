@@ -261,10 +261,11 @@ class BattleUpdateOpponentPokemonsViewTests(TestCase):
 
 class SettledBattlesListViewTests(TestCase):
     def setUp(self):
+        self.user = User.objects.create_user(email="test@test.com", password="password123")
         self.client = Client()
+        self.client.force_login(self.user)
 
     def test_list_settled_battles(self):
-        creator = mommy.make("users.User")
         opponent = mommy.make("users.User")
 
         pokemon_1 = mommy.make("pokemons.Pokemon")
@@ -273,7 +274,7 @@ class SettledBattlesListViewTests(TestCase):
 
         battle_1 = mommy.make(
             "battles.Battle",
-            creator=creator,
+            creator=self.user,
             opponent=opponent,
             creator_pokemon_1=pokemon_1,
             creator_pokemon_2=pokemon_2,
@@ -282,7 +283,7 @@ class SettledBattlesListViewTests(TestCase):
 
         battle_2 = mommy.make(
             "battles.Battle",
-            creator=creator,
+            creator=self.user,
             opponent=opponent,
             creator_pokemon_1=pokemon_1,
             creator_pokemon_2=pokemon_2,

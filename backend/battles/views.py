@@ -45,9 +45,10 @@ class BattleList(LoginRequiredMixin, ListView):
     login_url = reverse_lazy("users:user_login")
 
 
-class SettledBattlesList(ListView):
+class SettledBattlesList(LoginRequiredMixin, ListView):
     model = Battle
     template_name = "battles/battle_settled_list.html"
+    login_url = reverse_lazy("users:user_login")
 
     def get_queryset(self):
         return Battle.objects.settled()
