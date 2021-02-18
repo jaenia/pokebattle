@@ -41,6 +41,7 @@ class LoginViewTests(TestCase):
 
         url = reverse("users:user_login")
         response = self.client.post(url, data)
+        self.assertRedirects(response, reverse("battles:battle_list"))
 
         logged_user = auth.get_user(self.client)
         self.assertEqual(logged_user, user)
