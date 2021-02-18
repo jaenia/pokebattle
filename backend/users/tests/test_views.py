@@ -59,16 +59,11 @@ class LoginViewTests(TestCase):
 
 class LogoutViewTests(TestCase):
     def setUp(self):
+        self.user = User.objects.create_user(email="test@test.com", password="password123")
         self.client = Client()
+        self.client.force_login(self.user)
 
     def test_logout_with_success(self):
-        data = {"username": "test@test.com", "password": "password"}
-
-        User.objects.create_user(email="test@test.com", password="password")
-
-        url = reverse("users:user_login")
-        self.client.post(url, data)
-
         url = reverse("users:user_logout")
         response = self.client.get(url)
 

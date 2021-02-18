@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render, redirect  # noqa
 from django.urls import reverse, reverse_lazy
@@ -31,5 +32,6 @@ class Login(LoginView):
     redirect_authenticated_user = True
 
 
-class Logout(LogoutView):
+class Logout(LoginRequiredMixin, LogoutView):
     next_page = reverse_lazy("users:user_login")
+    login_url = reverse_lazy("users:user_login")
