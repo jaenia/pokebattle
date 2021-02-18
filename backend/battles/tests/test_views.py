@@ -50,7 +50,9 @@ class BattleListViewTests(TestCase):
 
 class BattleDetailViewTests(TestCase):
     def setUp(self):
+        self.user = User.objects.create_user(email="test@test.com", password="password123")
         self.client = Client()
+        self.client.force_login(self.user)
 
     def test_battle_detail(self):
         battle = mommy.make("battles.Battle")

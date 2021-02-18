@@ -35,8 +35,9 @@ class BattleUpdateOpponentPokemons(LoginRequiredMixin, UpdateView):
         return redirect(self.get_success_url())
 
 
-class BattleDetail(DetailView):
+class BattleDetail(LoginRequiredMixin, DetailView):
     model = Battle
+    login_url = reverse_lazy("users:user_login")
 
 
 class BattleList(LoginRequiredMixin, ListView):
