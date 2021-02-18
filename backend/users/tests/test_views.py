@@ -46,7 +46,7 @@ class LoginViewTests(TestCase):
         logged_user = auth.get_user(self.client)
         self.assertEqual(logged_user, user)
 
-    def test_login_with_wrong_password(self):
+    def test_login_with_invalid_credentials(self):
         data = {"username": "test@test.com", "password": "wrongpassword"}
 
         User.objects.create_user(email="test@test.com", password="password")
