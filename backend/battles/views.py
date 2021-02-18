@@ -23,10 +23,11 @@ class BattleCreate(LoginRequiredMixin, CreateView):
         return reverse("battles:battle_update_opponent_pokemons", kwargs={"pk": self.object.pk})
 
 
-class BattleUpdateOpponentPokemons(UpdateView):
+class BattleUpdateOpponentPokemons(LoginRequiredMixin, UpdateView):
     model = Battle
     form_class = BattleOpponentPokemonsForm
     template_name = "battles/battle_opponent_pokemons_form.html"
+    login_url = reverse_lazy("users:user_login")
 
     def post(self, request, *args, **kwargs):
         super(BattleUpdateOpponentPokemons, self).post(request, *args, **kwargs)
