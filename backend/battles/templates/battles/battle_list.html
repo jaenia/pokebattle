@@ -3,10 +3,13 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/global.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/battle_styles.css' %}" />
 
-<div class="header">
+<header class="header">
   <h1>Battles</h1>
-  <p>{{ request.user }}</p>
-</div>
+  <div class="user-info">
+    <span>{{ user }}</span>
+    <a href="{% url 'users:user_logout' %}">Log out</a>
+  </div>
+</header>
 <nav class="navigation">
   <a class="nav-link" href="{% url 'battles:battle_create' %}">Add new</a>
   <a class="nav-link" href="{% url 'battles:settled_battles_list' %}">Settled</a>
