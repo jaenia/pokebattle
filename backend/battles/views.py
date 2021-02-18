@@ -9,9 +9,10 @@ from battles.models import Battle
 from users.models import User
 
 
-class BattleCreate(CreateView):
+class BattleCreate(LoginRequiredMixin, CreateView):
     template_name = "battles/battle_form.html"
     form_class = BattleForm
+    login_url = reverse_lazy("users:user_login")
 
     def get_form_kwargs(self):
         kwargs = super(BattleCreate, self).get_form_kwargs()
@@ -40,6 +41,7 @@ class BattleDetail(DetailView):
 class BattleList(LoginRequiredMixin, ListView):
     model = Battle
     login_url = reverse_lazy("users:user_login")
+
 
 class SettledBattlesList(ListView):
     model = Battle

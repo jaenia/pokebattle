@@ -63,7 +63,9 @@ class BattleDetailViewTests(TestCase):
 
 class BattleCreateViewTests(TestCase):
     def setUp(self):
+        self.user = User.objects.create_user(email="test@test.com", password="password123")
         self.client = Client()
+        self.client.force_login(self.user)
 
     @responses.activate
     def test_battle_create(self):
@@ -102,7 +104,6 @@ class BattleCreateViewTests(TestCase):
             },
         )
 
-        mommy.make("users.User")
         opponent = mommy.make("users.User")
 
         data = {
@@ -163,10 +164,8 @@ class BattleCreateViewTests(TestCase):
             },
         )
 
-        current_user = mommy.make("users.User")
-
         data = {
-            "opponent": current_user.id,
+            "opponent": self.user.id,
             "creator_pokemon_1_input": 1,
             "creator_pokemon_2_input": 2,
             "creator_pokemon_3_input": 3,
