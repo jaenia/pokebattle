@@ -83,7 +83,8 @@ class BattleDetailViewTests(TestCase):
 
         self.assertRedirects(
             response,
-            f"{reverse('users:user_login')}?next={reverse('battles:battle_detail', args=[battle.id])}",
+            f"{reverse('users:user_login')}?next="
+            f"{reverse('battles:battle_detail', args=[battle.id])}",
         )
 
 
@@ -303,7 +304,8 @@ class BattleUpdateOpponentPokemonsViewTests(TestCase):
 
         self.assertRedirects(
             response,
-            f"{reverse('users:user_login')}?next={reverse('battles:battle_update_opponent_pokemons', args=[battle.id])}",
+            f"{reverse('users:user_login')}?next="
+            f"{reverse('battles:battle_update_opponent_pokemons', args=[battle.id])}",
         )
 
 
