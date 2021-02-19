@@ -47,6 +47,17 @@ class BattleListViewTests(TestCase):
         self.assertContains(response, battle1.id, status_code=200)
         self.assertContains(response, battle2.id, status_code=200)
 
+    def test_non_logged_user_cannot_access_battle_list(self):
+        url = reverse("users:user_logout")
+        self.client.get(url)
+
+        url = reverse("battles:battle_list")
+        response = self.client.get(url)
+
+        self.assertRedirects(
+            response, f"{reverse('users:user_login')}?next={reverse('battles:battle_list')}"
+        )
+
 
 class BattleDetailViewTests(TestCase):
     def setUp(self):
@@ -61,6 +72,19 @@ class BattleDetailViewTests(TestCase):
         response = self.client.get(url)
 
         self.assertContains(response, battle.id, status_code=200)
+
+    def test_non_logged_user_cannot_access_battle_detail(self):
+        url = reverse("users:user_logout")
+        self.client.get(url)
+
+        battle = mommy.make("battles.Battle")
+        url = reverse("battles:battle_detail", args=[battle.id])
+        response = self.client.get(url)
+
+        self.assertRedirects(
+            response,
+            f"{reverse('users:user_login')}?next={reverse('battles:battle_detail', args=[battle.id])}",
+        )
 
 
 class BattleCreateViewTests(TestCase):
@@ -177,6 +201,17 @@ class BattleCreateViewTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
 
+    def test_non_logged_user_cannot_access_battle_creation(self):
+        url = reverse("users:user_logout")
+        self.client.get(url)
+
+        url = reverse("battles:battle_create")
+        response = self.client.get(url)
+
+        self.assertRedirects(
+            response, f"{reverse('users:user_login')}?next={reverse('battles:battle_create')}"
+        )
+
 
 class BattleUpdateOpponentPokemonsViewTests(TestCase):
     def setUp(self):
@@ -258,6 +293,19 @@ class BattleUpdateOpponentPokemonsViewTests(TestCase):
         send_mock.assert_called_with(battle)
         self.assertEqual(response.status_code, 302)
 
+    def test_non_logged_user_cannot_access_add_opponent_pokemons_to_battle(self):
+        url = reverse("users:user_logout")
+        self.client.get(url)
+
+        battle = mommy.make("battles.Battle")
+        url = reverse("battles:battle_update_opponent_pokemons", args=[battle.id])
+        response = self.client.get(url)
+
+        self.assertRedirects(
+            response,
+            f"{reverse('users:user_login')}?next={reverse('battles:battle_update_opponent_pokemons', args=[battle.id])}",
+        )
+
 
 class SettledBattlesListViewTests(TestCase):
     def setUp(self):
@@ -302,6 +350,18 @@ class SettledBattlesListViewTests(TestCase):
         self.assertIn(battle_2, battles)
         self.assertNotIn(battle_1, battles)
 
+    def test_non_logged_user_cannot_access_settled_battles_list(self):
+        url = reverse("users:user_logout")
+        self.client.get(url)
+
+        url = reverse("battles:settled_battles_list")
+        response = self.client.get(url)
+
+        self.assertRedirects(
+            response,
+            f"{reverse('users:user_login')}?next={reverse('battles:settled_battles_list')}",
+        )
+
 
 class OngoingBattlesListViewTests(TestCase):
     def setUp(self):
@@ -345,3 +405,15 @@ class OngoingBattlesListViewTests(TestCase):
         battles = response.context_data["object_list"]
         self.assertIn(battle_1, battles)
         self.assertNotIn(battle_2, battles)
+
+    def test_non_logged_user_cannot_access_ongoing_battles_list(self):
+        url = reverse("users:user_logout")
+        self.client.get(url)
+
+        url = reverse("battles:ongoing_battles_list")
+        response = self.client.get(url)
+
+        self.assertRedirects(
+            response,
+            f"{reverse('users:user_login')}?next={reverse('battles:ongoing_battles_list')}",
+        )

@@ -68,3 +68,13 @@ class LogoutViewTests(TestCase):
         response = self.client.get(url)
 
         self.assertRedirects(response, reverse("users:user_login"))
+
+    def test_non_logged_user_cannot_access_logout(self):
+        url = reverse("users:user_logout")
+        self.client.get(url)
+
+        response = self.client.get(url)
+
+        self.assertRedirects(
+            response, f"{reverse('users:user_login')}?next={reverse('users:user_logout')}"
+        )
