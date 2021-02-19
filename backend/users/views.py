@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login
-from django.shortcuts import render  # noqa
-from django.urls import reverse
+from django.contrib.auth.views import LoginView, LogoutView
+from django.shortcuts import render, redirect  # noqa
+from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView
 
 from users.forms import SignUpForm
@@ -23,3 +24,12 @@ class SignUp(CreateView):
 
     def get_success_url(self):
         return reverse("battles:battle_list")
+
+
+class Login(LoginView):
+    template_name = "auth/login.html"
+    redirect_authenticated_user = True
+
+
+class Logout(LogoutView):
+    next_page = reverse_lazy("users:user_login")
