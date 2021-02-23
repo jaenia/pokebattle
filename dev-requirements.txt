@@ -40,7 +40,7 @@ certifi==2020.12.5
     #   -r requirements.txt
     #   requests
     #   sentry-sdk
-cffi==1.14.4
+cffi==1.14.5
     # via
     #   -r requirements.txt
     #   brotlipy
@@ -107,7 +107,7 @@ django-templated-email==2.3.0
     # via -r requirements.txt
 django-webpack-loader==0.7.0
     # via -r requirements.txt
-django==2.2.18
+django==2.2.19
     # via
     #   -r dev-requirements.in
     #   -r requirements.txt
@@ -135,11 +135,11 @@ flake8==3.8.4
     # via flake8-polyfill
 gitdb==4.0.5
     # via gitpython
-gitpython==3.1.12
+gitpython==3.1.13
     # via bandit
 gunicorn==20.0.4
     # via -r requirements.txt
-identify==1.5.13
+identify==1.5.14
     # via pre-commit
 idna==2.10
     # via
@@ -216,9 +216,9 @@ pickleshare==0.7.5
     # via
     #   -r requirements.txt
     #   ipython
-pre-commit==2.10.0
+pre-commit==2.10.1
     # via -r dev-requirements.in
-prompt-toolkit==3.0.14
+prompt-toolkit==3.0.16
     # via
     #   -r requirements.txt
     #   click-repl
@@ -247,7 +247,7 @@ pyflakes==2.2.0
     # via
     #   flake8
     #   prospector
-pygments==2.7.4
+pygments==2.8.0
     # via
     #   -r requirements.txt
     #   ipython
@@ -274,10 +274,6 @@ pyparsing==2.4.7
     # via packaging
 python-decouple==3.4
     # via -r requirements.txt
-python-http-client==3.3.1
-    # via
-    #   -r requirements.txt
-    #   sendgrid
 pytz==2021.1
     # via
     #   -r requirements.txt
@@ -308,9 +304,7 @@ responses==0.12.1
     # via -r dev-requirements.in
 safety==1.10.3
     # via -r dev-requirements.in
-sendgrid==6.5.0
-    # via -r requirements.txt
-sentry-sdk==0.19.5
+sentry-sdk==0.20.3
     # via -r requirements.txt
 setoptconf==0.2.0
     # via prospector
@@ -331,10 +325,6 @@ sqlparse==0.4.1
     # via
     #   -r requirements.txt
     #   django
-starkbank-ecdsa==1.1.0
-    # via
-    #   -r requirements.txt
-    #   sendgrid
 stevedore==3.3.0
     # via bandit
 tablib[html,ods,xls,xlsx,yaml]==3.0.0
