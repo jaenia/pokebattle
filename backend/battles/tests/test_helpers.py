@@ -93,3 +93,24 @@ class BattleHelperTests(TestCase):
 
         winner = get_battle_result(battle)
         self.assertEqual(winner, battle.creator)
+
+    def test_result_is_none_if_opponent_does_not_have_pokemon(self):
+        creator = mommy.make("users.User", email="creator@test.com")
+        opponent = mommy.make("users.User", email="opponent@test.com")
+
+        # creator's pokemons
+        pokemon_1 = mommy.make("pokemons.Pokemon", attack=10, defense=10, hit_points=20)
+        pokemon_2 = mommy.make("pokemons.Pokemon", attack=5, defense=5, hit_points=15)
+        pokemon_3 = mommy.make("pokemons.Pokemon", attack=20, defense=20, hit_points=40)
+
+        battle = mommy.make(
+            "battles.Battle",
+            creator=creator,
+            opponent=opponent,
+            creator_pokemon_1=pokemon_1,
+            creator_pokemon_2=pokemon_2,
+            creator_pokemon_3=pokemon_3,
+        )
+
+        winner = get_battle_result(battle)
+        self.assertIsNone(winner)

@@ -30,6 +30,15 @@ def get_battle_result(battle):
     creator_victory_points = 0
     opponent_victory_points = 0
 
+    # check if opponent has pokemons
+    opponent_pokemons = [
+        battle.opponent_pokemon_1,
+        battle.opponent_pokemon_2,
+        battle.opponent_pokemon_3,
+    ]
+    if all(pokemon is None for pokemon in opponent_pokemons):
+        return None
+
     pokemon_pairs = [
         (battle.creator_pokemon_1, battle.opponent_pokemon_1),
         (battle.creator_pokemon_2, battle.opponent_pokemon_2),
