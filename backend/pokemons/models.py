@@ -7,6 +7,7 @@ class Pokemon(models.Model):
     attack = models.IntegerField()
     defense = models.IntegerField()
     hit_points = models.IntegerField()
+    image = models.ImageField(blank=True, max_length=100)
 
     def __str__(self):
         return self.name
