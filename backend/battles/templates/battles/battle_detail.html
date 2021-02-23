@@ -1,5 +1,4 @@
 {% load static %}
-{% url 'battles:settled_battles_list' as settled_battles_list %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'css/global.css' %}" />
 <link rel="stylesheet" type="text/css" href="{% static 'css/battle_styles.css' %}" />
@@ -13,12 +12,16 @@
 <p><strong>Pokemon 2:</strong> {{ object.creator_pokemon_2.name  }}</p>
 <p><strong>Pokemon 3:</strong> {{ object.creator_pokemon_3.name  }}</p>
 
+
 <h2 class="heading-team">Opponent's Team</h2>
-{% if settled_list in request.META.HTTP_REFERER %}
+{% if object.winner is None %}
+  <p>Not added yet.</p>
+{% else %}
   <p><strong>Pokemon 1:</strong> {{ object.opponent_pokemon_1.name  }}</p>
   <p><strong>Pokemon 2:</strong> {{ object.opponent_pokemon_2.name  }}</p>
   <p><strong>Pokemon 3:</strong> {{ object.opponent_pokemon_3.name  }}</p>
-{% else %}
-  <p>Not added yet</p>
+
+  <h2 class="heading-team">Result</h2>
+  <p><strong>Winner:</strong> {{ object.winner.email }}</p>
 {% endif %}
 <a class="nav-link" href="{% url 'battles:battle_list' %}">Back to list</a>

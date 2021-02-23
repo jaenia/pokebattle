@@ -87,6 +87,51 @@ class BattleDetailViewTests(TestCase):
             f"{reverse('battles:battle_detail', args=[battle.id])}",
         )
 
+    def test_settled_battle_details_show_result(self):
+        opponent = mommy.make("users.User")
+
+        pokemon_1 = mommy.make("pokemons.Pokemon")
+        pokemon_2 = mommy.make("pokemons.Pokemon")
+        pokemon_3 = mommy.make("pokemons.Pokemon")
+
+        battle = mommy.make(
+            "battles.Battle",
+            creator=self.user,
+            opponent=opponent,
+            creator_pokemon_1=pokemon_1,
+            creator_pokemon_2=pokemon_2,
+            creator_pokemon_3=pokemon_3,
+            opponent_pokemon_1=pokemon_3,
+            opponent_pokemon_2=pokemon_2,
+            opponent_pokemon_3=pokemon_1,
+        )
+
+        url = reverse("battles:battle_detail", args=[battle.id])
+        response = self.client.get(url)
+
+        self.assertEqual(response.context_data["object"].winner, battle.winner)
+
+    def test_ongoing_battle_details_does_not_show_result(self):
+        opponent = mommy.make("users.User")
+
+        pokemon_1 = mommy.make("pokemons.Pokemon")
+        pokemon_2 = mommy.make("pokemons.Pokemon")
+        pokemon_3 = mommy.make("pokemons.Pokemon")
+
+        battle = mommy.make(
+            "battles.Battle",
+            creator=self.user,
+            opponent=opponent,
+            creator_pokemon_1=pokemon_1,
+            creator_pokemon_2=pokemon_2,
+            creator_pokemon_3=pokemon_3,
+        )
+
+        url = reverse("battles:battle_detail", args=[battle.id])
+        response = self.client.get(url)
+
+        self.assertIsNone(response.context_data["object"].winner)
+
 
 class BattleCreateViewTests(TestCase):
     def setUp(self):
