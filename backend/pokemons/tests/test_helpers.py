@@ -4,7 +4,7 @@ from model_mommy import mommy
 
 from common.constants import POKEAPI_BASE_URL
 from pokemons.exceptions import PokemonNotFound
-from pokemons.helpers import get_pokemons_points_sum
+from pokemons.helpers import get_pokemons_points_sum, save_pokemon
 
 
 class PokemonHelperTests(TestCase):
@@ -24,3 +24,27 @@ class PokemonHelperTests(TestCase):
 
         with self.assertRaises(PokemonNotFound):
             get_pokemons_points_sum([0, 1, 2])
+
+    @responses.activate
+    def test_save_pokemon_image(self):
+        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/1", status=200)
+
+        responses.add(
+            responses.GET,
+            f"{POKEAPI_BASE_URL}pokemon/1",
+            status=200,
+            json={
+                "id": 1,
+                "name": "pokemon1",
+                "stats": [{"base_stat": 45}, {"base_stat": 49}, {"base_stat": 49}],
+                "sprites": {
+                    "front_default": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"
+                },
+            },
+        )
+
+        pokemon = save_pokemon(1)
+        self.assertEqual(
+            pokemon.image,
+            "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png",
+        )

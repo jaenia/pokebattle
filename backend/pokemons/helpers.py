@@ -10,12 +10,19 @@ def save_pokemon(poke_id):
         return pokemon
 
     data = get_pokemon(poke_id)
+    name = data["name"]
     attack = data["stats"][1]["base_stat"]
     defense = data["stats"][2]["base_stat"]
     hit_points = data["stats"][0]["base_stat"]
+    image = data["sprites"]["front_default"]
 
     pokemon = Pokemon.objects.create(
-        poke_id=poke_id, name=data["name"], attack=attack, defense=defense, hit_points=hit_points
+        poke_id=poke_id,
+        name=name,
+        attack=attack,
+        defense=defense,
+        hit_points=hit_points,
+        image=image,
     )
 
     return pokemon
