@@ -39,7 +39,7 @@ class PokemonHelperTests(TestCase):
                 "stats": [{"base_stat": 45}, {"base_stat": 49}, {"base_stat": 49}],
                 "sprites": {
                     "front_default": "https://raw.githubusercontent.com/P"
-                                     "okeAPI/sprites/master/sprites/pokemon/1.png"
+                    "okeAPI/sprites/master/sprites/pokemon/1.png"
                 },
             },
         )

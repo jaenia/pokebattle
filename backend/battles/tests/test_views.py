@@ -155,7 +155,7 @@ class BattleCreateViewTests(TestCase):
                 "stats": [{"base_stat": 45}, {"base_stat": 49}, {"base_stat": 49}],
                 "sprites": {
                     "front_default": "https://raw.githubusercontent.com/"
-                                     "PokeAPI/sprites/master/sprites/pokemon/1.png"
+                    "PokeAPI/sprites/master/sprites/pokemon/1.png"
                 },
             },
         )
@@ -169,7 +169,7 @@ class BattleCreateViewTests(TestCase):
                 "stats": [{"base_stat": 50}, {"base_stat": 64}, {"base_stat": 64}],
                 "sprites": {
                     "front_default": "https://raw.githubusercontent.com/"
-                                     "PokeAPI/sprites/master/sprites/pokemon/2.png"
+                    "PokeAPI/sprites/master/sprites/pokemon/2.png"
                 },
             },
         )
@@ -183,7 +183,7 @@ class BattleCreateViewTests(TestCase):
                 "stats": [{"base_stat": 55}, {"base_stat": 69}, {"base_stat": 69}],
                 "sprites": {
                     "front_default": "https://raw.githubusercontent.com/"
-                                     "PokeAPI/sprites/master/sprites/pokemon/3.png"
+                    "PokeAPI/sprites/master/sprites/pokemon/3.png"
                 },
             },
         )
@@ -294,7 +294,7 @@ class BattleUpdateOpponentPokemonsViewTests(TestCase):
                 "stats": [{"base_stat": 45}, {"base_stat": 49}, {"base_stat": 49}],
                 "sprites": {
                     "front_default": "https://raw.githubusercontent.com/"
-                                     "PokeAPI/sprites/master/sprites/pokemon/1.png"
+                    "PokeAPI/sprites/master/sprites/pokemon/1.png"
                 },
             },
         )
@@ -308,7 +308,7 @@ class BattleUpdateOpponentPokemonsViewTests(TestCase):
                 "stats": [{"base_stat": 50}, {"base_stat": 64}, {"base_stat": 64}],
                 "sprites": {
                     "front_default": "https://raw.githubusercontent.com/"
-                                     "PokeAPI/sprites/master/sprites/pokemon/2.png"
+                    "PokeAPI/sprites/master/sprites/pokemon/2.png"
                 },
             },
         )
@@ -322,7 +322,7 @@ class BattleUpdateOpponentPokemonsViewTests(TestCase):
                 "stats": [{"base_stat": 55}, {"base_stat": 69}, {"base_stat": 69}],
                 "sprites": {
                     "front_default": "https://raw.githubusercontent.com/"
-                                     "PokeAPI/sprites/master/sprites/pokemon/3.png"
+                    "PokeAPI/sprites/master/sprites/pokemon/3.png"
                 },
             },
         )
