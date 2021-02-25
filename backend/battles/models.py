@@ -82,19 +82,14 @@ class Battle(models.Model):
         return get_battle_result(self)
 
     def has_been_resolved(self):
-        creator_has_pokemons = (
-            self.creator_pokemon_1 is not None
-            and self.creator_pokemon_2 is not None
-            and self.creator_pokemon_3 is not None
-        )
-
-        opponent_has_pokemons = (
-            self.opponent_pokemon_1 is not None
-            and self.opponent_pokemon_2 is not None
-            and self.opponent_pokemon_3 is not None
-        )
-
-        return creator_has_pokemons and opponent_has_pokemons
+        return all([
+            self.creator_pokemon_1,
+            self.creator_pokemon_2,
+            self.creator_pokemon_3,
+            self.opponent_pokemon_1,
+            self.opponent_pokemon_2,
+            self.opponent_pokemon_3
+        ])
 
     def __str__(self):
         return f"Battle #{self.id}: {self.creator.email} X {self.opponent.email}"
