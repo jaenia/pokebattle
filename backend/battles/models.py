@@ -81,6 +81,13 @@ class Battle(models.Model):
     def winner(self):
         return get_battle_result(self)
 
+    def has_been_resolved(self):
+        return (
+            self.opponent_pokemon_1 is not None
+            and self.opponent_pokemon_2 is not None
+            and self.opponent_pokemon_3 is not None
+        )
+
     def __str__(self):
         return f"Battle #{self.id}: {self.creator.email} X {self.opponent.email}"
 

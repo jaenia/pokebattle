@@ -26,7 +26,7 @@
 
   <div class="battle-team">
     <h2 class="heading-team">Opponent's Team</h2>
-    {% if object.winner is None %}
+    {% if not object.has_been_resolved %}
       <p>Not added yet.</p>
     {% else %}
       <div class="pokemon">
@@ -44,7 +44,7 @@
     {% endif %}
   </div>
 </div>
-{% if object.winner is not None %}
+{% if object.has_been_resolved %}
   <h2 class="heading-team">Result</h2>
   <p><strong>Winner:</strong> {{ object.winner.email }}</p>
 {% endif %}
