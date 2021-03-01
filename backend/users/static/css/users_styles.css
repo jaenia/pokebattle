@@ -42,3 +42,12 @@
     font-size: 14px;
     margin-top: 16px;
 }
+
+.social-login {
+    border-radius: 5px;
+    border: 1px solid #cbd4db;
+    padding: 8px 48px;
+    margin-top: 16px;
+    text-decoration: none;
+    color: #222222;
+}
