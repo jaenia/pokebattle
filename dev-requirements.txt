@@ -216,6 +216,8 @@ pickleshare==0.7.5
     # via
     #   -r requirements.txt
     #   ipython
+pillow==8.1.0
+    # via -r requirements.txt
 pre-commit==2.10.1
     # via -r dev-requirements.in
 prompt-toolkit==3.0.16

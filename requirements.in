@@ -17,3 +17,4 @@ sentry-sdk
 requests
 django-templated-email==2.3.0
 pillow==8.1.0
+social-auth-app-django==4.0.0

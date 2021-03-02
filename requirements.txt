@@ -19,7 +19,9 @@ certifi>=2020.12.5
     #   requests
     #   sentry-sdk
 cffi>=1.14.5
-    # via brotlipy
+    # via
+    #   brotlipy
+    #   cryptography
 chardet>=4.0.0
     # via requests
 click-didyoumean>=0.0.3
@@ -34,10 +36,15 @@ click>=7.1.2
     #   click-didyoumean
     #   click-plugins
     #   click-repl
+cryptography>=3.4.6
+    # via social-auth-core
 decorator>=4.4.2
     # via ipython
 defusedxml>=0.6.0
-    # via odfpy
+    # via
+    #   odfpy
+    #   python3-openid
+    #   social-auth-core
 diff-match-patch>=20200713
     # via django-import-export
 dj-database-url>=0.5.0
@@ -82,6 +89,10 @@ kombu>=5.0.2
     # via celery
 markuppy>=1.14
     # via tablib
+oauthlib>=3.1.0
+    # via
+    #   requests-oauthlib
+    #   social-auth-core
 odfpy>=1.4.1
     # via tablib
 openpyxl>=3.0.6
@@ -108,8 +119,12 @@ pycparser>=2.20
     # via cffi
 pygments>=2.8.0
     # via ipython
+pyjwt>=2.0.1
+    # via social-auth-core
 python-decouple>=3.4
     # via -r requirements.in
+python3-openid>=3.2.0
+    # via social-auth-core
 pytz>=2021.1
     # via
     #   celery
@@ -118,14 +133,24 @@ pyyaml>=5.4.1
     # via tablib
 redis>=3.5.3
     # via celery
+requests-oauthlib>=1.3.0
+    # via social-auth-core
 requests>=2.25.1
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   requests-oauthlib
+    #   social-auth-core
 sentry-sdk>=0.20.3
     # via -r requirements.in
 six>=1.15.0
     # via
     #   click-repl
     #   django-templated-email
+    #   social-auth-app-django
+social-auth-app-django>=4.0.0
+    # via -r requirements.in
+social-auth-core>=4.0.3
+    # via social-auth-app-django
 sqlparse>=0.4.1
     # via django
 tablib[html,ods,xls,xlsx,yaml]>=3.0.0

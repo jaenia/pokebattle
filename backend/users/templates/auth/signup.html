@@ -21,4 +21,5 @@
     <button type="submit">Create Account</button>
   </form>
   <span class="help-link">Do you have an account? <a href="{% url 'users:user_login' %}">Log in.</a></span>
+  <a class="social-login" href="{% url 'social:begin' 'google-oauth2' %}">Log in with Google</a>
 </main>
