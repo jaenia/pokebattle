@@ -7,13 +7,46 @@
 <p id="battle-creator"><strong>Creator:</strong> {{ object.creator }}</p>
 <p id="battle-opponent"><strong>Opponent:</strong> {{ object.opponent }}</p>
 
-<h2 class="heading-team">Creator's Team</h2>
-<p><strong>Pokemon 1:</strong> {{ object.creator_pokemon_1.name }}</p>
-<p><strong>Pokemon 2:</strong> {{ object.creator_pokemon_2.name  }}</p>
-<p><strong>Pokemon 3:</strong> {{ object.creator_pokemon_3.name  }}</p>
+<div id="battle-teams">
+  <div class="battle-team">
+    <h2 class="heading-team">Creator's Team</h2>
+    <div class="pokemon">
+      <p><strong>Pokemon 1:</strong> {{ object.creator_pokemon_1.name }}</p>
+      <img src="{{ object.creator_pokemon_1.image.name }}" />
+    </div>
+    <div class="pokemon">
+      <p><strong>Pokemon 2:</strong> {{ object.creator_pokemon_2.name  }}</p>
+      <img src="{{ object.creator_pokemon_2.image.name }}" />
+    </div>
+    <div class="pokemon">
+      <p><strong>Pokemon 3:</strong> {{ object.creator_pokemon_3.name  }}</p>
+      <img src="{{ object.creator_pokemon_3.image.name }}" />
+    </div>
+  </div>
 
-<h2 class="heading-team">Opponent's Team</h2>
-<p><strong>Pokemon 1:</strong> {{ object.opponent_pokemon_1.name  }}</p>
-<p><strong>Pokemon 2:</strong> {{ object.opponent_pokemon_2.name  }}</p>
-<p><strong>Pokemon 3:</strong> {{ object.opponent_pokemon_3.name  }}</p>
+  <div class="battle-team">
+    <h2 class="heading-team">Opponent's Team</h2>
+    {% if not object.has_been_resolved %}
+      <p>Not added yet.</p>
+    {% else %}
+      <div class="pokemon">
+        <p><strong>Pokemon 1:</strong> {{ object.opponent_pokemon_1.name  }}</p>
+        <img src="{{ object.opponent_pokemon_1.image.name }}" />
+      </div>
+      <div class="pokemon">
+        <p><strong>Pokemon 2:</strong> {{ object.opponent_pokemon_2.name  }}</p>
+        <img src="{{ object.opponent_pokemon_2.image.name }}" />
+      </div>
+      <div>
+        <p><strong>Pokemon 3:</strong> {{ object.opponent_pokemon_3.name  }}</p>
+        <img src="{{ object.opponent_pokemon_3.image.name }}" />
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% if object.has_been_resolved %}
+  <h2 class="heading-team">Result</h2>
+  <p><strong>Winner:</strong> {{ object.winner.email }}</p>
+{% endif %}
+
 <a class="nav-link" href="{% url 'battles:battle_list' %}">Back to list</a>

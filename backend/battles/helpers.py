@@ -27,6 +27,9 @@ def compare_pokemons(pokemon_1, pokemon_2):
 
 
 def get_battle_result(battle):
+    if not battle.has_been_resolved():
+        raise Exception("Battle has not been resolved yet")
+
     creator_victory_points = 0
     opponent_victory_points = 0
 

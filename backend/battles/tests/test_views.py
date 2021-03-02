@@ -87,6 +87,30 @@ class BattleDetailViewTests(TestCase):
             f"{reverse('battles:battle_detail', args=[battle.id])}",
         )
 
+    def test_settled_battle_details_show_result(self):
+        opponent = mommy.make("users.User")
+
+        pokemon_1 = mommy.make("pokemons.Pokemon")
+        pokemon_2 = mommy.make("pokemons.Pokemon")
+        pokemon_3 = mommy.make("pokemons.Pokemon")
+
+        battle = mommy.make(
+            "battles.Battle",
+            creator=self.user,
+            opponent=opponent,
+            creator_pokemon_1=pokemon_1,
+            creator_pokemon_2=pokemon_2,
+            creator_pokemon_3=pokemon_3,
+            opponent_pokemon_1=pokemon_3,
+            opponent_pokemon_2=pokemon_2,
+            opponent_pokemon_3=pokemon_1,
+        )
+
+        url = reverse("battles:battle_detail", args=[battle.id])
+        response = self.client.get(url)
+
+        self.assertEqual(response.context_data["object"].winner, battle.winner)
+
 
 class BattleCreateViewTests(TestCase):
     def setUp(self):
@@ -108,6 +132,10 @@ class BattleCreateViewTests(TestCase):
                 "id": 1,
                 "name": "pokemon1",
                 "stats": [{"base_stat": 45}, {"base_stat": 49}, {"base_stat": 49}],
+                "sprites": {
+                    "front_default": "https://raw.githubusercontent.com/"
+                    "PokeAPI/sprites/master/sprites/pokemon/1.png"
+                },
             },
         )
         responses.add(
@@ -118,6 +146,10 @@ class BattleCreateViewTests(TestCase):
                 "id": 2,
                 "name": "pokemon2",
                 "stats": [{"base_stat": 50}, {"base_stat": 64}, {"base_stat": 64}],
+                "sprites": {
+                    "front_default": "https://raw.githubusercontent.com/"
+                    "PokeAPI/sprites/master/sprites/pokemon/2.png"
+                },
             },
         )
         responses.add(
@@ -128,6 +160,10 @@ class BattleCreateViewTests(TestCase):
                 "id": 3,
                 "name": "pokemon3",
                 "stats": [{"base_stat": 55}, {"base_stat": 69}, {"base_stat": 69}],
+                "sprites": {
+                    "front_default": "https://raw.githubusercontent.com/"
+                    "PokeAPI/sprites/master/sprites/pokemon/3.png"
+                },
             },
         )
 
@@ -235,6 +271,10 @@ class BattleUpdateOpponentPokemonsViewTests(TestCase):
                 "id": 1,
                 "name": "pokemon1",
                 "stats": [{"base_stat": 45}, {"base_stat": 49}, {"base_stat": 49}],
+                "sprites": {
+                    "front_default": "https://raw.githubusercontent.com/"
+                    "PokeAPI/sprites/master/sprites/pokemon/1.png"
+                },
             },
         )
         responses.add(
@@ -245,6 +285,10 @@ class BattleUpdateOpponentPokemonsViewTests(TestCase):
                 "id": 2,
                 "name": "pokemon2",
                 "stats": [{"base_stat": 50}, {"base_stat": 64}, {"base_stat": 64}],
+                "sprites": {
+                    "front_default": "https://raw.githubusercontent.com/"
+                    "PokeAPI/sprites/master/sprites/pokemon/2.png"
+                },
             },
         )
         responses.add(
@@ -255,6 +299,10 @@ class BattleUpdateOpponentPokemonsViewTests(TestCase):
                 "id": 3,
                 "name": "pokemon3",
                 "stats": [{"base_stat": 55}, {"base_stat": 69}, {"base_stat": 69}],
+                "sprites": {
+                    "front_default": "https://raw.githubusercontent.com/"
+                    "PokeAPI/sprites/master/sprites/pokemon/3.png"
+                },
             },
         )
 

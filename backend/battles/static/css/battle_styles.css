@@ -107,3 +107,16 @@
 #battle-opponent {
     font-size: 24px;
 }
+
+#battle-teams {
+    display: flex;
+}
+
+.battle-team {
+    display: flex;
+    flex-direction: column;
+}
+
+.battle-team:first-child {
+    margin-right: 200px;
+}
