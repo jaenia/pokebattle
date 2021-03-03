@@ -22,7 +22,7 @@ def restart_celery():
         celery_proc = proc  # found parent celery process
         celery_proc.terminate()
         break
-    cmd = "celery worker -A pokebattle -l INFO"
+    cmd = "celery -A pokebattle worker -l INFO"
     psutil.Popen(shlex.split(cmd), stdout=PIPE)
 
 
