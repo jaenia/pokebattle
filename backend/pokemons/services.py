@@ -16,3 +16,11 @@ def get_pokemon(pokemon_id):
         raise Exception("Error fetching pokemon")
     pokemon_data = response.json()
     return pokemon_data
+
+
+def get_pokemon_list(limit):
+    response = requests.get(f"{POKEAPI_BASE_URL}pokemon?limit={limit}")
+    if response.status_code != 200:
+        raise Exception("Error fetching pokemon list")
+    pokemon_list = response.json()["results"]
+    return pokemon_list
