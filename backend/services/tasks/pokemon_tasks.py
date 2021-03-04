@@ -3,14 +3,13 @@ from celery.utils.log import get_task_logger
 from common.constants import POKEAPI_POKEMONS_LIMIT
 from pokebattle.celery import app as celery_app
 from pokemons.services import get_pokemon_list
+from pokemons.models import Pokemon
 
 logger = get_task_logger(__name__)
 
 
 @celery_app.task
 def save_all_pokemons_from_pokeapi():
-    from pokemons.models import Pokemon
-
     pokemons = get_pokemon_list(POKEAPI_POKEMONS_LIMIT)
     for pokemon in pokemons:
         existing_pokemon = Pokemon.objects.filter(name=pokemon["name"]).first()
