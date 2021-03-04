@@ -15,23 +15,21 @@ def save_all_pokemons_from_pokeapi():
     for pokemon in pokemons:
         existing_pokemon = Pokemon.objects.filter(name=pokemon["name"]).first()
 
-        if existing_pokemon:
-            break
+        if not existing_pokemon:
+            poke_id = pokemon["id"]
+            name = pokemon["name"]
+            attack = pokemon["stats"][1]["base_stat"]
+            defense = pokemon["stats"][2]["base_stat"]
+            hit_points = pokemon["stats"][0]["base_stat"]
+            image = pokemon["sprites"]["front_default"]
 
-        poke_id = pokemon["id"]
-        name = pokemon["name"]
-        attack = pokemon["stats"][1]["base_stat"]
-        defense = pokemon["stats"][2]["base_stat"]
-        hit_points = pokemon["stats"][0]["base_stat"]
-        image = pokemon["sprites"]["front_default"]
-
-        Pokemon.objects.create(
-            poke_id=poke_id,
-            name=name,
-            attack=attack,
-            defense=defense,
-            hit_points=hit_points,
-            image=image,
-        )
+            Pokemon.objects.create(
+                poke_id=poke_id,
+                name=name,
+                attack=attack,
+                defense=defense,
+                hit_points=hit_points,
+                image=image,
+            )
 
     logger.info("[Save all Pokemons] Save all Pokemons from PokéAPI")
