@@ -1,7 +1,7 @@
 import responses
 from django.test import TestCase
 
-from common.constants import POKEAPI_BASE_URL, POKEAPI_POKEMONS_LIMIT
+from common.constants import POKEAPI_BASE_URL
 from pokemons.models import Pokemon
 from services.tasks import pokemon_tasks
 
@@ -39,13 +39,24 @@ class SaveAllPokemonsFromPokeAPITaskTests(TestCase):
 
         responses.add(
             responses.GET,
-            f"{POKEAPI_BASE_URL}pokemon?limit={POKEAPI_POKEMONS_LIMIT}",
+            f"{POKEAPI_BASE_URL}pokemon?limit=60&offset=60",
+            status=200,
+            json={
+                "count": 3,
+                "next": f"{POKEAPI_BASE_URL}pokemon?limit=60&offset=120",
+                "previous": "null",
+                "results": [pokemon_1, pokemon_2],
+            },
+        )
+        responses.add(
+            responses.GET,
+            f"{POKEAPI_BASE_URL}pokemon?limit=60&offset=120",
             status=200,
             json={
                 "count": 3,
                 "next": "null",
-                "previous": "null",
-                "results": [pokemon_1, pokemon_2, pokemon_3],
+                "previous": f"{POKEAPI_BASE_URL}pokemon?limit=60&offset=60",
+                "results": [pokemon_3],
             },
         )
 
@@ -82,7 +93,7 @@ class SaveAllPokemonsFromPokeAPITaskTests(TestCase):
 
         responses.add(
             responses.GET,
-            f"{POKEAPI_BASE_URL}pokemon?limit={POKEAPI_POKEMONS_LIMIT}",
+            f"{POKEAPI_BASE_URL}pokemon?limit=60&offset=60",
             status=200,
             json={
                 "count": 2,

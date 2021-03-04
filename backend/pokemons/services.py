@@ -18,9 +18,21 @@ def get_pokemon(pokemon_id):
     return pokemon_data
 
 
-def get_pokemon_list(limit):
-    response = requests.get(f"{POKEAPI_BASE_URL}pokemon?limit={limit}")
+def get_pokemon_list(limit, initial_offset):
+    response = requests.get(f"{POKEAPI_BASE_URL}pokemon?limit={limit}&offset={initial_offset}")
     if response.status_code != 200:
         raise Exception("Error fetching pokemon list")
+
+    has_response_next = response.json()["next"]
     pokemon_list = response.json()["results"]
+    offset = 0
+
+    while has_response_next != "null":
+        offset += initial_offset
+        response = requests.get(f"{POKEAPI_BASE_URL}pokemon?limit={limit}&offset={offset}")
+        has_response_next = response.json()["next"]
+        if response.status_code != 200:
+            raise Exception("Error fetching pokemon list")
+        pokemon_list += response.json()["results"]
+
     return pokemon_list
