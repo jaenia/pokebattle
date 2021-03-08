@@ -8,10 +8,20 @@ def pokemon_exists(pokemon_id):
     return bool(response)
 
 
-def get_pokemon(pokemon_id):
+def get_pokemon_by_id(pokemon_id):
     response = requests.get(f"{POKEAPI_BASE_URL}pokemon/{pokemon_id}")
     if response.status_code == 404:
         raise Exception(f"Pokemon not found: {pokemon_id}")
+    if response.status_code != 200:
+        raise Exception("Error fetching pokemon")
+    pokemon_data = response.json()
+    return pokemon_data
+
+
+def get_pokemon_by_name(name):
+    response = requests.get(f"{POKEAPI_BASE_URL}pokemon/{name}")
+    if response.status_code == 404:
+        raise Exception(f"Pokemon not found: {name}")
     if response.status_code != 200:
         raise Exception("Error fetching pokemon")
     pokemon_data = response.json()
