@@ -39,23 +39,23 @@ class SaveAllPokemonsFromPokeAPITaskTests(TestCase):
 
         responses.add(
             responses.GET,
-            f"{POKEAPI_BASE_URL}pokemon?limit=60&offset=60",
+            f"{POKEAPI_BASE_URL}pokemon?limit=60",
             status=200,
             json={
                 "count": 3,
-                "next": f"{POKEAPI_BASE_URL}pokemon?limit=60&offset=120",
+                "next": f"{POKEAPI_BASE_URL}pokemon?limit=60&offset=60",
                 "previous": "null",
                 "results": [pokemon_1, pokemon_2],
             },
         )
         responses.add(
             responses.GET,
-            f"{POKEAPI_BASE_URL}pokemon?limit=60&offset=120",
+            f"{POKEAPI_BASE_URL}pokemon?limit=60&offset=60",
             status=200,
             json={
                 "count": 3,
                 "next": "null",
-                "previous": f"{POKEAPI_BASE_URL}pokemon?limit=60&offset=60",
+                "previous": f"{POKEAPI_BASE_URL}pokemon?limit=60",
                 "results": [pokemon_3],
             },
         )
@@ -93,7 +93,7 @@ class SaveAllPokemonsFromPokeAPITaskTests(TestCase):
 
         responses.add(
             responses.GET,
-            f"{POKEAPI_BASE_URL}pokemon?limit=60&offset=60",
+            f"{POKEAPI_BASE_URL}pokemon?limit=60",
             status=200,
             json={
                 "count": 2,
