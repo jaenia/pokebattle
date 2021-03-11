@@ -8,7 +8,7 @@ from services.tasks import pokemon_tasks
 
 class SaveAllPokemonsFromPokeAPITaskTests(TestCase):
     @responses.activate
-    def test_save_all_pokemons_from_poke_api(self):
+    def test_save_all_pokemons_from_pokeapi(self):
         pokemon_1 = {
             "id": 1,
             "name": "pokemon1",
@@ -43,21 +43,29 @@ class SaveAllPokemonsFromPokeAPITaskTests(TestCase):
             status=200,
             json={
                 "count": 3,
-                "next": f"{POKEAPI_BASE_URL}pokemon?limit=60&offset=60",
+                "next": "null",
                 "previous": "null",
-                "results": [pokemon_1, pokemon_2],
+                "results": [pokemon_1, pokemon_2, pokemon_3],
             },
+        )
+
+        responses.add(
+            responses.GET,
+            f"{POKEAPI_BASE_URL}pokemon/pokemon1",
+            status=200,
+            json=pokemon_1,
         )
         responses.add(
             responses.GET,
-            f"{POKEAPI_BASE_URL}pokemon?limit=60&offset=60",
+            f"{POKEAPI_BASE_URL}pokemon/pokemon2",
             status=200,
-            json={
-                "count": 3,
-                "next": "null",
-                "previous": f"{POKEAPI_BASE_URL}pokemon?limit=60",
-                "results": [pokemon_3],
-            },
+            json=pokemon_2,
+        )
+        responses.add(
+            responses.GET,
+            f"{POKEAPI_BASE_URL}pokemon/pokemon3",
+            status=200,
+            json=pokemon_3,
         )
 
         pokemon_tasks.save_all_pokemons_from_pokeapi()
@@ -101,6 +109,19 @@ class SaveAllPokemonsFromPokeAPITaskTests(TestCase):
                 "previous": "null",
                 "results": [pokemon_1, pokemon_2],
             },
+        )
+
+        responses.add(
+            responses.GET,
+            f"{POKEAPI_BASE_URL}pokemon/pokemon1",
+            status=200,
+            json=pokemon_1,
+        )
+        responses.add(
+            responses.GET,
+            f"{POKEAPI_BASE_URL}pokemon/pokemon2",
+            status=200,
+            json=pokemon_2,
         )
 
         pokemon_tasks.save_all_pokemons_from_pokeapi()

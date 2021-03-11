@@ -9,7 +9,7 @@ def save_pokemon(poke_id):
     if pokemon:
         return pokemon
 
-    data = get_pokemon(poke_id)
+    data = get_pokemon_by_id(poke_id)
     name = data["name"]
     attack = data["stats"][1]["base_stat"]
     defense = data["stats"][2]["base_stat"]
