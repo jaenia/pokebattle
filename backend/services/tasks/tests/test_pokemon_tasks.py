@@ -136,7 +136,7 @@ class SaveAllPokemonsFromPokeAPITaskTests(TestCase):
 
     @responses.activate
     def test_update_existing_pokemons(self):
-        existing_pokemon_1 = mommy.make(
+        mommy.make(
             "pokemons.Pokemon",
             poke_id=1,
             name="pokemon1",
@@ -146,7 +146,7 @@ class SaveAllPokemonsFromPokeAPITaskTests(TestCase):
             image="https://raw.githubusercontent.com/"
             "PokeAPI/sprites/master/sprites/pokemon/1.png",
         )
-        existing_pokemon_2 = mommy.make(
+        mommy.make(
             "pokemons.Pokemon",
             poke_id=2,
             name="pokemon2",
