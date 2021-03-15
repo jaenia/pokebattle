@@ -11,3 +11,4 @@ prospector[with-vulture]
 safety
 model-mommy
 responses
+flake8==3.8.4
