@@ -33,11 +33,11 @@ def get_all_pokemons():
     if response.status_code != 200:
         raise Exception("Error fetching pokemon list")
 
-    has_response_next = response.json()["next"]
+    has_response_next = bool(response.json()["next"])
     pokemon_list = response.json()["results"]
     offset = 0
 
-    while has_response_next != "null":
+    while has_response_next:
         offset += 60
         response = requests.get(f"{POKEAPI_BASE_URL}pokemon?limit=60&offset={offset}")
         has_response_next = response.json()["next"]
