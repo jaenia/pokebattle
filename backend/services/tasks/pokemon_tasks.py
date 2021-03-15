@@ -14,6 +14,7 @@ def save_all_pokemons_from_pokeapi():
     existing_pokemon_names = set(
         Pokemon.objects.filter(name__in=pokemon_names).values_list("name", flat=True)
     )
+    existing_pokemons = Pokemon.objects.filter(name__in=existing_pokemon_names).only("id", "name")
     missing_pokemon_names = pokemon_names - existing_pokemon_names
 
     pokemons_to_be_created = []
@@ -31,7 +32,6 @@ def save_all_pokemons_from_pokeapi():
         )
     Pokemon.objects.bulk_create(pokemons_to_be_created)
 
-    existing_pokemons = Pokemon.objects.filter(name__in=existing_pokemon_names)
     pokemons_to_be_updated = []
     for pokemon in existing_pokemons:
         updated_pokemon = get_pokemon_by_name(pokemon.name)
