@@ -1,6 +1,6 @@
 from pokemons.exceptions import PokemonNotFound
 from pokemons.models import Pokemon
-from pokemons.services import get_pokemon, pokemon_exists
+from pokemons.services import get_pokemon_by_id, pokemon_exists
 
 
 def save_pokemon(poke_id):
@@ -9,7 +9,7 @@ def save_pokemon(poke_id):
     if pokemon:
         return pokemon
 
-    data = get_pokemon(poke_id)
+    data = get_pokemon_by_id(poke_id)
     name = data["name"]
     attack = data["stats"][1]["base_stat"]
     defense = data["stats"][2]["base_stat"]
@@ -38,7 +38,7 @@ def get_pokemons_points_sum(poke_ids):
         else:
             if not pokemon_exists(poke_id):
                 raise PokemonNotFound(poke_id)
-            pokemon = get_pokemon(poke_id)
+            pokemon = get_pokemon_by_id(poke_id)
             points_sum += (
                 pokemon["stats"][1]["base_stat"]
                 + pokemon["stats"][2]["base_stat"]
