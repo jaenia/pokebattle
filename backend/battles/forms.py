@@ -1,3 +1,5 @@
+from dal import autocomplete
+
 from django import forms
 
 from battles.models import Battle
@@ -11,26 +13,24 @@ from users.models import User
 class BattleForm(forms.ModelForm):
     creator = forms.ModelChoiceField(required=False, queryset=User.objects.all())
 
-    """
-    These input fields are used to get the Pokemons' ids in the form.
-    We need to validate that selected Pokemons exist in PokeAPI before creating the battle.
-    """
-    creator_pokemon_1_input = forms.IntegerField(required=True)
-    creator_pokemon_2_input = forms.IntegerField(required=True)
-    creator_pokemon_3_input = forms.IntegerField(required=True)
-
-    creator_pokemon_1 = forms.ModelChoiceField(required=False, queryset=Pokemon.objects.all())
-    creator_pokemon_2 = forms.ModelChoiceField(required=False, queryset=Pokemon.objects.all())
-    creator_pokemon_3 = forms.ModelChoiceField(required=False, queryset=Pokemon.objects.all())
+    creator_pokemon_1 = forms.ModelChoiceField(
+        queryset=Pokemon.objects.all(),
+        widget=autocomplete.ModelSelect2(url="pokemons:pokemon_autocomplete")
+    )
+    creator_pokemon_2 = forms.ModelChoiceField(
+        queryset=Pokemon.objects.all(),
+        widget=autocomplete.ModelSelect2(url="pokemons:pokemon_autocomplete")
+    )
+    creator_pokemon_3 = forms.ModelChoiceField(
+        queryset=Pokemon.objects.all(),
+        widget=autocomplete.ModelSelect2(url="pokemons:pokemon_autocomplete")
+    )
 
     class Meta:
         model = Battle
         fields = [
             "creator",
             "opponent",
-            "creator_pokemon_1_input",
-            "creator_pokemon_2_input",
-            "creator_pokemon_3_input",
             "creator_pokemon_1",
             "creator_pokemon_2",
             "creator_pokemon_3",
@@ -42,36 +42,40 @@ class BattleForm(forms.ModelForm):
         self.fields["opponent"].queryset = User.objects.exclude(email=self.current_user.email)
         self.fields["creator"].initial = self.current_user
 
-    def clean_creator_pokemon_1_input(self):
-        data = self.cleaned_data.get("creator_pokemon_1_input")
+    def clean_creator_pokemon_1(self):
+        data = self.cleaned_data.get("creator_pokemon_1")
         if not pokemon_exists(data):
-            self.add_error("creator_pokemon_1_input", "Sorry, this pokemon was not found")
+            self.add_error("creator_pokemon_1", "Sorry, this pokemon was not found")
         return data
 
-    def clean_creator_pokemon_2_input(self):
-        data = self.cleaned_data.get("creator_pokemon_2_input")
+    def clean_creator_pokemon_2(self):
+        data = self.cleaned_data.get("creator_pokemon_2")
         if not pokemon_exists(data):
-            self.add_error("creator_pokemon_2_input", "Sorry, this pokemon was not found")
+            self.add_error("creator_pokemon_2", "Sorry, this pokemon was not found")
         return data
 
-    def clean_creator_pokemon_3_input(self):
-        data = self.cleaned_data.get("creator_pokemon_3_input")
+    def clean_creator_pokemon_3(self):
+        data = self.cleaned_data.get("creator_pokemon_3")
         if not pokemon_exists(data):
-            self.add_error("creator_pokemon_3_input", "Sorry, this pokemon was not found")
+            self.add_error("creator_pokemon_3", "Sorry, this pokemon was not found")
         return data
 
     def clean(self):
         cleaned_data = super().clean()
         cleaned_data["creator"] = self.fields["creator"].initial
 
-        creator_pokemon_1_input = cleaned_data.get("creator_pokemon_1_input")
-        creator_pokemon_2_input = cleaned_data.get("creator_pokemon_2_input")
-        creator_pokemon_3_input = cleaned_data.get("creator_pokemon_3_input")
+        creator_pokemon_1 = cleaned_data.get("creator_pokemon_1")
+        creator_pokemon_2 = cleaned_data.get("creator_pokemon_2")
+        creator_pokemon_3 = cleaned_data.get("creator_pokemon_3")
+
+        print(creator_pokemon_1, 'CREATOR 1')
+        print(creator_pokemon_2, 'CREATOR 2')
+        print(creator_pokemon_3, 'CREATOR 3')
 
         pokemon_points_sum = 0
         try:
             pokemon_points_sum = get_pokemons_points_sum(
-                [creator_pokemon_1_input, creator_pokemon_2_input, creator_pokemon_3_input]
+                [creator_pokemon_1, creator_pokemon_2, creator_pokemon_3]
             )
         except PokemonNotFound:
             pass
@@ -81,73 +85,70 @@ class BattleForm(forms.ModelForm):
 
         return cleaned_data
 
-    def save(self, commit=True):
-        self.instance.creator_pokemon_1 = save_pokemon(
-            self.cleaned_data.get("creator_pokemon_1_input")
-        )
-        self.instance.creator_pokemon_2 = save_pokemon(
-            self.cleaned_data.get("creator_pokemon_2_input")
-        )
-        self.instance.creator_pokemon_3 = save_pokemon(
-            self.cleaned_data.get("creator_pokemon_3_input")
-        )
-        return super(BattleForm, self).save(commit)
+    # def save(self, commit=True):
+    #     self.instance.creator_pokemon_1 = save_pokemon(
+    #         self.cleaned_data.get("creator_pokemon_1_input")
+    #     )
+    #     self.instance.creator_pokemon_2 = save_pokemon(
+    #         self.cleaned_data.get("creator_pokemon_2_input")
+    #     )
+    #     self.instance.creator_pokemon_3 = save_pokemon(
+    #         self.cleaned_data.get("creator_pokemon_3_input")
+    #     )
+    #     return super(BattleForm, self).save(commit)
 
 
 class BattleOpponentPokemonsForm(forms.ModelForm):
-    """
-    These input fields are used to get the Pokemons' ids in the form.
-    We need to validate that selected Pokemons exist in PokeAPI before creating the battle.
-    """
-
-    opponent_pokemon_1_input = forms.IntegerField(required=True)
-    opponent_pokemon_2_input = forms.IntegerField(required=True)
-    opponent_pokemon_3_input = forms.IntegerField(required=True)
-
-    opponent_pokemon_1 = forms.ModelChoiceField(required=False, queryset=Pokemon.objects.all())
-    opponent_pokemon_2 = forms.ModelChoiceField(required=False, queryset=Pokemon.objects.all())
-    opponent_pokemon_3 = forms.ModelChoiceField(required=False, queryset=Pokemon.objects.all())
+    opponent_pokemon_1 = forms.ModelChoiceField(
+        queryset=Pokemon.objects.all(),
+        widget=autocomplete.ModelSelect2(url="pokemons:pokemon_autocomplete")
+    )
+    opponent_pokemon_2 = forms.ModelChoiceField(
+        queryset=Pokemon.objects.all(),
+        widget=autocomplete.ModelSelect2(url="pokemons:pokemon_autocomplete")
+    )
+    opponent_pokemon_3 = forms.ModelChoiceField(
+        queryset=Pokemon.objects.all(),
+        widget=autocomplete.ModelSelect2(url="pokemons:pokemon_autocomplete")
+    )
 
     class Meta:
         model = Battle
         fields = [
-            "opponent_pokemon_1_input",
-            "opponent_pokemon_2_input",
-            "opponent_pokemon_3_input",
             "opponent_pokemon_1",
             "opponent_pokemon_2",
             "opponent_pokemon_3",
         ]
 
-    def clean_opponent_pokemon_1_input(self):
-        data = self.cleaned_data.get("opponent_pokemon_1_input")
+    def clean_opponent_pokemon_1(self):
+        data = self.cleaned_data.get("opponent_pokemon_1")
         if not pokemon_exists(data):
-            self.add_error("opponent_pokemon_1_input", "Sorry, this pokemon was not found")
+            self.add_error("opponent_pokemon_1", "Sorry, this pokemon was not found")
         return data
 
-    def clean_opponent_pokemon_2_input(self):
-        data = self.cleaned_data.get("opponent_pokemon_2_input")
+    def clean_opponent_pokemon_2(self):
+        data = self.cleaned_data.get("opponent_pokemon_2")
         if not pokemon_exists(data):
-            self.add_error("opponent_pokemon_2_input", "Sorry, this pokemon was not found")
+            self.add_error("opponent_pokemon_2", "Sorry, this pokemon was not found")
         return data
 
-    def clean_opponent_pokemon_3_input(self):
-        data = self.cleaned_data.get("opponent_pokemon_3_input")
+    def clean_opponent_pokemon_3(self):
+        data = self.cleaned_data.get("opponent_pokemon_3")
         if not pokemon_exists(data):
-            self.add_error("opponent_pokemon_3_input", "Sorry, this pokemon was not found")
+            self.add_error("opponent_pokemon_3", "Sorry, this pokemon was not found")
         return data
 
     def clean(self):
         cleaned_data = super().clean()
 
-        opponent_pokemon_1_input = cleaned_data.get("opponent_pokemon_1_input")
-        opponent_pokemon_2_input = cleaned_data.get("opponent_pokemon_2_input")
-        opponent_pokemon_3_input = cleaned_data.get("opponent_pokemon_3_input")
+        opponent_pokemon_1 = cleaned_data.get("opponent_pokemon_1")
+        opponent_pokemon_2 = cleaned_data.get("opponent_pokemon_2")
+        opponent_pokemon_3 = cleaned_data.get("opponent_pokemon_3")
 
         pokemon_points_sum = 0
         try:
             pokemon_points_sum = get_pokemons_points_sum(
-                [opponent_pokemon_1_input, opponent_pokemon_2_input, opponent_pokemon_3_input]
+                [opponent_pokemon_1, opponent_pokemon_2, opponent_pokemon_3]
             )
         except PokemonNotFound:
             pass
@@ -157,14 +158,14 @@ class BattleOpponentPokemonsForm(forms.ModelForm):
 
         return cleaned_data
 
-    def save(self, commit=True):
-        self.instance.opponent_pokemon_1 = save_pokemon(
-            self.cleaned_data.get("opponent_pokemon_1_input")
-        )
-        self.instance.opponent_pokemon_2 = save_pokemon(
-            self.cleaned_data.get("opponent_pokemon_2_input")
-        )
-        self.instance.opponent_pokemon_3 = save_pokemon(
-            self.cleaned_data.get("opponent_pokemon_3_input")
-        )
-        return super(BattleOpponentPokemonsForm, self).save(commit)
+    # def save(self, commit=True):
+    #     self.instance.opponent_pokemon_1 = save_pokemon(
+    #         self.cleaned_data.get("opponent_pokemon_1_input")
+    #     )
+    #     self.instance.opponent_pokemon_2 = save_pokemon(
+    #         self.cleaned_data.get("opponent_pokemon_2_input")
+    #     )
+    #     self.instance.opponent_pokemon_3 = save_pokemon(
+    #         self.cleaned_data.get("opponent_pokemon_3_input")
+    #     )
+    #     return super(BattleOpponentPokemonsForm, self).save(commit)

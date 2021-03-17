@@ -13,20 +13,44 @@
     <span class="field-error">{{ form.opponent.errors }}</span>
   </div>
   <div class="field-wrapper">
-    <label for="{{ form.creator_pokemon_1_input.id_for_label }}">Pokemon 1:</label>
-    {{ form.creator_pokemon_1_input }}
-    <span class="field-error">{{ form.creator_pokemon_1_input.errors }}</span>
+    <label for="{{ form.creator_pokemon_1.id_for_label }}">Pokemon 1:</label>
+    {{ form.creator_pokemon_1 }}
+    <span class="field-error">{{ form.creator_pokemon_1.errors }}</span>
   </div>
   <div class="field-wrapper">
-    <label for="{{ form.creator_pokemon_2_input.id_for_label }}">Pokemon 2:</label>
-    {{ form.creator_pokemon_2_input }}
-    <span class="field-error">{{ form.creator_pokemon_2_input.errors }}</span>
+    <label for="{{ form.creator_pokemon_2.id_for_label }}">Pokemon 2:</label>
+    {{ form.creator_pokemon_2 }}
+    <span class="field-error">{{ form.creator_pokemon_2.errors }}</span>
   </div>
   <div class="field-wrapper">
-    <label for="{{ form.creator_pokemon_3_input.id_for_label }}">Pokemon 3:</label>
-    {{ form.creator_pokemon_3_input }}
-    <span class="field-error">{{ form.creator_pokemon_3_input.errors }}</span>
+    <label for="{{ form.creator_pokemon_3.id_for_label }}">Pokemon 3:</label>
+    {{ form.creator_pokemon_3 }}
+    <span class="field-error">{{ form.creator_pokemon_3.errors }}</span>
   </div>
   <button type="submit">Create Battle</button>
 </form>
 <a class="nav-link" href="{% url 'battles:battle_list' %}">Back to list</a>
+
+<script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
+
+{{ form.media }}
+<script>
+  (function($) {
+      $('#add-form').click(function() {
+          var index = $('#id_inline_test_models-TOTAL_FORMS').val()
+          var newTable = $('#id_inline_test_models-__prefix__-DELETE').parents('table').clone()
+          newTable.find(':input').each(function() {
+              for (attr of ['name', 'id'])
+                  $(this).attr(
+                      attr,
+                      $(this).attr(attr).replace('__prefix__', index)
+                  )
+          })
+          newTable.insertBefore($(this))
+          $('#id_inline_test_models-TOTAL_FORMS').val(
+              parseInt($('#id_inline_test_models-TOTAL_FORMS').val()) + 1
+          )
+          newTable.slideDown()
+      })
+  })($)
+  </script>
