@@ -4,7 +4,7 @@ from django import forms
 
 from battles.models import Battle
 from pokemons.exceptions import PokemonNotFound
-from pokemons.helpers import save_pokemon, get_pokemons_points_sum
+from pokemons.helpers import get_pokemons_points_sum
 from pokemons.models import Pokemon
 from pokemons.services import pokemon_exists
 from users.models import User
@@ -68,10 +68,6 @@ class BattleForm(forms.ModelForm):
         creator_pokemon_2 = cleaned_data.get("creator_pokemon_2")
         creator_pokemon_3 = cleaned_data.get("creator_pokemon_3")
 
-        print(creator_pokemon_1, 'CREATOR 1')
-        print(creator_pokemon_2, 'CREATOR 2')
-        print(creator_pokemon_3, 'CREATOR 3')
-
         pokemon_points_sum = 0
         try:
             pokemon_points_sum = get_pokemons_points_sum(
@@ -84,18 +80,6 @@ class BattleForm(forms.ModelForm):
             raise forms.ValidationError("Pokemons' points sum cannot be more than 600")
 
         return cleaned_data
-
-    # def save(self, commit=True):
-    #     self.instance.creator_pokemon_1 = save_pokemon(
-    #         self.cleaned_data.get("creator_pokemon_1_input")
-    #     )
-    #     self.instance.creator_pokemon_2 = save_pokemon(
-    #         self.cleaned_data.get("creator_pokemon_2_input")
-    #     )
-    #     self.instance.creator_pokemon_3 = save_pokemon(
-    #         self.cleaned_data.get("creator_pokemon_3_input")
-    #     )
-    #     return super(BattleForm, self).save(commit)
 
 
 class BattleOpponentPokemonsForm(forms.ModelForm):
@@ -157,15 +141,3 @@ class BattleOpponentPokemonsForm(forms.ModelForm):
             raise forms.ValidationError("Pokemons' points sum cannot be more than 600")
 
         return cleaned_data
-
-    # def save(self, commit=True):
-    #     self.instance.opponent_pokemon_1 = save_pokemon(
-    #         self.cleaned_data.get("opponent_pokemon_1_input")
-    #     )
-    #     self.instance.opponent_pokemon_2 = save_pokemon(
-    #         self.cleaned_data.get("opponent_pokemon_2_input")
-    #     )
-    #     self.instance.opponent_pokemon_3 = save_pokemon(
-    #         self.cleaned_data.get("opponent_pokemon_3_input")
-    #     )
-    #     return super(BattleOpponentPokemonsForm, self).save(commit)
