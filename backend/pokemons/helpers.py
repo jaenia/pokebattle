@@ -1,6 +1,6 @@
 from pokemons.exceptions import PokemonNotFound
 from pokemons.models import Pokemon
-from pokemons.services import get_pokemon_by_id, pokemon_exists
+from pokemons.services import get_pokemon_by_id, get_pokemon_by_name, pokemon_exists
 
 
 def save_pokemon(poke_id):
@@ -26,6 +26,7 @@ def save_pokemon(poke_id):
     )
 
     return pokemon
+
 
 def get_pokemons_points_sum(names):
     points_sum = 0
