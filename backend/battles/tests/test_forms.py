@@ -299,90 +299,46 @@ class BattleCreateFormTests(TestCase):
 
 class BattleOpponentPokemonsFormTests(TestCase):
     @responses.activate
-    def test_cannot_create_battle_if_pokemon_does_not_exist_in_api(self):
-        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/0", status=404)
-        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/1", status=200)
-        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/2", status=200)
-
-        responses.add(
-            responses.GET,
-            f"{POKEAPI_BASE_URL}pokemon/0",
-            status=404,
-            json={"error": "not found"},
-        )
-        responses.add(
-            responses.GET,
-            f"{POKEAPI_BASE_URL}pokemon/1",
-            status=200,
-            json={
-                "id": 1,
-                "name": "pokemon1",
-                "stats": [{"base_stat": 45}, {"base_stat": 49}, {"base_stat": 49}],
-            },
-        )
-        responses.add(
-            responses.GET,
-            f"{POKEAPI_BASE_URL}pokemon/2",
-            status=200,
-            json={
-                "id": 2,
-                "name": "pokemon2",
-                "stats": [{"base_stat": 50}, {"base_stat": 64}, {"base_stat": 64}],
-            },
-        )
-
-        data = {
-            "opponent_pokemon_1_input": 0,
-            "opponent_pokemon_2_input": 1,
-            "opponent_pokemon_3_input": 2,
-        }
-
-        form = BattleOpponentPokemonsForm(data=data)
-        self.assertFalse(form.is_valid())
-
-        self.assertIn("opponent_pokemon_1_input", form.errors)
-
-    @responses.activate
     def test_cannot_create_battle_if_pokemon_points_sum_more_than_600(self):
-        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/1", status=200)
-        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/2", status=200)
-        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/3", status=200)
+        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/pokemon1", status=200)
+        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/pokemon2", status=200)
+        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/pokemon3", status=200)
 
-        responses.add(
-            responses.GET,
-            f"{POKEAPI_BASE_URL}pokemon/1",
-            status=200,
-            json={
-                "id": 1,
-                "name": "pokemon1",
-                "stats": [{"base_stat": 100}, {"base_stat": 100}, {"base_stat": 100}],
-            },
+        pokemon_1 = mommy.make(
+            "pokemons.Pokemon",
+            poke_id=1,
+            name="pokemon1",
+            attack=100,
+            defense=100,
+            hit_points=100,
+            image="https://raw.githubusercontent.com/"
+                  "PokeAPI/sprites/master/sprites/pokemon/1.png"
         )
-        responses.add(
-            responses.GET,
-            f"{POKEAPI_BASE_URL}pokemon/2",
-            status=200,
-            json={
-                "id": 2,
-                "name": "pokemon2",
-                "stats": [{"base_stat": 100}, {"base_stat": 100}, {"base_stat": 100}],
-            },
+        pokemon_2 = mommy.make(
+            "pokemons.Pokemon",
+            poke_id=2,
+            name="pokemon2",
+            attack=100,
+            defense=100,
+            hit_points=100,
+            image="https://raw.githubusercontent.com/"
+                  "PokeAPI/sprites/master/sprites/pokemon/2.png"
         )
-        responses.add(
-            responses.GET,
-            f"{POKEAPI_BASE_URL}pokemon/3",
-            status=200,
-            json={
-                "id": 3,
-                "name": "pokemon3",
-                "stats": [{"base_stat": 100}, {"base_stat": 100}, {"base_stat": 100}],
-            },
+        pokemon_3 = mommy.make(
+            "pokemons.Pokemon",
+            poke_id=3,
+            name="pokemon3",
+            attack=100,
+            defense=100,
+            hit_points=100,
+            image="https://raw.githubusercontent.com/"
+                  "PokeAPI/sprites/master/sprites/pokemon/3.png"
         )
 
         data = {
-            "opponent_pokemon_1_input": 1,
-            "opponent_pokemon_2_input": 2,
-            "opponent_pokemon_3_input": 3,
+            "opponent_pokemon_1": pokemon_1.id,
+            "opponent_pokemon_2": pokemon_2.id,
+            "opponent_pokemon_3": pokemon_3.id,
         }
 
         form = BattleOpponentPokemonsForm(data=data)
