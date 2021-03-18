@@ -120,60 +120,48 @@ class BattleCreateViewTests(TestCase):
 
     @responses.activate
     def test_battle_create(self):
-        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/1", status=200)
-        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/2", status=200)
-        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/3", status=200)
+        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/pokemon1", status=200)
+        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/pokemon2", status=200)
+        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/pokemon3", status=200)
 
-        responses.add(
-            responses.GET,
-            f"{POKEAPI_BASE_URL}pokemon/1",
-            status=200,
-            json={
-                "id": 1,
-                "name": "pokemon1",
-                "stats": [{"base_stat": 45}, {"base_stat": 49}, {"base_stat": 49}],
-                "sprites": {
-                    "front_default": "https://raw.githubusercontent.com/"
-                    "PokeAPI/sprites/master/sprites/pokemon/1.png"
-                },
-            },
+        pokemon_1 = mommy.make(
+            "pokemons.Pokemon",
+            poke_id=1,
+            name="pokemon1",
+            attack=49,
+            defense=49,
+            hit_points=45,
+            image="https://raw.githubusercontent.com/"
+                  "PokeAPI/sprites/master/sprites/pokemon/1.png"
         )
-        responses.add(
-            responses.GET,
-            f"{POKEAPI_BASE_URL}pokemon/2",
-            status=200,
-            json={
-                "id": 2,
-                "name": "pokemon2",
-                "stats": [{"base_stat": 50}, {"base_stat": 64}, {"base_stat": 64}],
-                "sprites": {
-                    "front_default": "https://raw.githubusercontent.com/"
-                    "PokeAPI/sprites/master/sprites/pokemon/2.png"
-                },
-            },
+        pokemon_2 = mommy.make(
+            "pokemons.Pokemon",
+            poke_id=2,
+            name="pokemon2",
+            attack=64,
+            defense=64,
+            hit_points=50,
+            image="https://raw.githubusercontent.com/"
+                  "PokeAPI/sprites/master/sprites/pokemon/2.png"
         )
-        responses.add(
-            responses.GET,
-            f"{POKEAPI_BASE_URL}pokemon/3",
-            status=200,
-            json={
-                "id": 3,
-                "name": "pokemon3",
-                "stats": [{"base_stat": 55}, {"base_stat": 69}, {"base_stat": 69}],
-                "sprites": {
-                    "front_default": "https://raw.githubusercontent.com/"
-                    "PokeAPI/sprites/master/sprites/pokemon/3.png"
-                },
-            },
+        pokemon_3 = mommy.make(
+            "pokemons.Pokemon",
+            poke_id=3,
+            name="pokemon3",
+            attack=69,
+            defense=69,
+            hit_points=55,
+            image="https://raw.githubusercontent.com/"
+                  "PokeAPI/sprites/master/sprites/pokemon/3.png"
         )
 
         opponent = mommy.make("users.User")
 
         data = {
             "opponent": opponent.id,
-            "creator_pokemon_1_input": 1,
-            "creator_pokemon_2_input": 2,
-            "creator_pokemon_3_input": 3,
+            "creator_pokemon_1": pokemon_1.id,
+            "creator_pokemon_2": pokemon_2.id,
+            "creator_pokemon_3": pokemon_3.id,
         }
         url = reverse("battles:battle_create")
 
@@ -192,46 +180,46 @@ class BattleCreateViewTests(TestCase):
 
     @responses.activate
     def test_cannot_create_battle_with_same_user_as_opponent_and_creator(self):
-        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/1", status=200)
-        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/2", status=200)
-        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/3", status=200)
+        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/pokemon1", status=200)
+        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/pokemon2", status=200)
+        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/pokemon3", status=200)
 
-        responses.add(
-            responses.GET,
-            f"{POKEAPI_BASE_URL}pokemon/1",
-            status=200,
-            json={
-                "id": 1,
-                "name": "pokemon1",
-                "stats": [{"base_stat": 45}, {"base_stat": 49}, {"base_stat": 49}],
-            },
+        pokemon_1 = mommy.make(
+            "pokemons.Pokemon",
+            poke_id=1,
+            name="pokemon1",
+            attack=49,
+            defense=49,
+            hit_points=45,
+            image="https://raw.githubusercontent.com/"
+                  "PokeAPI/sprites/master/sprites/pokemon/1.png"
         )
-        responses.add(
-            responses.GET,
-            f"{POKEAPI_BASE_URL}pokemon/2",
-            status=200,
-            json={
-                "id": 2,
-                "name": "pokemon2",
-                "stats": [{"base_stat": 50}, {"base_stat": 64}, {"base_stat": 64}],
-            },
+        pokemon_2 = mommy.make(
+            "pokemons.Pokemon",
+            poke_id=2,
+            name="pokemon2",
+            attack=64,
+            defense=64,
+            hit_points=50,
+            image="https://raw.githubusercontent.com/"
+                  "PokeAPI/sprites/master/sprites/pokemon/2.png"
         )
-        responses.add(
-            responses.GET,
-            f"{POKEAPI_BASE_URL}pokemon/3",
-            status=200,
-            json={
-                "id": 3,
-                "name": "pokemon3",
-                "stats": [{"base_stat": 55}, {"base_stat": 69}, {"base_stat": 69}],
-            },
+        pokemon_3 = mommy.make(
+            "pokemons.Pokemon",
+            poke_id=3,
+            name="pokemon3",
+            attack=69,
+            defense=69,
+            hit_points=55,
+            image="https://raw.githubusercontent.com/"
+                  "PokeAPI/sprites/master/sprites/pokemon/3.png"
         )
 
         data = {
             "opponent": self.user.id,
-            "creator_pokemon_1_input": 1,
-            "creator_pokemon_2_input": 2,
-            "creator_pokemon_3_input": 3,
+            "creator_pokemon_1": pokemon_1.id,
+            "creator_pokemon_2": pokemon_2.id,
+            "creator_pokemon_3": pokemon_3.id,
         }
         url = reverse("battles:battle_create")
         response = self.client.post(url, data)
@@ -259,58 +247,42 @@ class BattleUpdateOpponentPokemonsViewTests(TestCase):
     @responses.activate
     @mock.patch("battles.views.send_battle_result")
     def test_opponent_select_pokemons(self, send_mock):
-        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/1", status=200)
-        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/2", status=200)
-        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/3", status=200)
+        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/pokemon1", status=200)
+        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/pokemon2", status=200)
+        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/pokemon3", status=200)
 
-        responses.add(
-            responses.GET,
-            f"{POKEAPI_BASE_URL}pokemon/1",
-            status=200,
-            json={
-                "id": 1,
-                "name": "pokemon1",
-                "stats": [{"base_stat": 45}, {"base_stat": 49}, {"base_stat": 49}],
-                "sprites": {
-                    "front_default": "https://raw.githubusercontent.com/"
-                    "PokeAPI/sprites/master/sprites/pokemon/1.png"
-                },
-            },
+        pokemon_1 = mommy.make(
+            "pokemons.Pokemon",
+            poke_id=1,
+            name="pokemon1",
+            attack=49,
+            defense=49,
+            hit_points=45,
+            image="https://raw.githubusercontent.com/"
+            "PokeAPI/sprites/master/sprites/pokemon/1.png"
         )
-        responses.add(
-            responses.GET,
-            f"{POKEAPI_BASE_URL}pokemon/2",
-            status=200,
-            json={
-                "id": 2,
-                "name": "pokemon2",
-                "stats": [{"base_stat": 50}, {"base_stat": 64}, {"base_stat": 64}],
-                "sprites": {
-                    "front_default": "https://raw.githubusercontent.com/"
-                    "PokeAPI/sprites/master/sprites/pokemon/2.png"
-                },
-            },
+        pokemon_2 = mommy.make(
+            "pokemons.Pokemon",
+            poke_id=2,
+            name="pokemon2",
+            attack=64,
+            defense=64,
+            hit_points=50,
+            image="https://raw.githubusercontent.com/"
+            "PokeAPI/sprites/master/sprites/pokemon/2.png"
         )
-        responses.add(
-            responses.GET,
-            f"{POKEAPI_BASE_URL}pokemon/3",
-            status=200,
-            json={
-                "id": 3,
-                "name": "pokemon3",
-                "stats": [{"base_stat": 55}, {"base_stat": 69}, {"base_stat": 69}],
-                "sprites": {
-                    "front_default": "https://raw.githubusercontent.com/"
-                    "PokeAPI/sprites/master/sprites/pokemon/3.png"
-                },
-            },
+        pokemon_3 = mommy.make(
+            "pokemons.Pokemon",
+            poke_id=3,
+            name="pokemon3",
+            attack=69,
+            defense=69,
+            hit_points=55,
+            image="https://raw.githubusercontent.com/"
+            "PokeAPI/sprites/master/sprites/pokemon/3.png"
         )
 
         opponent = mommy.make("users.User")
-
-        pokemon_1 = mommy.make("pokemons.Pokemon")
-        pokemon_2 = mommy.make("pokemons.Pokemon")
-        pokemon_3 = mommy.make("pokemons.Pokemon")
 
         battle = mommy.make(
             "battles.Battle",
@@ -322,9 +294,9 @@ class BattleUpdateOpponentPokemonsViewTests(TestCase):
         )
 
         data = {
-            "opponent_pokemon_1_input": 3,
-            "opponent_pokemon_2_input": 2,
-            "opponent_pokemon_3_input": 1,
+            "opponent_pokemon_1": pokemon_3.id,
+            "opponent_pokemon_2": pokemon_2.id,
+            "opponent_pokemon_3": pokemon_1.id,
         }
 
         self.assertIsNone(battle.opponent_pokemon_1)
