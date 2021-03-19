@@ -23,7 +23,7 @@ class BattleCreateFormTests(TestCase):
             defense=49,
             hit_points=45,
             image="https://raw.githubusercontent.com/"
-                  "PokeAPI/sprites/master/sprites/pokemon/1.png"
+            "PokeAPI/sprites/master/sprites/pokemon/1.png",
         )
         pokemon_2 = mommy.make(
             "pokemons.Pokemon",
@@ -33,7 +33,7 @@ class BattleCreateFormTests(TestCase):
             defense=64,
             hit_points=50,
             image="https://raw.githubusercontent.com/"
-                  "PokeAPI/sprites/master/sprites/pokemon/2.png"
+            "PokeAPI/sprites/master/sprites/pokemon/2.png",
         )
         pokemon_3 = mommy.make(
             "pokemons.Pokemon",
@@ -43,7 +43,7 @@ class BattleCreateFormTests(TestCase):
             defense=69,
             hit_points=55,
             image="https://raw.githubusercontent.com/"
-                  "PokeAPI/sprites/master/sprites/pokemon/3.png"
+            "PokeAPI/sprites/master/sprites/pokemon/3.png",
         )
 
         current_user = mommy.make("users.User")
@@ -80,7 +80,7 @@ class BattleCreateFormTests(TestCase):
             defense=49,
             hit_points=45,
             image="https://raw.githubusercontent.com/"
-                  "PokeAPI/sprites/master/sprites/pokemon/1.png"
+            "PokeAPI/sprites/master/sprites/pokemon/1.png",
         )
         pokemon_2 = mommy.make(
             "pokemons.Pokemon",
@@ -90,7 +90,7 @@ class BattleCreateFormTests(TestCase):
             defense=64,
             hit_points=50,
             image="https://raw.githubusercontent.com/"
-                  "PokeAPI/sprites/master/sprites/pokemon/2.png"
+            "PokeAPI/sprites/master/sprites/pokemon/2.png",
         )
         pokemon_3 = mommy.make(
             "pokemons.Pokemon",
@@ -100,7 +100,7 @@ class BattleCreateFormTests(TestCase):
             defense=69,
             hit_points=55,
             image="https://raw.githubusercontent.com/"
-                  "PokeAPI/sprites/master/sprites/pokemon/3.png"
+            "PokeAPI/sprites/master/sprites/pokemon/3.png",
         )
 
         current_user = mommy.make("users.User")
@@ -131,7 +131,7 @@ class BattleCreateFormTests(TestCase):
             defense=49,
             hit_points=45,
             image="https://raw.githubusercontent.com/"
-                  "PokeAPI/sprites/master/sprites/pokemon/1.png"
+            "PokeAPI/sprites/master/sprites/pokemon/1.png",
         )
         pokemon_2 = mommy.make(
             "pokemons.Pokemon",
@@ -141,7 +141,7 @@ class BattleCreateFormTests(TestCase):
             defense=64,
             hit_points=50,
             image="https://raw.githubusercontent.com/"
-                  "PokeAPI/sprites/master/sprites/pokemon/2.png"
+            "PokeAPI/sprites/master/sprites/pokemon/2.png",
         )
         pokemon_3 = mommy.make(
             "pokemons.Pokemon",
@@ -151,7 +151,7 @@ class BattleCreateFormTests(TestCase):
             defense=69,
             hit_points=55,
             image="https://raw.githubusercontent.com/"
-                  "PokeAPI/sprites/master/sprites/pokemon/3.png"
+            "PokeAPI/sprites/master/sprites/pokemon/3.png",
         )
 
         current_user = mommy.make("users.User")
@@ -186,7 +186,7 @@ class BattleCreateFormTests(TestCase):
             defense=100,
             hit_points=100,
             image="https://raw.githubusercontent.com/"
-                  "PokeAPI/sprites/master/sprites/pokemon/1.png"
+            "PokeAPI/sprites/master/sprites/pokemon/1.png",
         )
         pokemon_2 = mommy.make(
             "pokemons.Pokemon",
@@ -196,7 +196,7 @@ class BattleCreateFormTests(TestCase):
             defense=100,
             hit_points=100,
             image="https://raw.githubusercontent.com/"
-                  "PokeAPI/sprites/master/sprites/pokemon/2.png"
+            "PokeAPI/sprites/master/sprites/pokemon/2.png",
         )
         pokemon_3 = mommy.make(
             "pokemons.Pokemon",
@@ -206,7 +206,7 @@ class BattleCreateFormTests(TestCase):
             defense=100,
             hit_points=100,
             image="https://raw.githubusercontent.com/"
-                  "PokeAPI/sprites/master/sprites/pokemon/3.png"
+            "PokeAPI/sprites/master/sprites/pokemon/3.png",
         )
 
         current_user = mommy.make("users.User")
@@ -240,7 +240,7 @@ class BattleOpponentPokemonsFormTests(TestCase):
             defense=100,
             hit_points=100,
             image="https://raw.githubusercontent.com/"
-                  "PokeAPI/sprites/master/sprites/pokemon/1.png"
+            "PokeAPI/sprites/master/sprites/pokemon/1.png",
         )
         pokemon_2 = mommy.make(
             "pokemons.Pokemon",
@@ -250,7 +250,7 @@ class BattleOpponentPokemonsFormTests(TestCase):
             defense=100,
             hit_points=100,
             image="https://raw.githubusercontent.com/"
-                  "PokeAPI/sprites/master/sprites/pokemon/2.png"
+            "PokeAPI/sprites/master/sprites/pokemon/2.png",
         )
         pokemon_3 = mommy.make(
             "pokemons.Pokemon",
@@ -260,7 +260,7 @@ class BattleOpponentPokemonsFormTests(TestCase):
             defense=100,
             hit_points=100,
             image="https://raw.githubusercontent.com/"
-                  "PokeAPI/sprites/master/sprites/pokemon/3.png"
+            "PokeAPI/sprites/master/sprites/pokemon/3.png",
         )
 
         data = {

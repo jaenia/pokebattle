@@ -15,15 +15,15 @@ class BattleForm(forms.ModelForm):
 
     creator_pokemon_1 = forms.ModelChoiceField(
         queryset=Pokemon.objects.all(),
-        widget=autocomplete.ModelSelect2(url="pokemons:pokemon_autocomplete")
+        widget=autocomplete.ModelSelect2(url="pokemons:pokemon_autocomplete"),
     )
     creator_pokemon_2 = forms.ModelChoiceField(
         queryset=Pokemon.objects.all(),
-        widget=autocomplete.ModelSelect2(url="pokemons:pokemon_autocomplete")
+        widget=autocomplete.ModelSelect2(url="pokemons:pokemon_autocomplete"),
     )
     creator_pokemon_3 = forms.ModelChoiceField(
         queryset=Pokemon.objects.all(),
-        widget=autocomplete.ModelSelect2(url="pokemons:pokemon_autocomplete")
+        widget=autocomplete.ModelSelect2(url="pokemons:pokemon_autocomplete"),
     )
 
     class Meta:
@@ -85,15 +85,15 @@ class BattleForm(forms.ModelForm):
 class BattleOpponentPokemonsForm(forms.ModelForm):
     opponent_pokemon_1 = forms.ModelChoiceField(
         queryset=Pokemon.objects.all(),
-        widget=autocomplete.ModelSelect2(url="pokemons:pokemon_autocomplete")
+        widget=autocomplete.ModelSelect2(url="pokemons:pokemon_autocomplete"),
     )
     opponent_pokemon_2 = forms.ModelChoiceField(
         queryset=Pokemon.objects.all(),
-        widget=autocomplete.ModelSelect2(url="pokemons:pokemon_autocomplete")
+        widget=autocomplete.ModelSelect2(url="pokemons:pokemon_autocomplete"),
     )
     opponent_pokemon_3 = forms.ModelChoiceField(
         queryset=Pokemon.objects.all(),
-        widget=autocomplete.ModelSelect2(url="pokemons:pokemon_autocomplete")
+        widget=autocomplete.ModelSelect2(url="pokemons:pokemon_autocomplete"),
     )
 
     class Meta:

@@ -132,7 +132,7 @@ class BattleCreateViewTests(TestCase):
             defense=49,
             hit_points=45,
             image="https://raw.githubusercontent.com/"
-                  "PokeAPI/sprites/master/sprites/pokemon/1.png"
+            "PokeAPI/sprites/master/sprites/pokemon/1.png",
         )
         pokemon_2 = mommy.make(
             "pokemons.Pokemon",
@@ -142,7 +142,7 @@ class BattleCreateViewTests(TestCase):
             defense=64,
             hit_points=50,
             image="https://raw.githubusercontent.com/"
-                  "PokeAPI/sprites/master/sprites/pokemon/2.png"
+            "PokeAPI/sprites/master/sprites/pokemon/2.png",
         )
         pokemon_3 = mommy.make(
             "pokemons.Pokemon",
@@ -152,7 +152,7 @@ class BattleCreateViewTests(TestCase):
             defense=69,
             hit_points=55,
             image="https://raw.githubusercontent.com/"
-                  "PokeAPI/sprites/master/sprites/pokemon/3.png"
+            "PokeAPI/sprites/master/sprites/pokemon/3.png",
         )
 
         opponent = mommy.make("users.User")
@@ -192,7 +192,7 @@ class BattleCreateViewTests(TestCase):
             defense=49,
             hit_points=45,
             image="https://raw.githubusercontent.com/"
-                  "PokeAPI/sprites/master/sprites/pokemon/1.png"
+            "PokeAPI/sprites/master/sprites/pokemon/1.png",
         )
         pokemon_2 = mommy.make(
             "pokemons.Pokemon",
@@ -202,7 +202,7 @@ class BattleCreateViewTests(TestCase):
             defense=64,
             hit_points=50,
             image="https://raw.githubusercontent.com/"
-                  "PokeAPI/sprites/master/sprites/pokemon/2.png"
+            "PokeAPI/sprites/master/sprites/pokemon/2.png",
         )
         pokemon_3 = mommy.make(
             "pokemons.Pokemon",
@@ -212,7 +212,7 @@ class BattleCreateViewTests(TestCase):
             defense=69,
             hit_points=55,
             image="https://raw.githubusercontent.com/"
-                  "PokeAPI/sprites/master/sprites/pokemon/3.png"
+            "PokeAPI/sprites/master/sprites/pokemon/3.png",
         )
 
         data = {
@@ -259,7 +259,7 @@ class BattleUpdateOpponentPokemonsViewTests(TestCase):
             defense=49,
             hit_points=45,
             image="https://raw.githubusercontent.com/"
-            "PokeAPI/sprites/master/sprites/pokemon/1.png"
+            "PokeAPI/sprites/master/sprites/pokemon/1.png",
         )
         pokemon_2 = mommy.make(
             "pokemons.Pokemon",
@@ -269,7 +269,7 @@ class BattleUpdateOpponentPokemonsViewTests(TestCase):
             defense=64,
             hit_points=50,
             image="https://raw.githubusercontent.com/"
-            "PokeAPI/sprites/master/sprites/pokemon/2.png"
+            "PokeAPI/sprites/master/sprites/pokemon/2.png",
         )
         pokemon_3 = mommy.make(
             "pokemons.Pokemon",
@@ -279,7 +279,7 @@ class BattleUpdateOpponentPokemonsViewTests(TestCase):
             defense=69,
             hit_points=55,
             image="https://raw.githubusercontent.com/"
-            "PokeAPI/sprites/master/sprites/pokemon/3.png"
+            "PokeAPI/sprites/master/sprites/pokemon/3.png",
         )
 
         opponent = mommy.make("users.User")
