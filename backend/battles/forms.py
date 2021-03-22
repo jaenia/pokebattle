@@ -71,7 +71,7 @@ class BattleForm(forms.ModelForm):
         pokemon_points_sum = 0
         try:
             pokemon_points_sum = get_pokemons_points_sum(
-                [creator_pokemon_1, creator_pokemon_2, creator_pokemon_3]
+                [creator_pokemon_1.name, creator_pokemon_2.name, creator_pokemon_3.name]
             )
         except PokemonNotFound:
             pass
@@ -132,7 +132,7 @@ class BattleOpponentPokemonsForm(forms.ModelForm):
         pokemon_points_sum = 0
         try:
             pokemon_points_sum = get_pokemons_points_sum(
-                [opponent_pokemon_1, opponent_pokemon_2, opponent_pokemon_3]
+                [opponent_pokemon_1.name, opponent_pokemon_2.name, opponent_pokemon_3.name]
             )
         except PokemonNotFound:
             pass
