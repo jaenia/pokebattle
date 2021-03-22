@@ -27,7 +27,10 @@
 </form>
 <a class="nav-link" href="{% url 'battles:battle_list' %}">Back to list</a>
 
-<!-- django-autocomplete-light configuration -->
+<!--
+django-autocomplete-light configurations to use autocompletes outside the admin
+https://django-autocomplete-light.readthedocs.io/en/master/tutorial.html#using-autocompletes-outside-the-admin
+-->
 <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
 
 {{ form.media }}
