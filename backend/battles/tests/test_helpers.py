@@ -1,7 +1,8 @@
 from django.test import TestCase
 from model_mommy import mommy
 
-from battles.helpers import get_battle_result
+from battles.exceptions import DuplicatedPokemonPositions
+from battles.helpers import get_battle_result, position_pokemons
 
 
 class BattleHelperTests(TestCase):
@@ -114,3 +115,42 @@ class BattleHelperTests(TestCase):
 
         with self.assertRaises(Exception):
             get_battle_result(battle)
+
+    def test_position_pokemons(self):
+        pokemon_1 = mommy.make("pokemons.Pokemon", name="pokemon1")
+        pokemon_2 = mommy.make("pokemons.Pokemon", name="pokemon2")
+        pokemon_3 = mommy.make("pokemons.Pokemon", name="pokemon3")
+
+        position_pokemon_1 = 3
+        position_pokemon_2 = 1
+        position_pokemon_3 = 2
+
+        positioned_pokemons = position_pokemons(
+            pokemon_1,
+            pokemon_2,
+            pokemon_3,
+            position_pokemon_1,
+            position_pokemon_2,
+            position_pokemon_3,
+        )
+
+        self.assertEqual(positioned_pokemons, [pokemon_2, pokemon_3, pokemon_1])
+
+    def test_position_pokemons_raises_exception_if_duplicated_positions(self):
+        pokemon_1 = mommy.make("pokemons.Pokemon", name="pokemon1")
+        pokemon_2 = mommy.make("pokemons.Pokemon", name="pokemon2")
+        pokemon_3 = mommy.make("pokemons.Pokemon", name="pokemon3")
+
+        position_pokemon_1 = 3
+        position_pokemon_2 = 1
+        position_pokemon_3 = 1
+
+        with self.assertRaises(DuplicatedPokemonPositions):
+            position_pokemons(
+                pokemon_1,
+                pokemon_2,
+                pokemon_3,
+                position_pokemon_1,
+                position_pokemon_2,
+                position_pokemon_3,
+            )

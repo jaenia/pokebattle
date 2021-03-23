@@ -1,6 +1,8 @@
 from decouple import config  # noqa
 from templated_email import send_templated_mail
 
+from battles.exceptions import DuplicatedPokemonPositions
+
 
 def compare_pokemons(pokemon_1, pokemon_2):
     pokemon_1_victory_points = 0
@@ -70,3 +72,18 @@ def send_battle_result(battle):
             "battle_opponent_pokemon_3": battle.opponent_pokemon_3.name,
         },
     )
+
+
+def position_pokemons(
+    pokemon_1, pokemon_2, pokemon_3, position_pokemon_1, position_pokemon_2, position_pokemon_3
+):
+    position_list = [position_pokemon_1, position_pokemon_2, position_pokemon_3]
+    if len(position_list) != len(set(position_list)):
+        raise DuplicatedPokemonPositions()
+
+    positioned_pokemons = []
+    positioned_pokemons.insert(position_pokemon_1 - 1, pokemon_1)
+    positioned_pokemons.insert(position_pokemon_2 - 1, pokemon_2)
+    positioned_pokemons.insert(position_pokemon_3 - 1, pokemon_3)
+
+    return positioned_pokemons
