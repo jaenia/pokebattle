@@ -49,6 +49,8 @@ diff-match-patch>=20200713
     # via django-import-export
 dj-database-url>=0.5.0
     # via -r requirements.in
+django-autocomplete-light>=3.8.2
+    # via -r requirements.in
 django-import-export>=2.5.0
     # via -r requirements.in
 django-js-reverse>=0.9.1
@@ -143,6 +145,7 @@ sentry-sdk>=1.0.0
 six>=1.15.0
     # via
     #   click-repl
+    #   django-autocomplete-light
     #   django-templated-email
     #   social-auth-app-django
 social-auth-app-django>=4.0.0

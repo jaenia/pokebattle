@@ -3,8 +3,8 @@ import requests
 from common.constants import POKEAPI_BASE_URL
 
 
-def pokemon_exists(pokemon_id):
-    response = requests.head(f"{POKEAPI_BASE_URL}pokemon/{pokemon_id}")
+def pokemon_exists(name):
+    response = requests.head(f"{POKEAPI_BASE_URL}pokemon/{name}")
     return bool(response)
 
 

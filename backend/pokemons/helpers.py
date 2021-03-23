@@ -1,6 +1,6 @@
 from pokemons.exceptions import PokemonNotFound
 from pokemons.models import Pokemon
-from pokemons.services import get_pokemon_by_id, pokemon_exists
+from pokemons.services import get_pokemon_by_id, get_pokemon_by_name, pokemon_exists
 
 
 def save_pokemon(poke_id):
@@ -28,21 +28,26 @@ def save_pokemon(poke_id):
     return pokemon
 
 
-def get_pokemons_points_sum(poke_ids):
+def get_pokemons_points_sum(names):
     points_sum = 0
-    for poke_id in poke_ids:
-        pokemon = Pokemon.objects.filter(poke_id=poke_id).first()
+    pokemons = Pokemon.objects.filter(name__in=names)
 
-        if pokemon:
-            points_sum += pokemon.attack + pokemon.defense + pokemon.hit_points
-        else:
-            if not pokemon_exists(poke_id):
-                raise PokemonNotFound(poke_id)
-            pokemon = get_pokemon_by_id(poke_id)
-            points_sum += (
-                pokemon["stats"][1]["base_stat"]
-                + pokemon["stats"][2]["base_stat"]
-                + pokemon["stats"][0]["base_stat"]
-            )
+    for pokemon in pokemons:
+        points_sum += pokemon.attack + pokemon.defense + pokemon.hit_points
+
+    existing_pokemon_names = set(
+        Pokemon.objects.filter(name__in=names).values_list("name", flat=True)
+    )
+    missing_pokemon_names = set(names) - existing_pokemon_names
+
+    for name in missing_pokemon_names:
+        if not pokemon_exists(name):
+            raise PokemonNotFound(name)
+        pokemon = get_pokemon_by_name(name)
+        points_sum += (
+            pokemon["stats"][1]["base_stat"]
+            + pokemon["stats"][2]["base_stat"]
+            + pokemon["stats"][0]["base_stat"]
+        )
 
     return points_sum

@@ -26,6 +26,31 @@ class PokemonHelperTests(TestCase):
             get_pokemons_points_sum([0, 1, 2])
 
     @responses.activate
+    def test_calculates_pokemon_points_sum_when_pokemon_is_not_in_db(self):
+        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/pokemon3", status=200)
+
+        responses.add(
+            responses.GET,
+            f"{POKEAPI_BASE_URL}pokemon/pokemon3",
+            status=200,
+            json={
+                "id": 3,
+                "name": "pokemon3",
+                "stats": [{"base_stat": 3}, {"base_stat": 3}, {"base_stat": 3}],
+                "sprites": {
+                    "front_default": "https://raw.githubusercontent.com/"
+                    "PokeAPI/sprites/master/sprites/pokemon/3.png"
+                },
+            },
+        )
+
+        mommy.make("pokemons.Pokemon", name="pokemon1", attack=1, defense=1, hit_points=1)
+        mommy.make("pokemons.Pokemon", name="pokemon2", attack=2, defense=2, hit_points=2)
+
+        points_sum = get_pokemons_points_sum(["pokemon1", "pokemon2", "pokemon3"])
+        self.assertEqual(points_sum, 18)
+
+    @responses.activate
     def test_save_pokemon_image(self):
         responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/1", status=200)
 

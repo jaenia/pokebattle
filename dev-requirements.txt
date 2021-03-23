@@ -164,8 +164,6 @@ isort==4.3.21
     # via
     #   -r dev-requirements.in
     #   pylint
-jdcal==1.4.1
-    # via -r requirements.txt
 jedi==0.18.0
     # via
     #   -r requirements.txt
