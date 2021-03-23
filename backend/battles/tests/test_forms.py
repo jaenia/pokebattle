@@ -54,9 +54,13 @@ class BattleCreateFormTests(TestCase):
             "creator_pokemon_1": pokemon_1.id,
             "creator_pokemon_2": pokemon_2.id,
             "creator_pokemon_3": pokemon_3.id,
+            "position_creator_pokemon_1": "1",
+            "position_creator_pokemon_2": "2",
+            "position_creator_pokemon_3": "3",
         }
 
         form = BattleForm(data=data, current_user=current_user)
+        print(form.errors)
         self.assertTrue(form.is_valid())
 
         battle = form.save()
@@ -110,6 +114,9 @@ class BattleCreateFormTests(TestCase):
             "creator_pokemon_1": pokemon_1.id,
             "creator_pokemon_2": pokemon_2.id,
             "creator_pokemon_3": pokemon_3.id,
+            "position_creator_pokemon_1": "1",
+            "position_creator_pokemon_2": "2",
+            "position_creator_pokemon_3": "3",
         }
 
         form = BattleForm(data=data, current_user=current_user)
@@ -164,6 +171,9 @@ class BattleCreateFormTests(TestCase):
             "creator_pokemon_1": pokemon_1.id,
             "creator_pokemon_2": pokemon_2.id,
             "creator_pokemon_3": pokemon_3.id,
+            "position_creator_pokemon_1": "1",
+            "position_creator_pokemon_2": "2",
+            "position_creator_pokemon_3": "3",
         }
 
         form = BattleForm(data=data, current_user=current_user)
@@ -223,6 +233,66 @@ class BattleCreateFormTests(TestCase):
         self.assertFalse(form.is_valid())
 
         self.assertEqual(["Pokemons' points sum cannot be more than 600"], form.errors["__all__"])
+
+    @responses.activate
+    def test_choose_pokemon_position(self):
+        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/pokemon1", status=200)
+        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/pokemon2", status=200)
+        responses.add(responses.HEAD, f"{POKEAPI_BASE_URL}pokemon/pokemon3", status=200)
+
+        pokemon_1 = mommy.make(
+            "pokemons.Pokemon",
+            poke_id=1,
+            name="pokemon1",
+            attack=49,
+            defense=49,
+            hit_points=45,
+            image="https://raw.githubusercontent.com/"
+            "PokeAPI/sprites/master/sprites/pokemon/1.png",
+        )
+        pokemon_2 = mommy.make(
+            "pokemons.Pokemon",
+            poke_id=2,
+            name="pokemon2",
+            attack=64,
+            defense=64,
+            hit_points=50,
+            image="https://raw.githubusercontent.com/"
+            "PokeAPI/sprites/master/sprites/pokemon/2.png",
+        )
+        pokemon_3 = mommy.make(
+            "pokemons.Pokemon",
+            poke_id=3,
+            name="pokemon3",
+            attack=69,
+            defense=69,
+            hit_points=55,
+            image="https://raw.githubusercontent.com/"
+            "PokeAPI/sprites/master/sprites/pokemon/3.png",
+        )
+
+        current_user = mommy.make("users.User")
+        opponent = mommy.make("users.User", email="opponent@test.com")
+
+        data = {
+            "opponent": opponent.id,
+            "creator_pokemon_1": pokemon_1.id,
+            "creator_pokemon_2": pokemon_2.id,
+            "creator_pokemon_3": pokemon_3.id,
+            "position_creator_pokemon_1": "3",
+            "position_creator_pokemon_2": "1",
+            "position_creator_pokemon_3": "2",
+        }
+
+        form = BattleForm(data=data, current_user=current_user)
+        print(form.errors)
+
+        self.assertTrue(form.is_valid())
+
+        battle = form.save()
+        self.assertEqual(battle.creator_pokemon_1, pokemon_2)
+        self.assertEqual(battle.creator_pokemon_2, pokemon_3)
+        self.assertEqual(battle.creator_pokemon_3, pokemon_1)
 
 
 class BattleOpponentPokemonsFormTests(TestCase):

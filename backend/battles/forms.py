@@ -2,12 +2,20 @@ from dal import autocomplete
 
 from django import forms
 
+from battles.exceptions import DuplicatedPokemonPositions
+from battles.helpers import position_pokemons
 from battles.models import Battle
 from pokemons.exceptions import PokemonNotFound
 from pokemons.helpers import get_pokemons_points_sum
 from pokemons.models import Pokemon
 from pokemons.services import pokemon_exists
 from users.models import User
+
+POKEMON_POSITION_CHOICES = [
+    (1, "Position 1"),
+    (2, "Position 2"),
+    (3, "Position 3"),
+]
 
 
 class BattleForm(forms.ModelForm):
@@ -26,6 +34,16 @@ class BattleForm(forms.ModelForm):
         widget=autocomplete.ModelSelect2(url="pokemons:pokemon_autocomplete"),
     )
 
+    position_creator_pokemon_1 = forms.ChoiceField(
+        choices=POKEMON_POSITION_CHOICES, initial=1, required=False
+    )
+    position_creator_pokemon_2 = forms.ChoiceField(
+        choices=POKEMON_POSITION_CHOICES, initial=2, required=False
+    )
+    position_creator_pokemon_3 = forms.ChoiceField(
+        choices=POKEMON_POSITION_CHOICES, initial=3, required=False
+    )
+
     class Meta:
         model = Battle
         fields = [
@@ -34,6 +52,9 @@ class BattleForm(forms.ModelForm):
             "creator_pokemon_1",
             "creator_pokemon_2",
             "creator_pokemon_3",
+            "position_creator_pokemon_1",
+            "position_creator_pokemon_2",
+            "position_creator_pokemon_3",
         ]
 
     def __init__(self, *args, **kwargs):
@@ -68,6 +89,10 @@ class BattleForm(forms.ModelForm):
         creator_pokemon_2 = cleaned_data.get("creator_pokemon_2")
         creator_pokemon_3 = cleaned_data.get("creator_pokemon_3")
 
+        position_creator_pokemon_1 = cleaned_data.get("position_creator_pokemon_1")
+        position_creator_pokemon_2 = cleaned_data.get("position_creator_pokemon_2")
+        position_creator_pokemon_3 = cleaned_data.get("position_creator_pokemon_3")
+
         pokemon_points_sum = 0
         try:
             pokemon_points_sum = get_pokemons_points_sum(
@@ -79,7 +104,44 @@ class BattleForm(forms.ModelForm):
         if pokemon_points_sum > 600:
             raise forms.ValidationError("Pokemons' points sum cannot be more than 600")
 
+        # The exception treatment needs to be in clean method, so it can show the Validation Error in the form
+        try:
+            position_pokemons(
+                creator_pokemon_1,
+                creator_pokemon_2,
+                creator_pokemon_3,
+                position_creator_pokemon_1,
+                position_creator_pokemon_2,
+                position_creator_pokemon_3,
+            )
+        except DuplicatedPokemonPositions:
+            raise forms.ValidationError("Please add each Pokemon in a different position")
+
         return cleaned_data
+
+    def save(self, commit=True):
+        creator_pokemon_1 = self.cleaned_data.get("creator_pokemon_1")
+        creator_pokemon_2 = self.cleaned_data.get("creator_pokemon_2")
+        creator_pokemon_3 = self.cleaned_data.get("creator_pokemon_3")
+
+        position_creator_pokemon_1 = self.cleaned_data.get("position_creator_pokemon_1")
+        position_creator_pokemon_2 = self.cleaned_data.get("position_creator_pokemon_2")
+        position_creator_pokemon_3 = self.cleaned_data.get("position_creator_pokemon_3")
+
+        positioned_pokemons = position_pokemons(
+            creator_pokemon_1,
+            creator_pokemon_2,
+            creator_pokemon_3,
+            position_creator_pokemon_1,
+            position_creator_pokemon_2,
+            position_creator_pokemon_3,
+        )
+
+        self.instance.creator_pokemon_1 = positioned_pokemons[0]
+        self.instance.creator_pokemon_2 = positioned_pokemons[1]
+        self.instance.creator_pokemon_3 = positioned_pokemons[2]
+
+        return super(BattleForm, self).save(commit)
 
 
 class BattleOpponentPokemonsForm(forms.ModelForm):

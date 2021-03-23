@@ -27,6 +27,21 @@
     {{ form.creator_pokemon_3 }}
     <span class="field-error">{{ form.creator_pokemon_3.errors }}</span>
   </div>
+  <div class="field-wrapper">
+    <label for="{{ form.position_creator_pokemon_1.id_for_label }}">Pokemon 1 position:</label>
+    {{ form.position_creator_pokemon_1 }}
+    <span class="field-error">{{ form.position_creator_pokemon_1.errors }}</span>
+  </div>
+  <div class="field-wrapper">
+    <label for="{{ form.position_creator_pokemon_2.id_for_label }}">Pokemon 2 position:</label>
+    {{ form.position_creator_pokemon_2 }}
+    <span class="field-error">{{ form.position_creator_pokemon_2.errors }}</span>
+  </div>
+  <div class="field-wrapper">
+    <label for="{{ form.position_creator_pokemon_3.id_for_label }}">Pokemon 3 position:</label>
+    {{ form.position_creator_pokemon_3 }}
+    <span class="field-error">{{ form.position_creator_pokemon_3.errors }}</span>
+  </div>
   <button type="submit">Create Battle</button>
 </form>
 <a class="nav-link" href="{% url 'battles:battle_list' %}">Back to list</a>

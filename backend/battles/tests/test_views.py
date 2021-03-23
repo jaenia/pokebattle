@@ -162,6 +162,9 @@ class BattleCreateViewTests(TestCase):
             "creator_pokemon_1": pokemon_1.id,
             "creator_pokemon_2": pokemon_2.id,
             "creator_pokemon_3": pokemon_3.id,
+            "position_creator_pokemon_1": "1",
+            "position_creator_pokemon_2": "2",
+            "position_creator_pokemon_3": "3",
         }
         url = reverse("battles:battle_create")
 

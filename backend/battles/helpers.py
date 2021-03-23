@@ -79,11 +79,11 @@ def position_pokemons(
 ):
     position_list = [position_pokemon_1, position_pokemon_2, position_pokemon_3]
     if len(position_list) != len(set(position_list)):
-        raise DuplicatedPokemonPositions()
+        raise DuplicatedPokemonPositions
 
     positioned_pokemons = []
-    positioned_pokemons.insert(position_pokemon_1 - 1, pokemon_1)
-    positioned_pokemons.insert(position_pokemon_2 - 1, pokemon_2)
-    positioned_pokemons.insert(position_pokemon_3 - 1, pokemon_3)
+    positioned_pokemons.insert(int(position_pokemon_1) - 1, pokemon_1)
+    positioned_pokemons.insert(int(position_pokemon_2) - 1, pokemon_2)
+    positioned_pokemons.insert(int(position_pokemon_3) - 1, pokemon_3)
 
     return positioned_pokemons
