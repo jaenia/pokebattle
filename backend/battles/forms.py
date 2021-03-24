@@ -104,7 +104,8 @@ class BattleForm(forms.ModelForm):
         if pokemon_points_sum > 600:
             raise forms.ValidationError("Pokemons' points sum cannot be more than 600")
 
-        # The exception treatment needs to be in clean method, so it can show the Validation Error in the form
+        # The exception treatment needs to be in clean method,
+        # so it can show the Validation Error in the form
         try:
             position_pokemons(
                 creator_pokemon_1,
