@@ -126,12 +126,8 @@ class BattleHelperTests(TestCase):
         position_pokemon_3 = 2
 
         positioned_pokemons = position_pokemons(
-            pokemon_1,
-            pokemon_2,
-            pokemon_3,
-            position_pokemon_1,
-            position_pokemon_2,
-            position_pokemon_3,
+            [pokemon_1, pokemon_2, pokemon_3],
+            [position_pokemon_1, position_pokemon_2, position_pokemon_3],
         )
 
         self.assertEqual(positioned_pokemons, [pokemon_2, pokemon_3, pokemon_1])
@@ -147,10 +143,6 @@ class BattleHelperTests(TestCase):
 
         with self.assertRaises(DuplicatedPokemonPositions):
             position_pokemons(
-                pokemon_1,
-                pokemon_2,
-                pokemon_3,
-                position_pokemon_1,
-                position_pokemon_2,
-                position_pokemon_3,
+                [pokemon_1, pokemon_2, pokemon_3],
+                [position_pokemon_1, position_pokemon_2, position_pokemon_3],
             )

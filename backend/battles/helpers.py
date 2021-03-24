@@ -74,9 +74,15 @@ def send_battle_result(battle):
     )
 
 
-def position_pokemons(
-    pokemon_1, pokemon_2, pokemon_3, position_pokemon_1, position_pokemon_2, position_pokemon_3
-):
+def position_pokemons(pokemons, positions):
+    pokemon_1 = pokemons[0]
+    pokemon_2 = pokemons[1]
+    pokemon_3 = pokemons[2]
+
+    position_pokemon_1 = positions[0]
+    position_pokemon_2 = positions[1]
+    position_pokemon_3 = positions[2]
+
     position_list = [position_pokemon_1, position_pokemon_2, position_pokemon_3]
     if len(position_list) != len(set(position_list)):
         raise DuplicatedPokemonPositions
