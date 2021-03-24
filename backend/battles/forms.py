@@ -109,7 +109,11 @@ class BattleForm(forms.ModelForm):
         try:
             position_pokemons(
                 [creator_pokemon_1, creator_pokemon_2, creator_pokemon_3],
-                [position_creator_pokemon_1, position_creator_pokemon_2, position_creator_pokemon_3]
+                [
+                    position_creator_pokemon_1,
+                    position_creator_pokemon_2,
+                    position_creator_pokemon_3,
+                ],
             )
         except DuplicatedPokemonPositions:
             raise forms.ValidationError("Please add each Pokemon in a different position")
@@ -127,7 +131,7 @@ class BattleForm(forms.ModelForm):
 
         positioned_pokemons = position_pokemons(
             [creator_pokemon_1, creator_pokemon_2, creator_pokemon_3],
-            [position_creator_pokemon_1, position_creator_pokemon_2, position_creator_pokemon_3]
+            [position_creator_pokemon_1, position_creator_pokemon_2, position_creator_pokemon_3],
         )
 
         self.instance.creator_pokemon_1 = positioned_pokemons[0]
