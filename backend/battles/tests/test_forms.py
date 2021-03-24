@@ -285,6 +285,8 @@ class BattleCreateFormTests(TestCase):
         }
 
         form = BattleForm(data=data, current_user=current_user)
+        print(form.errors)
+
         self.assertTrue(form.is_valid())
 
         battle = form.save()

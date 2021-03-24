@@ -300,9 +300,6 @@ class BattleUpdateOpponentPokemonsViewTests(TestCase):
             "opponent_pokemon_1": pokemon_3.id,
             "opponent_pokemon_2": pokemon_2.id,
             "opponent_pokemon_3": pokemon_1.id,
-            "position_opponent_pokemon_1": "3",
-            "position_opponent_pokemon_2": "1",
-            "position_opponent_pokemon_3": "2",
         }
 
         self.assertIsNone(battle.opponent_pokemon_1)
@@ -313,16 +310,12 @@ class BattleUpdateOpponentPokemonsViewTests(TestCase):
         response = self.client.post(url, data)
 
         battle = Battle.objects.get(pk=battle.id)
-        self.assertEqual(battle.opponent_pokemon_1.poke_id, 2)
-        self.assertEqual(battle.opponent_pokemon_2.poke_id, 1)
-        self.assertEqual(battle.opponent_pokemon_3.poke_id, 3)
+        self.assertEqual(battle.opponent_pokemon_1.poke_id, 3)
+        self.assertEqual(battle.opponent_pokemon_2.poke_id, 2)
+        self.assertEqual(battle.opponent_pokemon_3.poke_id, 1)
 
         send_mock.assert_called_with(battle)
         self.assertEqual(response.status_code, 302)
-
-        self.assertEqual(battle.opponent_pokemon_1, pokemon_2)
-        self.assertEqual(battle.opponent_pokemon_2, pokemon_1)
-        self.assertEqual(battle.opponent_pokemon_3, pokemon_3)
 
     def test_non_logged_user_cannot_access_add_opponent_pokemons_to_battle(self):
         url = reverse("users:user_logout")

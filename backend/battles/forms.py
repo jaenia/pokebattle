@@ -158,25 +158,12 @@ class BattleOpponentPokemonsForm(forms.ModelForm):
         widget=autocomplete.ModelSelect2(url="pokemons:pokemon_autocomplete"),
     )
 
-    position_opponent_pokemon_1 = forms.ChoiceField(
-        choices=POKEMON_POSITION_CHOICES, initial=1, required=False
-    )
-    position_opponent_pokemon_2 = forms.ChoiceField(
-        choices=POKEMON_POSITION_CHOICES, initial=2, required=False
-    )
-    position_opponent_pokemon_3 = forms.ChoiceField(
-        choices=POKEMON_POSITION_CHOICES, initial=3, required=False
-    )
-
     class Meta:
         model = Battle
         fields = [
             "opponent_pokemon_1",
             "opponent_pokemon_2",
             "opponent_pokemon_3",
-            "position_opponent_pokemon_1",
-            "position_opponent_pokemon_2",
-            "position_opponent_pokemon_3",
         ]
 
     def clean_opponent_pokemon_1(self):
@@ -204,10 +191,6 @@ class BattleOpponentPokemonsForm(forms.ModelForm):
         opponent_pokemon_2 = cleaned_data.get("opponent_pokemon_2")
         opponent_pokemon_3 = cleaned_data.get("opponent_pokemon_3")
 
-        position_opponent_pokemon_1 = cleaned_data.get("position_opponent_pokemon_1")
-        position_opponent_pokemon_2 = cleaned_data.get("position_opponent_pokemon_2")
-        position_opponent_pokemon_3 = cleaned_data.get("position_opponent_pokemon_3")
-
         pokemon_points_sum = 0
         try:
             pokemon_points_sum = get_pokemons_points_sum(
@@ -219,41 +202,4 @@ class BattleOpponentPokemonsForm(forms.ModelForm):
         if pokemon_points_sum > 600:
             raise forms.ValidationError("Pokemons' points sum cannot be more than 600")
 
-        # The exception treatment needs to be in clean method, so it can show the Validation Error in the form
-        try:
-            position_pokemons(
-                opponent_pokemon_1,
-                opponent_pokemon_2,
-                opponent_pokemon_3,
-                position_opponent_pokemon_1,
-                position_opponent_pokemon_2,
-                position_opponent_pokemon_3,
-            )
-        except DuplicatedPokemonPositions:
-            raise forms.ValidationError("Please add each Pokemon in a different position")
-
         return cleaned_data
-
-    def save(self, commit=True):
-        opponent_pokemon_1 = self.cleaned_data.get("opponent_pokemon_1")
-        opponent_pokemon_2 = self.cleaned_data.get("opponent_pokemon_2")
-        opponent_pokemon_3 = self.cleaned_data.get("opponent_pokemon_3")
-
-        position_opponent_pokemon_1 = self.cleaned_data.get("position_opponent_pokemon_1")
-        position_opponent_pokemon_2 = self.cleaned_data.get("position_opponent_pokemon_2")
-        position_opponent_pokemon_3 = self.cleaned_data.get("position_opponent_pokemon_3")
-
-        positioned_pokemons = position_pokemons(
-            opponent_pokemon_1,
-            opponent_pokemon_2,
-            opponent_pokemon_3,
-            position_opponent_pokemon_1,
-            position_opponent_pokemon_2,
-            position_opponent_pokemon_3,
-        )
-
-        self.instance.opponent_pokemon_1 = positioned_pokemons[0]
-        self.instance.opponent_pokemon_2 = positioned_pokemons[1]
-        self.instance.opponent_pokemon_3 = positioned_pokemons[2]
-
-        return super(BattleOpponentPokemonsForm, self).save(commit)
