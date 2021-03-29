@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     "django_js_reverse",
     "webpack_loader",
     "import_export",
+    "rest_framework",
+    "rest_framework.authtoken",
     "common",
     "users",
     "battles",
