@@ -1,11 +1,6 @@
-from django.contrib.auth import get_user_model, authenticate
+from django.contrib.auth import authenticate
 from rest_framework import serializers
-
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = get_user_model()
-        fields = "email"
+from rest_framework.authtoken.models import Token
 
 
 class AuthTokenSerializer(serializers.Serializer):
@@ -23,3 +18,9 @@ class AuthTokenSerializer(serializers.Serializer):
 
         attrs["user"] = user
         return attrs
+
+    def create(self, validated_data):
+        return Token(**validated_data)
+
+    def update(self, instance, validated_data):
+        return instance
