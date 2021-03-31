@@ -4,11 +4,8 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render, redirect  # noqa
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView
-from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.settings import api_settings
 
 from users.forms import SignUpForm
-from users.serializers import AuthTokenSerializer
 
 
 class SignUp(CreateView):
@@ -39,7 +36,3 @@ class Logout(LoginRequiredMixin, LogoutView):
     next_page = reverse_lazy("users:user_login")
     login_url = reverse_lazy("users:user_login")
 
-
-class CreateTokenView(ObtainAuthToken):
-    serializer_class = AuthTokenSerializer
-    renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES

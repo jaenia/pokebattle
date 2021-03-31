@@ -16,7 +16,7 @@ class CreateTokenViewTests(TestCase):
     def test_create_token_for_user(self):
         data = {"email": "test@test.com", "password": "testpass"}
         create_user(**data)
-        url = reverse("users:token")
+        url = reverse("api_users:token")
         res = self.client.post(url, data)
 
         self.assertIn("token", res.data)
@@ -28,7 +28,7 @@ class CreateTokenViewTests(TestCase):
             "email": "test@test.com",
             "password": "wrong",
         }
-        url = reverse("users:token")
+        url = reverse("api_users:token")
         res = self.client.post(url, payload)
 
         self.assertNotIn("token", res.data)
@@ -39,14 +39,14 @@ class CreateTokenViewTests(TestCase):
             "email": "test@test.com",
             "password": "wrong",
         }
-        url = reverse("users:token")
+        url = reverse("api_users:token")
         res = self.client.post(url, payload)
 
         self.assertNotIn("token", res.data)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_create_token_missing_fields(self):
-        url = reverse("users:token")
+        url = reverse("api_users:token")
         res = self.client.post(url, {"email": "one", "password": ""})
         self.assertNotIn("token", res.data)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
