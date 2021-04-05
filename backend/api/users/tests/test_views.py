@@ -9,7 +9,7 @@ def create_user(**params):
     return get_user_model().objects.create_user(**params)
 
 
-class CreateTokenViewTests(TestCase):
+class CreateTokenEndpointTests(TestCase):
     def setUp(self):
         self.client = APIClient()
 
