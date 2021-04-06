@@ -20,7 +20,7 @@ class AuthTokenSerializer(serializers.Serializer):
         return attrs
 
     def create(self, validated_data):
-        return Token(**validated_data)
+        return Token.objects.get_or_create(**validated_data)
 
     def update(self, instance, validated_data):
         return instance
