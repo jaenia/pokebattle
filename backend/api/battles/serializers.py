@@ -61,6 +61,3 @@ class BattleSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return Battle.objects.create(**validated_data)
-
-    def update(self, instance, validated_data):
-        pass
