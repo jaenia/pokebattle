@@ -15,7 +15,7 @@ class PublicBattleListCreateEndpointTests(TestCase):
         self.client = APIClient()
 
     def test_login_required(self):
-        url = reverse("api_battles:battles")
+        url = reverse("api_battles:battle_list_create")
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
@@ -73,7 +73,7 @@ class PrivateBattleListCreateEndpointTests(TestCase):
             "creator_pokemon_2": pokemon_2.name,
             "creator_pokemon_3": pokemon_3.name,
         }
-        url = reverse("api_battles:battles")
+        url = reverse("api_battles:battle_list_create")
 
         battle = Battle.objects.filter(opponent=opponent).first()
         self.assertIsNone(battle)
@@ -92,7 +92,7 @@ class PrivateBattleListCreateEndpointTests(TestCase):
             "creator": self.user.id,
             "opponent": opponent.id,
         }
-        url = reverse("api_battles:battles")
+        url = reverse("api_battles:battle_list_create")
 
         response = self.client.post(url, data)
 
@@ -113,7 +113,7 @@ class PrivateBattleListCreateEndpointTests(TestCase):
             "creator_pokemon_2": "pokemon2",
             "creator_pokemon_3": "pokemon3",
         }
-        url = reverse("api_battles:battles")
+        url = reverse("api_battles:battle_list_create")
         response = self.client.post(url, data)
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -172,7 +172,7 @@ class PrivateBattleListCreateEndpointTests(TestCase):
             "creator_pokemon_2": pokemon_2.name,
             "creator_pokemon_3": pokemon_3.name,
         }
-        url = reverse("api_battles:battles")
+        url = reverse("api_battles:battle_list_create")
         response = self.client.post(url, data)
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
