@@ -506,5 +506,5 @@ class PrivateBattleRetrieveUpdateEndpointTests(TestCase):
         self.assertEqual(
             response.content,
             b'{"non_field_errors":['
-            b'"You can\'t update opponent Pokemons if you aren\'t the battle opponent"]}',
+            b"\"You can't update opponent Pokemons if you aren't the battle opponent\"]}",
         )
