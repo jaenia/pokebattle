@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate
 from rest_framework import serializers
 
 
-class AuthTokenSerializer(serializers.Serializer):
+class AuthTokenSerializer(serializers.Serializer): # noqa
     email = serializers.CharField()
     password = serializers.CharField(style={"input_type": "password"}, trim_whitespace=False)
 
