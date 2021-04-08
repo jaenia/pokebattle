@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from api.battles.validators import validate_pokemon
 from battles.models import Battle
 from pokemons.exceptions import PokemonNotFound
 from pokemons.helpers import get_pokemons_points_sum
@@ -31,34 +32,22 @@ class BattleSerializer(serializers.ModelSerializer):
         )
 
     def validate_creator_pokemon_1(self, value):
-        if not pokemon_exists(value):
-            raise serializers.ValidationError("Sorry, this pokemon was not found")
-        return Pokemon.objects.get(name=value)
+        return validate_pokemon(value)
 
     def validate_creator_pokemon_2(self, value):
-        if not pokemon_exists(value):
-            raise serializers.ValidationError("Sorry, this pokemon was not found")
-        return Pokemon.objects.get(name=value)
+        return validate_pokemon(value)
 
     def validate_creator_pokemon_3(self, value):
-        if not pokemon_exists(value):
-            raise serializers.ValidationError("Sorry, this pokemon was not found")
-        return Pokemon.objects.get(name=value)
+        return validate_pokemon(value)
 
     def validate_opponent_pokemon_1(self, value):
-        if not pokemon_exists(value):
-            raise serializers.ValidationError("Sorry, this pokemon was not found")
-        return Pokemon.objects.get(name=value)
+        return validate_pokemon(value)
 
     def validate_opponent_pokemon_2(self, value):
-        if not pokemon_exists(value):
-            raise serializers.ValidationError("Sorry, this pokemon was not found")
-        return Pokemon.objects.get(name=value)
+        return validate_pokemon(value)
 
     def validate_opponent_pokemon_3(self, value):
-        if not pokemon_exists(value):
-            raise serializers.ValidationError("Sorry, this pokemon was not found")
-        return Pokemon.objects.get(name=value)
+        return validate_pokemon(value)
 
     def validate(self, attrs):
         request = self.context.get("request")
