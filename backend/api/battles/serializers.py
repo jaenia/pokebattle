@@ -69,10 +69,7 @@ class BattleSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Pokemons' points sum cannot be more than 600")
 
         if self.instance:
-            object_id = self.instance.id
-
-            battle = Battle.objects.get(pk=object_id)
-            if request.user != battle.opponent:
+            if request.user != self.instance.opponent:
                 raise serializers.ValidationError(
                     "You can't update opponent Pokemons if you aren't the battle opponent"
                 )
