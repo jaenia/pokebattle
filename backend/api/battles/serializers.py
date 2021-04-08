@@ -94,19 +94,6 @@ class BattleSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         return Battle.objects.create(**validated_data)
 
-    def update_opponent_pokemons(
-        self, battle, opponent_pokemon_1, opponent_pokemon_2, opponent_pokemon_3
-    ):
-        opponent_pokemons = [opponent_pokemon_1, opponent_pokemon_2, opponent_pokemon_3]
-
-        if any(pokemon is None for pokemon in opponent_pokemons):
-            return
-
-        battle.opponent_pokemon_1 = opponent_pokemon_1
-        battle.opponent_pokemon_2 = opponent_pokemon_2
-        battle.opponent_pokemon_3 = opponent_pokemon_3
-        battle.save()
-
     def update(self, instance, validated_data):
         opponent_pokemon_1 = self.validated_data.pop("opponent_pokemon_1", None)
         opponent_pokemon_2 = self.validated_data.pop("opponent_pokemon_2", None)
@@ -114,8 +101,14 @@ class BattleSerializer(serializers.ModelSerializer):
 
         instance = super().update(instance, validated_data)
 
-        self.update_opponent_pokemons(
-            instance, opponent_pokemon_1, opponent_pokemon_2, opponent_pokemon_3
-        )
+        opponent_pokemons = [opponent_pokemon_1, opponent_pokemon_2, opponent_pokemon_3]
+
+        if any(pokemon is None for pokemon in opponent_pokemons):
+            return
+
+        instance.opponent_pokemon_1 = opponent_pokemon_1
+        instance.opponent_pokemon_2 = opponent_pokemon_2
+        instance.opponent_pokemon_3 = opponent_pokemon_3
+        instance.save()
 
         return instance
