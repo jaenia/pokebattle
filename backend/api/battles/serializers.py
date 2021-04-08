@@ -4,8 +4,6 @@ from api.battles.validators import validate_pokemon
 from battles.models import Battle
 from pokemons.exceptions import PokemonNotFound
 from pokemons.helpers import get_pokemons_points_sum
-from pokemons.models import Pokemon
-from pokemons.services import pokemon_exists
 
 
 class BattleSerializer(serializers.ModelSerializer):
@@ -94,16 +92,16 @@ class BattleSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         return Battle.objects.create(**validated_data)
 
-    def update(self, instance, validated_data):
+    def update(self, instance, validated_data):  # noqa
+        instance = super().update(instance, validated_data)
+
         opponent_pokemon_1 = self.validated_data.pop("opponent_pokemon_1", None)
         opponent_pokemon_2 = self.validated_data.pop("opponent_pokemon_2", None)
         opponent_pokemon_3 = self.validated_data.pop("opponent_pokemon_3", None)
 
-        instance = super().update(instance, validated_data)
-
         opponent_pokemons = [opponent_pokemon_1, opponent_pokemon_2, opponent_pokemon_3]
 
-        if any(pokemon is None for pokemon in opponent_pokemons):
+        if not any(pokemon is None for pokemon in opponent_pokemons):
             return
 
         instance.opponent_pokemon_1 = opponent_pokemon_1
