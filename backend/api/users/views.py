@@ -5,6 +5,6 @@ from rest_framework.settings import api_settings
 from api.users.serializers import AuthTokenSerializer
 
 
-class CreateTokenEndpoint(ObtainAuthToken):
+class LoginEndpoint(ObtainAuthToken):
     serializer_class = AuthTokenSerializer
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES

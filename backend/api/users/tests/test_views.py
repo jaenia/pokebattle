@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
+from rest_framework.authtoken.models import Token
 from rest_framework.test import APIClient
 
 
@@ -9,15 +10,22 @@ def create_user(**params):
     return get_user_model().objects.create_user(**params)
 
 
-class CreateTokenEndpointTests(TestCase):
+class LoginEndpointTests(TestCase):
     def setUp(self):
         self.client = APIClient()
 
     def test_create_token_for_user(self):
         data = {"email": "test@test.com", "password": "testpass"}
-        create_user(**data)
+        user = create_user(**data)
         url = reverse("api_users:token")
+
+        token = Token.objects.filter(user=user).first()
+        self.assertIsNone(token)
+
         res = self.client.post(url, data)
+
+        token = Token.objects.get(user=user)
+        self.assertEqual(token.user, user)
 
         self.assertIn("token", res.data)
         self.assertEqual(res.status_code, status.HTTP_200_OK)

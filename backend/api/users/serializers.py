@@ -1,9 +1,8 @@
 from django.contrib.auth import authenticate
 from rest_framework import serializers
-from rest_framework.authtoken.models import Token
 
 
-class AuthTokenSerializer(serializers.Serializer):
+class AuthTokenSerializer(serializers.Serializer):  # noqa
     email = serializers.CharField()
     password = serializers.CharField(style={"input_type": "password"}, trim_whitespace=False)
 
@@ -18,9 +17,3 @@ class AuthTokenSerializer(serializers.Serializer):
 
         attrs["user"] = user
         return attrs
-
-    def create(self, validated_data):
-        return Token(**validated_data)
-
-    def update(self, instance, validated_data):
-        return instance
