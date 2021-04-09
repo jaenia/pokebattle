@@ -101,7 +101,7 @@ class BattleSerializer(serializers.ModelSerializer):
 
         opponent_pokemons = [opponent_pokemon_1, opponent_pokemon_2, opponent_pokemon_3]
 
-        if not any(pokemon is None for pokemon in opponent_pokemons):
+        if any(pokemon is None for pokemon in opponent_pokemons):
             return
 
         instance.opponent_pokemon_1 = opponent_pokemon_1
