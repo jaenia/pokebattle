@@ -58,3 +58,14 @@ class LoginEndpointTests(TestCase):
         res = self.client.post(url, {"email": "one", "password": ""})
         self.assertNotIn("token", res.data)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+
+class PublicUserListEndpointTests(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+
+    def test_login_required(self):
+        url = reverse("api_users:user_list")
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
