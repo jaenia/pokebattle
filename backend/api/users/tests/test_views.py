@@ -87,5 +87,5 @@ class PrivateUserListEndpointTests(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(
             response.content,
-            b'[{"id":1,"email":"test@test.com"},{"id":2,"email":"user2@test.com"}]'
+            b'[{"id":1,"email":"test@test.com"},{"id":2,"email":"user2@test.com"}]',
         )
