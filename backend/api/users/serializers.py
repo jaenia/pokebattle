@@ -1,6 +1,8 @@
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 
+from users.models import User
+
 
 class AuthTokenSerializer(serializers.Serializer):  # noqa
     email = serializers.CharField()
@@ -17,3 +19,9 @@ class AuthTokenSerializer(serializers.Serializer):  # noqa
 
         attrs["user"] = user
         return attrs
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["id", "email"]
