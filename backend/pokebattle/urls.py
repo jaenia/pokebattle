@@ -14,4 +14,5 @@ urlpatterns = [
     path("oauth/", include("social_django.urls", namespace="social")),
     path("api/users/", include(("api.users.urls", "users"), namespace="api_users")),
     path("api/battles/", include(("api.battles.urls", "battles"), namespace="api_battles")),
+    path("api/pokemons/", include(("api.pokemons.urls", "pokemons"), namespace="api_pokemons")),
 ]
