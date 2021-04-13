@@ -142,3 +142,5 @@ TEMPLATED_EMAIL_BACKEND = "templated_email.backends.vanilla_django.TemplateBacke
 # Google Social login
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config("SOCIAL_AUTH_GOOGLE_OAUTH2_KEY", default="")
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config("SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET", default="")
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
