@@ -10,3 +10,9 @@ class BattleListCreateEndpoint(generics.ListCreateAPIView):
     serializer_class = BattleSerializer
     queryset = Battle.objects.all()
     permission_classes = (IsAuthenticated,)
+
+
+class BattleRetrieveUpdateEndpoint(generics.RetrieveUpdateAPIView):
+    serializer_class = BattleSerializer
+    queryset = Battle.objects.all()
+    permission_classes = (IsAuthenticated,)
