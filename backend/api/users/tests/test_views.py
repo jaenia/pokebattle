@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
+from model_mommy import mommy
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APIClient
@@ -78,7 +79,12 @@ class PrivateUserListEndpointTests(TestCase):
         self.client.force_authenticate(self.user)
 
     def test_see_users_list(self):
+        mommy.make("users.User", email="user1@test.com")
+        mommy.make("users.User", email="user2@test.com")
+
         url = reverse("api_users:user_list")
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn(b"user1@test.com", response.content)
+        self.assertIn(b"user2@test.com", response.content)
